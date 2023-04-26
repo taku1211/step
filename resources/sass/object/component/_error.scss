@@ -1,0 +1,13 @@
+//formタグ内validationエラー表示部分
+.c-error{
+    margin-top: $space_l;
+    color: $font-color_red;
+    &__ul{
+    background:$background-color_lightRed;
+    border:1px solid $background-color_red;
+    padding: $space_s;
+    border-radius: 2px;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+    margin-top: $space_l;
+    }
+}

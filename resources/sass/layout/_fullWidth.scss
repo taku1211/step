@@ -1,0 +1,8 @@
+//フル画面レイアウト
+#l-fullWidth{
+    width: 100%;
+    margin: 0 auto 0 auto;
+    @include mq(){
+        width: 100%;
+    }
+}

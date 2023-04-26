@@ -1,0 +1,35 @@
+//ユーザー情報更新画面
+.p-setting{
+    &__title{
+        &::before{
+            top: 20px;
+        }
+        &::after{
+            top:-20px;
+        }
+    }
+    &__label{
+        margin: $space_l 0 $space_l 0;
+    }
+    &__deleteMyIcon{
+        margin: $space_3l 0 $space_3l 0;
+        text-align: right;
+    }
+    &__button{
+        display: inline-block;
+    }
+    &__myIcon{
+        display: inline-block;
+        width: 100%;
+        height: auto;
+        margin: $space_l 0 $space_l 0;
+        text-align: center;
+    }
+    &__img{
+        width: 50%;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+    }
+}
+

@@ -1,0 +1,24 @@
+//トップページインデックス部分
+.p-index{
+    margin: $space_3l auto 0 auto;
+    &__title{
+        font-size: $font-size_3l;
+        @include mq(){
+            font-size: $font-size_xl;
+        }
+    }
+    &__link{
+        margin-top: $space_3l;
+        text-align: right;
+    }
+    &__url{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        padding: $space_m 0 0 $space_m;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+}

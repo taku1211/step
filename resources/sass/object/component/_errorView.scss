@@ -1,0 +1,16 @@
+//input部分：validationエラー時のcss
+.c-errorView{
+    &__para{
+        line-height: 3;
+    }
+    &__link{
+        cursor: pointer;
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+}

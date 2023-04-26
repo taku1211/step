@@ -1,0 +1,18 @@
+//トップページアバウト部分
+.p-about{
+    margin: $space_3l auto 0 auto;
+    &__title{
+        font-size: $font-size_3l;
+        @include mq(){
+            font-size: $font-size_xl;
+        }
+    }
+    &__para{
+        margin-top: $space_3l;
+        text-align: center;
+        line-height: 4;
+        @include mq(){
+            line-height: 2.5;
+        }
+    }
+}

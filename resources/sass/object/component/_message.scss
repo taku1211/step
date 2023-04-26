@@ -1,0 +1,13 @@
+//セッションメッセージ表示部分
+.c-message{
+    z-index: 3;
+    width: 100%;
+    margin:  0 auto 0 auto;
+    background:#CCFFCC;
+    border:2px solid #00CC00;
+    border-radius: 2px;
+    color: #00CC00;
+    padding: $space_s $space_m $space_s $space_m;
+    text-align: center;
+    margin-bottom: $space_m;
+}

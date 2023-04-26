@@ -1,0 +1,91 @@
+//Sass変数
+
+//フォントカラー
+
+
+//======================================
+//sass変数
+//======================================
+
+//コンテンツWidth
+$site-width: 1024px;
+
+//ヘッダーHeight
+$site-height-header: 130px;
+$site-height-headerMd: 80px;
+
+//フッターHeight
+$site-height-footer: 80px;
+
+//font書体 ※修正要
+$font-family_base: 'Noto Sans JP', sans-serif;
+
+
+//fontカラー
+$font-color_default : #333;
+$font-color_light-black :rgb(096,113,122);
+$font-color_gray: rgb(167,167,167);
+$font-color_white: #fff;
+$font-color_orange: rgb(255,124,060);
+$font-color_blue:#3498db;
+$font-color_dark-blue:#2980b9;
+$font-color_red:#F06060;
+$font-color_gold:rgb(173,161,66);
+
+
+//fontサイズ
+$font-size_xs: 8px;
+$font-size_s: 12px;
+$font-size_m: 14px;
+$font-size_default: 16px;
+$font-size_l: 18px;
+$font-size_xl: 24px;
+$font-size_xxl: 30px;
+$font-size_3l: 45px;
+$font-size_4l: 54px;
+
+
+//背景カラー
+$background-color_default:#fff;
+$background-color_gray:#eee;
+$background-color_lightgray:#f6f5f4;
+$background-color_black: #333;
+$background-color_orange: rgb(255,124,060);
+$background-color_light-black :rgb(096,113,122);
+$background-color_green : #90ee90;
+$background-color_red: #F06060;
+$background-color_lightRed:#FFEBE8;
+
+
+
+//アイコンサイズ
+$icon-size_default: 20px;
+$icon-size_s: 14px;
+$icon-size_m: 40px;
+$icon-size_l: 60px;
+
+//margin padding幅
+$space_xs: 2px;
+$space_s: 5px;
+$space_m: 10px;
+$space_l: 15px;
+$space_xl: 20px;
+$space_xxl: 30px;
+$space_3l: 40px;
+$space_4l: 60px;
+$space_5l: 100px;
+
+
+//mixin変数
+$breakpoints: (
+    'sm' : 'screen and (max-width: 415px)',
+    'md' : 'screen and (max-width: 767px)',
+    'tab' : 'screen and (max-width: 1023px)',
+    'pc' : 'screen and (min-width: 1024px)',
+) !default;
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)}{
+    @content
+  }
+}

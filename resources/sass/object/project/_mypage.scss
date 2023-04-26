@@ -1,0 +1,86 @@
+//マイページ画面
+.p-mypage{
+    width: 100%;
+    &__userInfo{
+        display: flex;
+        align-items: center;
+    }
+    &__userIcon{
+        display: inline-block;
+        width: 3%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+        @include mq(){
+            width: 10%;
+        }
+    }
+    &__userMail{
+        margin-left: $space_m;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    &__title{
+        &::before{
+            top: 20px;
+        }
+        &::after{
+            top:-20px;
+        }
+    }
+    &__content{
+        width: 100%;
+        margin-bottom: $space_4l;
+    }
+    &__message{
+        margin-top: $space_l;
+        color:#0066CC;
+        background:#99CCFF;
+        border:2px solid #0066CC;
+        font-size: $font-size_m;
+    }
+    &__button{
+        background: $background-color_orange;
+        padding: 0;
+    }
+    &__link{
+        display: inline-block;
+        width: 100%;
+        color: $font-color_white;
+        padding: $space_m $space_xl $space_m $space_xl;
+    }
+    &__route{
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    &__para{
+        margin-top: $space_3l;
+    }
+    &__panel{
+        position: relative;
+    }
+    &__crownIcon{
+        position: absolute;
+        color: $font-color_gold;
+        font-size: $font-size_xxl;
+        transform: rotate(-45deg);
+        top: -20px;
+        left: -20px;
+    }
+    &__toAll{
+        margin-top: $space_3l;
+        text-align: right;
+    }
+    &__url{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        padding: $space_m 0 0 $space_m;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+}
+

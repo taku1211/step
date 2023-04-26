@@ -1,0 +1,46 @@
+//トップヒーロー部分
+.p-hero{
+    text-align: center;
+    background-image: url('../../../../resources/image/hero-image4.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @include mq(){
+        height: 40vh;
+    }
+    &__title{
+        font-size: $font-size_4l;
+        color: $font-color_white;
+        font-weight: bold;
+        text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        @include mq(){
+            font-size: $font-size_xl;
+        }
+    }
+    &__para{
+        color:$font-color_white;
+        padding: $space_xl 0 0 0;
+        font-size: $font-size_xxl;
+        font-weight: bold;
+        text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        @include mq(){
+            font-size: $font-size_l;
+        }
+    }
+    &__button{
+        margin-top: $space_3l;
+        background: $background-color_orange;
+        @include mq(){
+            margin-top: $space_l;
+        }
+    }
+    &__link{
+        color: $font-color_white;
+    }
+}

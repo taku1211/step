@@ -1,0 +1,27 @@
+//トップへ戻るボタン
+.c-returnButton{
+    width: 100%;
+    height: auto;
+    position: fixed;
+    bottom: 50px;
+    padding: 0 5% 0 5%;
+    text-align: right;
+    pointer-events:none;
+    @include mq(tab){
+        position: fixed;
+        bottom: 50px;
+    }
+    @include mq(){
+        position: fixed;
+        bottom: 50px;
+    }
+    &__icon{
+        font-size: $font-size_4l;
+        color: $font-color_gray;
+        cursor: pointer;
+        opacity: .8;
+        border-radius: 50%;
+        box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+        pointer-events: all;
+    }
+}

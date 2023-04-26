@@ -1,0 +1,225 @@
+//ステップ詳細画面
+.p-detail{
+    width: 100%;
+    &__title{
+        margin-top: $space_3l;
+        &::before{
+            top: 20px;
+        }
+        &::after{
+            top:-20px;
+        }
+    }
+    &__border{
+        max-width: 80%;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    &__link{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+    &__share{
+        background: #167df0;
+        color: $font-color_white;
+        padding: $space_s $space_m $space_s $space_m;
+        border-radius: 5px;
+        float: right;
+        border-top:2px solid rgba(255,255,255,0.2);
+        border-bottom:2px solid rgba(0,0,0,0.2);
+        transition: 0.3s;
+        cursor: pointer;
+        @include mq{
+            font-size: $font-size_s;
+        }
+        &:hover{
+            opacity: .8;
+        }
+        &:active{
+            -webkit-transform: translate(0,2px);
+            -moz-transform: translate(0,2px);
+            transform: translate(0,2px);
+            border-bottom:none;
+            margin-bottom: 2px;
+        }
+    }
+    &__flex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        @include mq(){
+            flex-direction: column;
+            align-items: center;
+        }
+        @include mq(tab){
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    &__left{
+        width: 50%;
+        margin: $space_3l $space_l $space_l $space_l;
+        @include mq(){
+            width: 100%;
+        }
+        @include mq(tab){
+            width: 100%;
+        }
+    }
+    &__right{
+        width: 50%;
+        margin: $space_3l $space_l $space_l $space_l;
+        @include mq(){
+            width: 100%;
+        }
+        @include mq(tab){
+            width: 100%;
+        }
+    }
+    &__para{
+        padding: $space_s $space_m $space_s $space_m;
+        overflow-wrap: break-word;
+        &:first-child{
+            padding-top: 0;
+        }
+        &:last-child{
+            padding: $space_s $space_3l $space_s $space_m;
+            height: auto;
+            line-height: 1.5;
+        }
+        &--title{
+            font-weight: bold;
+        }
+    }
+    &__userInfo{
+        display: flex;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+        margin: $space_l $space_l $space_m $space_l;
+        padding: $space_m;
+        align-items: flex-start;
+        @include mq(){
+            margin: $space_m;
+        }
+        @include mq(tab){
+            margin: $space_m;
+        }
+    }
+    &__iconBox{
+        width: 15%;
+        margin-top: $space_m;
+    }
+    &__userIcon{
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+    }
+    &__userIntroduction{
+        width: 85%;
+        padding: $space_m;
+        overflow-wrap: break-word;
+    }
+    &__sub{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        margin: $space_s $space_m $space_s $space_m;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+        &:first-child{
+            margin-top: 0;
+        }
+        &-para{
+        padding: $space_m $space_s $space_m $space_s;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include mq(){
+            font-size: $font-size_s;
+        }
+            &--left{
+                background: $background-color_light-black;
+                color: $font-color_white;
+                width: 15%;
+                text-align: center;
+            }
+            &--center{
+                display: inline-block;
+                text-align: left;
+                width: 55%;
+                transition: 0.3s;
+                opacity: 1;
+                &:hover{
+                    text-decoration: none;
+                    opacity: .7;
+                    transform: scale(1.02);
+                }
+                @include mq(tab){
+                    width: 70%;
+                }
+                @include mq(){
+                    width: 55%;
+                }
+            }
+            &--right{
+                background: $background-color_light-black;
+                color: $font-color_white;
+                width: 30%;
+                opacity: 1;
+                transition: 0.3s;
+                text-align: center;
+                @include mq(tab){
+                    width: 15%;
+                }
+                @include mq(){
+                    width: 30%;
+                }
+            }
+            &--orange{
+                background: $background-color_orange;
+            }
+            &--green{
+                background: $background-color_green;
+            }
+        }
+    }
+    &__subTitle{
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    &__submit{
+        text-align: right;
+        margin: $space_3l calc($space_l + $space_m) $space_l $space_l;
+        @include mq(){
+            margin: $space_l $space_m 0 0;
+        }
+        @include mq(tab){
+            margin: $space_l $space_m 0 0;
+        }
+    }
+    &__button{
+        &--noPadding{
+            padding: 0;
+        }
+        &--orange{
+            background: $background-color_orange;
+        }
+        &--green{
+            background: $background-color_green;
+            cursor: not-allowed;
+        }
+    }
+    &__buttonlink{
+        display: inline-block;
+        width: 100%;
+        padding: $space_m $space_l $space_m $space_l;
+        color: $font-color_white;
+    }
+}

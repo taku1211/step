@@ -1,0 +1,30 @@
+//パスワード再設定メール送信画面
+.p-sendMail{
+    &__title{
+        &::before{
+            top: 20px;
+        }
+        &::after{
+            top:-20px;
+        }
+    }
+    &__label{
+        margin: $space_l 0 $space_l 0;
+    }
+    &__submit{
+        margin: $space_3l 0 $space_3l 0;
+    }
+    &__button{
+        background:$background-color_orange;
+    }
+    &__link{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+}
+

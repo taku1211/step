@@ -1,0 +1,24 @@
+//input部分
+.c-input{
+    display: block;
+    width: 100%;
+    background: $background-color_lightgray;
+    padding: $space_m;
+    font-size: $font-size_default;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    &:hover{
+        box-shadow: 0 0 2px 0 rgba(255,124,060,1);
+        outline: 0;
+    }
+    &:focus{
+        box-shadow: 0 0 2px 0 rgba(255,124,060,1);
+        outline: 0;
+    }
+    &--error{
+        border:1px solid $background-color_red;
+        background: $background-color_lightRed;
+    }
+}

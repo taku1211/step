@@ -1,0 +1,72 @@
+//STEP編集画面 全体レイアウト
+.p-editStep{
+    width: 100%;
+    &__title{
+        margin-bottom: $space_3l;
+        &::before{
+            top: 20px;
+        }
+        &::after{
+            top:-20px;
+        }
+    }
+    &__form{
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    &__mainStep{
+        width: 50%;
+        margin: 0 auto $space_4l auto;
+        @include mq(){
+            width: 80%;
+        }
+    }
+    &__label{
+        margin: $space_l 0 $space_l 0;
+    }
+    &__input{
+        &--invalid{
+            cursor: not-allowed;
+            background: $background-color_gray;
+        }
+    }
+    &__textarea{
+        height: 100px;
+        &--invalid{
+            cursor: not-allowed;
+            background: $background-color_gray;
+        }
+    }
+    &__select{
+        color: $font-color_default;
+        &--invalid{
+            cursor: not-allowed;
+            background: $background-color_gray;
+        }
+    }
+    &__option{
+        color: $font-color_default;
+        cursor: pointer;
+        &--disable{
+            color: $font-color_gray;
+        }
+    }
+    &__button{
+        background: $background-color_red;
+        &--invalid{
+            cursor: not-allowed;
+            &:hover{
+                opacity: 1;
+            }
+        }
+    }
+    &__error{
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        @include mq(){
+            width: 80%;
+        }
+    }
+}

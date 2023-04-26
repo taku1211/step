@@ -1,0 +1,228 @@
+//サブステップ詳細画面
+.p-subDetail{
+    width: 100%;
+    &__title{
+        margin-top: $space_3l;
+        height: 62px;
+        &::before{
+            top: 32px;
+        }
+        &::after{
+            top:-40px;
+        }
+    }
+    &__border{
+        max-width: 80%;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    &__budge{
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+        vertical-align: middle;
+        font-size: $font-size_xs;
+        background: $background-color_orange;
+        color: $font-color_white;
+        padding: 0 $space_l 0 $space_l;
+        border-radius: 5px;
+        margin:20px $space_m 20px 0;
+    }
+    &__link{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+    &__flex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        @include mq(){
+            flex-direction: column;
+            align-items: center;
+        }
+        @include mq(tab){
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    &__left{
+        width: 50%;
+        margin: $space_3l $space_l $space_l $space_l;
+        @include mq(){
+            width: 100%;
+        }
+        @include mq(tab){
+            width: 100%;
+        }
+    }
+    &__right{
+        width: 50%;
+        margin: $space_3l $space_l $space_l $space_l;
+        @include mq(){
+            width: 100%;
+        }
+        @include mq(tab){
+            width: 100%;
+        }
+    }
+    &__para{
+        padding: $space_s $space_m $space_s $space_m;
+        overflow-wrap: break-word;
+        &:first-child{
+            padding-top: 0;
+        }
+        &:last-child{
+            padding: $space_s $space_3l $space_s $space_m;
+            height: auto;
+            line-height: 1.5;
+        }
+        &--title{
+            font-weight: bold;
+        }
+    }
+    &__sub{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        margin: $space_s $space_m $space_s $space_m;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+        &-para{
+        padding: $space_m $space_s $space_m $space_s;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include mq(){
+            font-size: $font-size_s;
+        }
+            &--left{
+                background: $background-color_light-black;
+                color: $font-color_white;
+                width: 15%;
+                text-align: center;
+            }
+            &--center{
+                text-align: left;
+                width: 55%;
+                transition: 0.3s;
+                opacity: 1;
+                &:hover{
+                    text-decoration: none;
+                    opacity: .7;
+                    transform: scale(1.02);
+                }
+                @include mq(tab){
+                    width: 70%;
+                }
+                @include mq(){
+                    width: 55%;
+                }
+            }
+            &--right{
+                background: $background-color_light-black;
+                color: $font-color_white;
+                width: 30%;
+                opacity: 1;
+                transition: 0.3s;
+                text-align: center;
+                @include mq(tab){
+                    width: 15%;
+                }
+                @include mq(){
+                    width: 30%;
+                }
+            }
+            &--orange{
+                background: $background-color_orange;
+            }
+            &--green{
+                background: $background-color_green;
+            }
+        }
+    }
+    &__subTitle{
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    &__submit{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: center;
+        margin: $space_3l calc($space_l + $space_m) $space_l $space_l;
+        @include mq{
+            flex-direction: column;
+            justify-content: center;
+            margin: $space_3l $space_l $space_l $space_l;
+            align-items: flex-end;
+        }
+        @include mq(tab){
+            flex-direction: column;
+            justify-content: center;
+            margin: $space_3l $space_l $space_l $space_l;
+            align-items: flex-end;
+        }
+    }
+    &__block{
+        width: 30%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        margin-right: $space_xxl;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+        @include mq(){
+            width: 100%;
+            margin:0;
+            justify-content: center;
+        }
+        @include mq(tab){
+            width: 100%;
+            margin:0;
+            justify-content: center;
+        }
+    }
+    &__label{
+        width: 70%;
+        padding-left: $space_m;
+    }
+    &__select{
+        width: 30%;
+        text-align: center;
+    }
+    &__button{
+        display: inline-block;
+        &--noPadding{
+            padding: 0;
+        }
+        &--orange{
+            background: $background-color_orange;
+        }
+        &--green{
+            background: $background-color_green;
+        }
+        &--gray{
+            background: $background-color_light-black;
+        }
+        @include mq(){
+            margin-top: $space_l;
+        }
+        @include mq(tab){
+            margin-top: $space_l;
+        }
+    }
+    &__buttonlink{
+        display: inline-block;
+        width: 100%;
+        padding: $space_m $space_l $space_m $space_l;
+        color: $font-color_white;
+    }
+}

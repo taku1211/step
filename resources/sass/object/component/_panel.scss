@@ -1,0 +1,133 @@
+//パネルレイアウト
+.c-panel{
+    background: $background-color_default;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+    cursor: pointer;
+    margin: 0 $space_l 0 $space_l;
+    aspect-ratio: 1/1;
+    @include mq(){
+        width: 100%;
+        margin-left:auto;
+        margin-right: auto;
+    }
+    &:hover{
+        opacity: .7;
+    }
+    &__routerLink{
+        min-height: 100%;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        &:hover{
+            text-decoration: none;
+        }
+    }
+    &__category{
+        width: 100%;
+        display: block;
+        flex-grow: 1;
+        padding:$space_xl $space_m $space_m $space_m;
+        font-size: $font-size_s;
+        color: $font-color_blue;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include mq(tab){
+            font-size: $font-size_default;
+        }
+        @include mq(){
+            padding: $space_s;
+            font-size: $font-size_s;
+        }
+
+    }
+    &__title{
+        width: 100%;
+        flex-grow: 1;
+        padding:$space_m;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: $font-size_default;
+        @include mq(tab){
+            font-size: $font-size_xl;
+        }
+        @include mq(){
+            padding: $space_s $space_s 0 $space_s;
+            margin-bottom: $space_m;
+            font-size: $font-size_default;
+        }
+    }
+    &__summary{
+        width: calc(100% - $space_m*2);
+        max-width: 100%;
+        flex-grow: 1;
+        margin: $space_m;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: $font-size_s;
+        @include mq(tab){
+            font-size: $font-size_default;
+        }
+        @include mq(){
+            display: none;
+        }
+    }
+    &__para{
+        width: 100%;
+        flex-grow: 1;
+        padding: 0 $space_m $space_s $space_m;
+        font-size: $font-size_s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @include mq(tab){
+            font-size: $font-size_default;
+        }
+        @include mq(){
+            font-size: $font-size_s;
+        }
+    }
+    &__barArea{
+        width: 100%;
+        padding: $space_s $space_m $space_s $space_m;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__bar{
+        display: inline-block;
+        width: 80%;
+    }
+    &__progress{
+        width: 20%;
+        text-align: right;
+        font-size: $font-size_s;
+        @include mq(tab){
+            font-size: $font-size_default;
+        }
+        @include mq(){
+            font-size: $font-size_s;
+        }
+    }
+    &__footer{
+        width: 100%;
+        text-align: right;
+        font-size: $font-size_s;
+        padding: 0 $space_m $space_xl $space_m;
+        color: $font-color_orange;
+        margin-top: auto;
+        @include mq(tab){
+            font-size: $font-size_default;
+            justify-self: baseline;
+        }
+        @include mq(){
+            padding: 0 $space_m $space_m $space_m;
+            font-size: $font-size_s;
+        }
+    }
+}

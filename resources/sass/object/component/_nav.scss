@@ -1,0 +1,8 @@
+//navigation部分
+.c-nav{
+    &__menu{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+}
