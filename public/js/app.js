@@ -4408,10 +4408,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //STEPをTwitterでシェアする
     shareTwitter: function shareTwitter() {
-      //シェア用の画面を設定
-      var shareURL = 'https://twitter.com/intent/tweet?text=' + 'STEP：' + this.step.title + "%20%STEP%20%STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/" + this.id;
-      //シェア用の画面へ遷移
-      window.open('https://twitter.com/intent/tweet?text=' + 'STEP：' + this.step.title + "%20%23STEP%20%23STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/" + this.id, '_blank');
+      //開発環境か本番環境かでurlを分岐させる
+      if (true) {
+        //シェア用の画面を設定
+        var shareURL = 'https://twitter.com/intent/tweet?text=' + 'STEP：' + this.step.title + "%20%STEP%20%STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/" + this.id;
+        //シェア用の画面へ遷移
+        window.open('https://twitter.com/intent/tweet?text=' + 'STEP：' + this.step.title + "%20%23STEP%20%23STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/" + this.id, '_blank');
+      } else { var _shareURL; }
     }
   },
   computed: {
