@@ -250,17 +250,14 @@
             },
             //STEPをTwitterでシェアする
             shareTwitter(){
-                console.log(process.env.MIX_APP_ENV)
                 //開発環境か本番環境かでurlを分岐させる
                 if(process.env.MIX_APP_ENV === 'local'){
-                    console.log('local mode')
                     //シェア用の画面を設定
                     const shareURL = 'https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title +
                     "%20%STEP%20%STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/"+this.id;
                     //シェア用の画面へ遷移
                     window.open('https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title+ "%20%23STEP%20%23STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/"+this.id,'_blank')
                 }else{
-                    console.log('production mode')
                     const shareURL = 'https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title +
                     "%20%STEP%20%STEPをはじめよう" + '&url=' + "https://step-steps.com/steps/"+this.id;
                     window.open('https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title+ "%20%23STEP%20%23STEPをはじめよう" + '&url=' + "https://step-steps.com/steps/"+this.id,'_blank')
