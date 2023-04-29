@@ -131,7 +131,7 @@
                 <!--STEP表示パネル部分-->
                 <div class="c-grid p-index__grid" v-if="indexSteps">
                     <div class="c-panel p-index__panel" v-for="step  in indexSteps" :key="step.id">
-                        <RouterLink :to="`/steps/${step.id}`" class="c-panel__ruterLink p-index__routerLink">
+                        <RouterLink :to="`/steps/${step.id}`" class="c-panel__routerLink p-index__routerLink">
                             <p class="c-panel__category p-index__category">
                               {{ step.category_main }} | {{ step.category_sub }}
                             </p>

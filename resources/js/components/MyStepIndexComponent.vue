@@ -41,7 +41,7 @@
                 </select>
                 <!--キーワード入力-->
                 <input type="text" name="search" id="search" class="c-input p-allMyStep__input"
-                       placeholder="タイトルをキーワードで検索できます。" v-model="searchForm.keyword">
+                       placeholder="タイトルをキーワードで検索" v-model="searchForm.keyword">
                 <!--検索ボタン-->
                 <button class="c-button p-allMyStep__button">
                     検索

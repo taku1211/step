@@ -222,4 +222,12 @@
         padding: $space_m $space_l $space_m $space_l;
         color: $font-color_white;
     }
+    &__alert{
+        text-align: left;
+        margin-left: $space_m;
+        margin-right: $space_m;
+        @include mq(){
+            font-size: $font-size_s;
+        }
+    }
 }

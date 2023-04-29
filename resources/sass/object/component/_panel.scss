@@ -7,7 +7,7 @@
     aspect-ratio: 1/1;
     @include mq(){
         width: 100%;
-        margin-left:auto;
+        margin-left: auto;
         margin-right: auto;
     }
     &:hover{
@@ -126,7 +126,7 @@
             justify-self: baseline;
         }
         @include mq(){
-            padding: 0 $space_m $space_m $space_m;
+            padding: 0 $space_m $space_s $space_m;
             font-size: $font-size_s;
         }
     }

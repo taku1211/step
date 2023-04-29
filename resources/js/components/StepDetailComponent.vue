@@ -162,7 +162,7 @@
             <!--ログインしていない場合に表示-->
             <div class="p-detail__submit u-rightMargin__none" v-else>
                 <p class="p-detail__alert">
-                    STEPに挑戦するためにはユーザー登録・ログインを行ってください。
+                    STEPに挑戦するためには<span class="u-showMd"><br></span>ユーザー登録・ログインを行ってください。
                 </p>
             </div>
 

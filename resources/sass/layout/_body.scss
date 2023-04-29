@@ -5,9 +5,9 @@
     min-height: 100vh;
     width: 100%;
     @include mq(){
-        padding: 0 2% 0 2%;
+        padding: 0 3% 0 3%;
     }
     @include mq(tab){
-        padding: 0 2% 0 2%;
+        padding: 0 3% 0 3%;
     }
 }

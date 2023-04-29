@@ -5,16 +5,20 @@
     background: $background-color_lightgray;
     padding: $space_m;
     font-size: $font-size_default;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+    color: $font-color_default;
     border: none;
     cursor: pointer;
     box-sizing: border-box;
     &:hover{
-        box-shadow: 0 0 2px 0 rgba(255,124,060,1);
+        box-shadow: 0 0 3px 0 rgba(255,124,060,1);
         outline: 0;
     }
     &:focus{
-        box-shadow: 0 0 2px 0 rgba(255,124,060,1);
+        box-shadow: 0 0 3px 0 rgba(255,124,060,1);
         outline: 0;
     }
     &--error{
