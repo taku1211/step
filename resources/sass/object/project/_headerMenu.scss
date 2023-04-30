@@ -1,0 +1,53 @@
+//スマートフォン用ハンバーガーメニューのレイアウト
+
+.p-headerMenu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 100vw;
+    height: 100vh;
+    background:$background-color_default;
+
+    &__return{
+        height: 10vh;
+        font-size: $font-size_xxl;
+        text-align: right;
+        padding: $space_xxl $space_xxl 0 0;
+        background:$background-color_default;
+    }
+    &__icon{
+        padding: $space_m;
+        &:hover{
+            opacity: .7;
+        }
+    }
+    &__nav{
+        height: 60vh;
+        background:$background-color_default;
+    }
+    &__menu{
+        height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    &__list{
+        margin: $space_l;
+        font-size: $font-size_xl;
+    }
+    &__link{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+    &__footer{
+        height: 30vh;
+        background: $background-color_black;
+    }
+}

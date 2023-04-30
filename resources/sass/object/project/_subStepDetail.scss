@@ -42,6 +42,7 @@
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
+        justify-content: center;
         @include mq(){
             flex-direction: column;
             align-items: center;
@@ -53,7 +54,9 @@
     }
     &__left{
         width: 50%;
-        margin: $space_3l $space_l $space_l $space_l;
+        padding: $space_3l $space_l $space_l $space_l;
+        box-sizing: border-box;
+
         @include mq(){
             width: 100%;
         }
@@ -63,7 +66,8 @@
     }
     &__right{
         width: 50%;
-        margin: $space_3l $space_l $space_l $space_l;
+        padding: $space_3l $space_l $space_l $space_l;
+        box-sizing: border-box;
         @include mq(){
             width: 100%;
         }
@@ -78,7 +82,6 @@
             padding-top: 0;
         }
         &:last-child{
-            padding: $space_s $space_3l $space_s $space_m;
             height: auto;
             line-height: 1.5;
         }
@@ -112,6 +115,7 @@
                 width: 55%;
                 transition: 0.3s;
                 opacity: 1;
+                max-width: 55%;
                 &:hover{
                     text-decoration: none;
                     opacity: .7;
@@ -150,6 +154,7 @@
         white-space:nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 100%;
     }
     &__submit{
         display: flex;
@@ -160,13 +165,13 @@
         margin: $space_3l calc($space_l + $space_m) $space_l $space_l;
         @include mq{
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
             margin: $space_3l $space_l $space_l $space_l;
             align-items: flex-end;
         }
         @include mq(tab){
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
             margin: $space_3l $space_l $space_l $space_l;
             align-items: flex-end;
         }
@@ -224,5 +229,13 @@
         width: 100%;
         padding: $space_m $space_l $space_m $space_l;
         color: $font-color_white;
+    }
+    &__alert{
+        text-align: left;
+        margin-left: calc($space_m + $space_l);
+        margin-right: calc($space_m + $space_l);
+        @include mq(){
+            font-size: $font-size_s;
+        }
     }
 }

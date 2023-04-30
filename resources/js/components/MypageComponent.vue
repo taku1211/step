@@ -215,6 +215,25 @@
                     })
                 }
             },
+            //URLの「?page=」以降に直接、不正な値が入力された場合の対策
+            //不正な値が入力された場合は、404NotFoundページへ遷移させる
+            checkInvalidPageNum(){
+                //表示ページのsearch情報を取得
+                const search = location.search
+                    //routingで管理しているページ情報を取得
+                    const page = '?page=' + this.page
+
+                    if(search !== '' && search !== page  ){
+                        //一致しない場合（不正な値など）は、404notFoundエラーページへ遷移
+                        this.$router.push('*')
+                    }
+            },
+            //Vuexに表示ページのURL情報を保存する
+            storeUrlData(){
+                //この処理を行うことで、STEP詳細からこのページへ戻る際に、戻るページのpathを特定している
+                this.$store.dispatch('route/setLocationUrl',(location.pathname+location.search))
+                this.$store.dispatch('route/setLocationPath',(location.pathname))
+            },
         },
         watch: {
             //$routeの監視
@@ -226,22 +245,11 @@
                     await this.getAllMySteps()
                     await this.getAllMyChallenge()
 
-                    //以下は、URLの「?page=」以降に直接、不正な値が入力された場合の対策
-
-                    //表示ページのsearch情報を取得
-                    const search = location.search
-                    //routingで管理しているページ情報を取得
-                    const page = '?page=' + this.page
-
-                    if(search !== '' && search !== page  ){
-                        //一致しない場合（不正な値など）は、404notFoundエラーページへ遷移
-                        this.$router.push('*')
-                    }
+                    //URLの「?page=」以降に直接、不正な値が入力された場合の対策
+                    this.checkInvalidPageNum()
 
                     //Vuexに表示ページのURL情報を保存する
-                    //この処理を行うことで、STEP詳細からこのページへ戻る際に、戻るページのpathを特定している
-                    this.$store.dispatch('route/setLocationUrl',(location.pathname+location.search))
-                    this.$store.dispatch('route/setLocationPath',(location.pathname))
+                    this.storeUrlData()
                 },
                 immediate: true
             }

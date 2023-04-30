@@ -202,7 +202,7 @@
             }
         },
         methods: {
-            //STEP詳細を取得する
+            //STEP詳細を取得し表示する
             async fetchStep () {
                 await this.$store.dispatch('step/fetchStep',this.id)
 
@@ -233,10 +233,12 @@
                             }
                         }
                    }
-
-                   this.userIcon = (this.step['user']['icon'] === null)?'/images/icon_user.svg':'/storage/'+this.step['user']['icon']
-                   this.userIntroduction = (this.step['user']['introduction'] === null)?'自己紹介はまだ登録されていません。':this.step['user']['introduction']
                 }
+            },
+            //ユーザー情報を取得する
+            getCurrentUser(){
+                this.userIcon = (this.step['user']['icon'] === null)?'/images/icon_user.svg':'/storage/'+this.step['user']['icon']
+                this.userIntroduction = (this.step['user']['introduction'] === null)?'自己紹介はまだ登録されていません。':this.step['user']['introduction']
             },
             //STEPに挑戦する
             async challengeStep(mainId,subId){
@@ -250,19 +252,11 @@
             },
             //STEPをTwitterでシェアする
             shareTwitter(){
-                //開発環境か本番環境かでurlを分岐させる
-                if(process.env.MIX_APP_ENV === 'local'){
-                    //シェア用の画面を設定
-                    const shareURL = 'https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title +
-                    "%20%STEP%20%STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/"+this.id;
-                    //シェア用の画面へ遷移
-                    window.open('https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title+ "%20%23STEP%20%23STEPをはじめよう" + '&url=' + "http://localhost:8000/steps/"+this.id,'_blank')
-                }else{
-                    const shareURL = 'https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title +
-                    "%20%STEP%20%STEPをはじめよう" + '&url=' + "https://step-steps.com/steps/"+this.id;
-                    window.open('https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title+ "%20%23STEP%20%23STEPをはじめよう" + '&url=' + "https://step-steps.com/steps/"+this.id,'_blank')
-
-                }
+                //シェア用の画面を設定
+                const shareURL = 'https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title +
+                "%20%STEP%20%STEPをはじめよう" + '&url=' + "https://step-steps.com/steps/"+this.id;
+                //シェア用の画面へ遷移
+                window.open('https://twitter.com/intent/tweet?text=' + 'STEP：'+this.step.title+ "%20%23STEP%20%23STEPをはじめよう" + '&url=' + "https://step-steps.com/steps/"+this.id,'_blank')
             }
         },
         computed: {
@@ -276,6 +270,7 @@
             $route: {
                 async handler () {
                     await this.fetchStep()
+                    this.getCurrentUser()
                 },
                 immediate: true
             },

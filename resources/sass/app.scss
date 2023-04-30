@@ -1,68 +1,18 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 //==========================================
 //Foundation
 //==========================================
 
-// Sass変数の読み込み
-@import 'variables';
+//reset.css
+@import './foundation/reset';
+// Sass変数
+@import './foundation/variables';
+//google fonts
+@import './foundation/googlefonts';
+//ページ全体のベースレイアウト
+@import './foundation/base';
 
-//ページ全体のcss
-body, html{
-    background: $background-color_default;
-    color: $font-color_default;
-    font-size: $font-size_default;
-    width: 100%;
-    margin: 0;
-    font-family: $font-family_base;
-}
-li{
-    list-style: none;
-}
-img{
-    width: 100%;
-    object-fit: cover;
-}
-a{
-    cursor: pointer;
-    text-decoration: none;
-    color: $font-color_default;
-    opacity: 1;
-    transition: 0.6s;
-    &:hover{
-        opacity: .7;
-    }
-}
-h1,h2,h3,h4,h5,h6{
-    font-weight: lighter;
-    text-align: center;
-}
-progress {
-    height: 10px;
-    border-radius: 15px;
-    background-color: $background-color_lightgray;
-  }
 
-  progress::-webkit-progress-bar {
-     border-radius: 15px;
-     background-color: $background-color_gray;
-  }
-
-  progress::-webkit-progress-value {
-     border-radius: 15px;
-     background-color: $background-color_green;
-  }
-
-  progress::-moz-progress-bar {
-     border-radius: 15px;
-     background-color: $background-color_green;
-  }
-
-  progress::-ms-fill {
-     border-radius: 15px;
-     background-color: $background-color_green;
-  }
 //==========================================
 //Layout
 //==========================================
@@ -95,17 +45,8 @@ progress {
 @import './object/component/grid';
 @import './object/component/panel';
 @import './object/component/returnButton';
+@import './object/component/overlay';
 
-.c-overlay{
-    z-index: 3;
-    position: fixed;
-    top:0;
-    left: 0;
-    width: 100vw;
-    height: 120vh;
-    background-color:rgba(0,0,0,0.45);
-    cursor: pointer;
-  }
 
 /* Project ------------------------------ */
 
@@ -129,158 +70,18 @@ progress {
 @import './object/project/editSubStep';
 @import './object/project/allMyStep';
 @import './object/project/allMyChallenge';
-
-.p-headerMenu{
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 4;
-    width: 100vw;
-    height: 100vh;
-    background:$background-color_default;
-
-    &__return{
-        height: 10vh;
-        font-size: $font-size_xxl;
-        text-align: right;
-        padding: $space_xxl $space_xxl 0 0;
-        background:$background-color_default;
-    }
-    &__icon{
-        padding: $space_m;
-        &:hover{
-            opacity: .7;
-        }
-    }
-    &__nav{
-        height: 60vh;
-        background:$background-color_default;
-    }
-    &__menu{
-        height: 60vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    &__list{
-        margin: $space_l;
-        font-size: $font-size_xl;
-    }
-    &__link{
-        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
-        background-repeat: no-repeat;
-        background-position: left bottom;
-        background-size: 0 1px;
-        &:hover{
-            background-size: 100% 1px;
-        }
-    }
-    &__footer{
-        height: 30vh;
-        background: $background-color_black;
-    }
-}
-.p-feature{
-    margin: $space_3l auto 0 auto;
-    &__title{
-        font-size: $font-size_3l;
-        @include mq(){
-            font-size: $font-size_xl;
-        }
-    }
-    &__flex{
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-        @include mq(){
-            flex-direction: column;
-        }
-    }
-    &__item{
-        margin-top: $space_3l;
-        width: calc(100%/3);
-        padding: $space_l;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        @include mq(){
-            width: 100%;
-        }
-    }
-    &__image{
-        text-align: center;
-        font-size: $font-size_4l;
-        margin-bottom: $space_l;
-    }
-    &__icon{
-        &::before{
-            display: inline-block;
-            line-height: 80px;
-            width: 80px;
-            aspect-ratio: 1/1;
-            display: inline-block;
-            background: $background-color_gray;
-            border-radius: 50%;
-        }
-    }
-    &__headline{
-        font-size: $font-size_l;
-        font-weight: bolder;
-        margin-bottom: $space_l;
-    }
-    &__para{
-        font-size: $font-size_m;
-        overflow-wrap: break-word;
-
-    }
-}
-
+@import './object/project/headerMenu';
+@import './object/project/feature';
 
 
 /* Utility ------------------------------ */
 
 @import './object/utility/fadeAnimation';
 @import './object/utility/routingAnimation';
+@import './object/utility/slideAnimation';
 @import './object/utility/margin';
 @import './object/utility/pointerEvent';
+@import './object/utility/responsiveLayout';
 
-.u-showMd{
-    display: none;
-    @include mq(){
-        display: inline;
-    }
-}
-.u-showTab{
-    display: none;
-    @include mq(tab){
-        display: inline;
-    }
-}
-.u-hiddenMd{
-    display: inline;
-    @include mq(){
-        display: none;
-    }
-}
-.top-enter-active, .top-leave-active {
-    transform: translate(0px, 0px);
-    transition: transform 0.5s cubic-bezier(0, 0, 0.2, 1) 0ms;
-  }
 
-  .top-enter, .top-leave-to {
-    transform: translateY(-100vh) translateY(0px);
-  }
 
-.u-jsFadeIn{
-    opacity: 0;
-    position: relative;
-    top:10px;
-    transition:1.5s;
-}
-
-.u-jsFadeIn--active{
-    opacity: 1;
-    top:0;
-}

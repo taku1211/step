@@ -1,0 +1,19 @@
+//レスポンシブレイアウト
+.u-showMd{
+    display: none;
+    @include mq(){
+        display: inline;
+    }
+}
+.u-showTab{
+    display: none;
+    @include mq(tab){
+        display: inline;
+    }
+}
+.u-hiddenMd{
+    display: inline;
+    @include mq(){
+        display: none;
+    }
+}

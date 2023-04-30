@@ -40,14 +40,16 @@
     opacity: 1;
 }
 
-//slideUpアニメーション
-.slideUp-enter-from{
-    height: 0;
+//トップページ　aboutの文章のfadeInアニメーション
+.u-jsFadeIn{
+    opacity: 0;
+    position: relative;
+    top:10px;
+    transition:1.5s;
 }
-.slideUp-enter-active, .slideUp-move{
-    transition: all 0.5s ease;
-    height: 0;
+
+.u-jsFadeIn--active{
+    opacity: 1;
+    top:0;
 }
-.slideUp-enter-to{
-    height: 30vh;
-}
+

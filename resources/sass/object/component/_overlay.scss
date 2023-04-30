@@ -1,0 +1,11 @@
+//オーバーレイ部分のレイアウト
+.c-overlay{
+    z-index: 3;
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100vw;
+    height: 120vh;
+    background-color:rgba(0,0,0,0.45);
+    cursor: pointer;
+  }

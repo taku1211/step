@@ -1,0 +1,55 @@
+//ページ全体のcss
+body, html{
+    background: $background-color_default;
+    color: $font-color_default;
+    font-size: $font-size_default;
+    width: 100%;
+    margin: 0;
+    font-family: $font-family_base;
+}
+li{
+    list-style: none;
+}
+img{
+    width: 100%;
+    object-fit: cover;
+}
+a{
+    cursor: pointer;
+    text-decoration: none;
+    color: $font-color_default;
+    opacity: 1;
+    transition: 0.6s;
+    &:hover{
+        opacity: .7;
+    }
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: lighter;
+    text-align: center;
+}
+
+progress {
+    height: 10px;
+    border-radius: 15px;
+    background-color: $background-color_lightgray;
+  }
+
+  progress::-webkit-progress-bar {
+     border-radius: 15px;
+     background-color: $background-color_gray;
+  }
+
+  progress::-webkit-progress-value {
+     border-radius: 15px;
+     background-color: $background-color_green;
+  }
+
+  progress::-moz-progress-bar {
+     border-radius: 15px;
+     background-color: $background-color_green;
+  }
+  progress::-ms-fill {
+     border-radius: 15px;
+     background-color: $background-color_green;
+  }

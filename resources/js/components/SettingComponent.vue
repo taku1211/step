@@ -119,7 +119,8 @@
             clearError () {
                      this.$store.commit('auth/setUpdateErrorMessages', null)
             },
-            //フォームでファイルが選択されたら実行される
+            //フォームでファイルが選択されたら実行される処理
+            //ファイルのデータURLを取得する
             onFileChange (event) {
                 //ファイル選択時エラーのメッセージを初期化
                 this.sizeErrorMessage = ''
@@ -162,7 +163,7 @@
                 this.updateForm.myIcon = event.target.files[0]
                 this.updateForm.iconName = null
             },
-            // ファイル選択欄の値とプレビュー表示をリセットするメソッド
+            // ファイル選択欄の値とプレビュー表示をリセットする
             reset () {
                 //DBにアイコンが登録されている場合はそのアイコンのpathを、そうでなければnullを格納
                 this.preview = (this.$store.getters['auth/icon']) ? '/storage/'+this.$store.getters['auth/icon']:null

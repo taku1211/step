@@ -6,8 +6,7 @@
         <meta name="description" content="あなたの人生のSTEPを共有しよう。
               STEPは、あなたの学びの「STEP」をほかのだれかに共有し、あなたも他のだれかの学びの「STEP」にチャレンジできるサービスです。">
         <title>STEP | あなたの人生のSTEPを共有しよう</title>
-        <!-- reset.cssの読み込み-->
-        <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
+
         <!-- googleFonts・font-awesome・cssの読み込み-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

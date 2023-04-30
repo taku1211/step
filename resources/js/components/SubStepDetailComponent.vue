@@ -22,7 +22,7 @@
                         ♢サブSTEPタイトル
                     </p>
                     <p class="p-subDetail__para u-leftMargin__l">
-                        {{ subStep.step.title }}
+                        {{ subStep.title }}
                     </p>
                     <p class="p-subDetail__para p-subDetail__para--title">
                         ♢カテゴリー
@@ -159,9 +159,9 @@
             </div>
 
             <!--ログインしていない場合に表示-->
-            <div class="p-subDetail__submit u-rightMargin__none" v-else>
+            <div class="p-subDetail__footer u-rightMargin__none" v-else>
                 <p class="p-subDetail__alert">
-                    STEPに挑戦するためにはユーザー登録・ログインを行ってください。
+                    STEPに挑戦するためには<span class="u-showMd"><br></span>ユーザー登録・ログインを行ってください。
                 </p>
             </div>
         </div>
@@ -257,7 +257,7 @@ import { OK } from '../util'
                     this.time = 15
                 }
             },
-            //サブSTEpをクリアする
+            //サブSTEPをクリアする
             async clearSubStep(id){
                 const response = await axios.post('/api/clear',{id:Number(id),time:Number(this.time),order:Number(this.subStep['order']),mainId:Number(this.stepMainId)})
 

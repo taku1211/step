@@ -13,13 +13,13 @@ global.$ = jQuery
 window.$ = window.jQuery = require('jquery')
 
 //router.jsで定義したルーティングをインポートする
-import router from './router';
+import router from './router'
 
 //Vuexの定義ファイルをインポートする
 import store from './store'
 
 //ルートコンポーネントをインポートする
-import IndexComponent from "./components/IndexComponent.vue";
+import IndexComponent from "./components/IndexComponent.vue"
 
 
 const createApp = async () => {
@@ -45,8 +45,8 @@ createApp()
 
 //スクロールした際に、要素がFadeInするアニメーション
 $(window).on('scroll load', function(){
-    let scroll = $(this).scrollTop();
-    let windowHeight = $(window).height();
+    let scroll = $(this).scrollTop()
+    let windowHeight = $(window).height()
     $('.u-jsFadeIn').each(function(){
         let domHeight = $(this).offset().top;
         if(scroll > domHeight - windowHeight + windowHeight / 3){
@@ -61,7 +61,7 @@ $(window).on('scroll load', function(){
 
 //画面横幅が360px以下の場合は、viewPort自体を縮小させ、レスポンシブ対応させる
 !(function () {
-    const viewport = document.querySelector('meta[name="viewport"]');
+    const viewport = document.querySelector('meta[name="viewport"]')
     function switchViewport() {
       const value =
         window.outerWidth > 360
@@ -71,6 +71,6 @@ $(window).on('scroll load', function(){
         viewport.setAttribute('content', value)
       }
     }
-    addEventListener('resize', switchViewport, false);
+    addEventListener('resize', switchViewport, false)
     switchViewport()
   })()

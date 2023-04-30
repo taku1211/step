@@ -142,13 +142,13 @@ export default {
         window.addEventListener("scroll", this.handleScroll)
     },
     mounted () {
-        //ナビゲーション確立前
+        //ナビゲーション確立前の処理
         this.$router.beforeEach((to, from, next) => {
             //アニメーションの開始メソッドをfalseにする
             this.isOpen = false;
             next();
         })
-        //ナビゲーション確立後
+        //ナビゲーション確立後の処理
         this.$router.afterEach((to, from, next) => {
             //0/8秒間、watchで監視しているisOpenをtrueにし、open()メソッドを実行
             setTimeout( () => {

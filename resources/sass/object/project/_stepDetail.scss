@@ -64,7 +64,8 @@
     }
     &__left{
         width: 50%;
-        margin: $space_3l $space_l $space_l $space_l;
+        padding: $space_3l $space_l $space_l $space_l;
+        box-sizing: border-box;
         @include mq(){
             width: 100%;
         }
@@ -74,7 +75,8 @@
     }
     &__right{
         width: 50%;
-        margin: $space_3l $space_l $space_l $space_l;
+        padding: $space_3l $space_l $space_l $space_l;
+        box-sizing: border-box;
         @include mq(){
             width: 100%;
         }
@@ -89,7 +91,6 @@
             padding-top: 0;
         }
         &:last-child{
-            padding: $space_s $space_3l $space_s $space_m;
             height: auto;
             line-height: 1.5;
         }
@@ -197,12 +198,13 @@
     &__submit{
         text-align: right;
         margin: $space_3l calc($space_l + $space_m) $space_l $space_l;
-        @include mq(){
-            margin: $space_l $space_m 0 0;
-        }
         @include mq(tab){
-            margin: $space_l $space_m 0 0;
+            margin: $space_l calc($space_l + $space_m) 0 calc($space_l + $space_m);
         }
+        @include mq(){
+            margin: $space_l calc($space_l + $space_m) 0 calc($space_l + $space_m);
+        }
+
     }
     &__button{
         &--noPadding{

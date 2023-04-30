@@ -173,6 +173,11 @@
             }
         },
         methods: {
+            //ページネーションのための現在のページ数・最終ページを取得
+            getPageData(){
+                this.currentPage = this.$store.getters['step/currentPage']
+                this.lastPage = this.$store.getters['step/lastPage']
+            },
             //登録されている挑戦中のSTEPを取得する
             async fetchAllMyChallenge() {
                 await this.$store.dispatch('step/indexMyChallenge', this.page)
@@ -180,9 +185,7 @@
 
                 this.getMyChallengeInfo()
 
-                //ページネーションのための現在のページ数・最終ページを取得
-                this.currentPage = this.$store.getters['step/currentPage']
-                this.lastPage = this.$store.getters['step/lastPage']
+                this.getPageData()
             },
             //検索ボタンを押したときの検索処理
             async searchSteps(){
@@ -203,9 +206,7 @@
 
                 this.getMyChallengeInfo()
 
-                //ページネーションのための現在のページ数・最終ページを取得
-                this.currentPage = this.$store.getters['step/currentPage']
-                this.lastPage = this.$store.getters['step/lastPage']
+                this.getPageData()
             },
             //検索された状態でのページネーション処理
             async fetchSearchSteps(){
@@ -225,8 +226,7 @@
 
                 this.getMyChallengeInfo()
 
-                this.currentPage = this.$store.getters['step/currentPage']
-                this.lastPage = this.$store.getters['step/lastPage']
+                this.getPageData()
             },
             //チャレンジ中のSTEPの自分の挑戦データ・進捗数・取り組み時間を取得
             getMyChallengeInfo(){
@@ -317,6 +317,25 @@
                         this.categoryListSubSelected = []
                 }
             },
+            //URLの「?page=」以降に直接、不正な値が入力された場合の対策
+            //不正な値が入力された場合は、404NotFoundページへ遷移させる
+            checkInvalidPageNum(){
+                //表示ページのsearch情報を取得
+                const search = location.search
+                    //routingで管理しているページ情報を取得
+                    const page = '?page=' + this.page
+
+                    if(search !== '' && search !== page  ){
+                        //一致しない場合（不正な値など）は、404notFoundエラーページへ遷移
+                        this.$router.push('*')
+                    }
+            },
+            //Vuexに表示ページのURL情報を保存する
+            storeUrlData(){
+                //この処理を行うことで、STEP詳細からこのページへ戻る際に、戻るページのpathを特定している
+                this.$store.dispatch('route/setLocationUrl',(location.pathname+location.search))
+                this.$store.dispatch('route/setLocationPath',(location.pathname))
+            },
         },
         watch: {
             //$routeの監視
@@ -348,22 +367,11 @@
                         await this.fetchSearchSteps()
                     }
 
-                    //以下は、URLの「?page=」以降に直接、不正な値が入力された場合の対策
-
-                    //表示ページのsearch情報を取得
-                    const search = location.search
-                    //routingで管理しているページ情報を取得
-                    const page = '?page=' + this.page
-
-                    if(search !== '' && search !== page  ){
-                        //一致しない場合（不正な値など）は、404notFoundエラーページへ遷移
-                        this.$router.push('*')
-                    }
+                    //URLの「?page=」以降に直接、不正な値が入力された場合の対策
+                    this.checkInvalidPageNum()
 
                     //Vuexに表示ページのURL情報を保存する
-                    //この処理を行うことで、STEP詳細からこのページへ戻る際に、戻るページのpathを特定している
-                    this.$store.dispatch('route/setLocationUrl',(location.pathname+location.search))
-                    this.$store.dispatch('route/setLocationPath',(location.pathname))
+                    this.storeUrlData()
                 },
                 immediate: true
             },
