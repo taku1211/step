@@ -1,4 +1,6 @@
 import {OK, CREATED, UNPROCESSABLE_ENTITY} from "../util"
+import mainCategoryJson from "./../../json/categoryList.json"
+
 
 //stateの定義
 const state = {
@@ -29,6 +31,7 @@ const state = {
     myChallengeSearchCategoryMain:'メインカテゴリーを選択してください',
     myChallengeSearchCategorySub:'サブカテゴリーを選択してください',
     myChallengeSearchSort:'normal',
+    categoryList: mainCategoryJson['mainCategory']
 }
 
 //componentでstateを取得するためのgettersの定義
@@ -43,6 +46,7 @@ const getters = {
     myChallengeCurrentPage: state => state.myChallengeCurrentPage ? state.myChallengeCurrentPage: null,
     myChallengeLastPage: state => state.myChallengeLastPage ? state.myChallengeLastPage: null,
     stepDetail: state => state.stepDetail ? state.stepDetail : null,
+    stepDetailImagePath: state=> state.Detail ? state.stepDetail.image_path: null,
     indexSearchKeyword: state => state.indexSearchKeyword ? state.indexSearchKeyword : '',
     indexSearchCategoryMain: state => state.indexSearchCategoryMain ? state.indexSearchCategoryMain : 'メインカテゴリーを選択してください',
     indexSearchCategorySub: state => state.indexSearchCategorySub ? state.indexSearchCategorySub : 'サブカテゴリーを選択してください',
@@ -140,6 +144,27 @@ const actions = {
             //APIステータスが200OKの場合、APIステータスにtrueを入れる
             context.commit('setApiStatus', true)
 
+            if(!response.data.data || !Array(response.data.data)){
+                return false
+            }
+
+            //一覧に表示させるための画像パスを取得
+            response.data.data.forEach(step => {
+                if(step["image_path"] === null){
+                    step["image_path"] = "/images/category-image-" + step["category_main"] + ".jpg"
+                }else{
+                    step["image_path"] ="/storage/" + step["image_path"]
+                }
+            })
+
+            //取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+            response.data.data.forEach(step => {
+                step["category_main_id"] = step["category_main"]
+                step["category_sub_id"] = step["category_sub"]
+                step["category_sub"] = state.categoryList[step['category_main'] - 1]['subCategory'][step['category_sub'] - 1]['name']
+                step["category_main"] = state.categoryList[step['category_main'] - 1]['name']
+            })
+
 
             //取得したSTEPの作成日時をUTC形式からyyyy-mm-dd形式に変更する
             response.data.data.forEach(step => {
@@ -190,6 +215,16 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //STEP一覧から、指定条件でSTEPを検索する
@@ -205,6 +240,27 @@ const actions = {
             context.commit('setApiStatus', true)
             //リロード・ページ遷移でも検索条件が保持されるように、検索条件をstateに格納しておく
             context.commit('setIndexSearchConditions', data)
+
+            if(!response.data.data || !Array(response.data.data)){
+                return false
+            }
+
+            //一覧に表示させるための画像パスを取得
+            response.data.data.forEach(step => {
+                if(step["image_path"] === null){
+                    step["image_path"] = "/images/category-image-" + step["category_main"] + ".jpg"
+                }else{
+                    step["image_path"] ="/storage/" + step["image_path"]
+                }
+            })
+
+            //取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+            response.data.data.forEach(step => {
+                step["category_main_id"] = step["category_main"]
+                step["category_sub_id"] = step["category_sub"]
+                step["category_sub"] = state.categoryList[step['category_main'] - 1]['subCategory'][step['category_sub'] - 1]['name']
+                step["category_main"] = state.categoryList[step['category_main'] - 1]['name']
+            })
 
             //取得したSTEPの作成日時をUTC形式からyyyy-mm-dd形式に変更する
             response.data.data.forEach(step => {
@@ -253,6 +309,16 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //自分が登録したSTEP一覧取得処理
@@ -265,6 +331,27 @@ const actions = {
         if (response.status === OK) {
             //APIステータスが200OKの場合、APIステータスにtrueを入れる
             context.commit('setApiStatus', true)
+
+            if(!response.data.data || !Array(response.data.data)){
+                return false
+            }
+
+            //一覧に表示させるための画像パスを取得
+            response.data.data.forEach(step => {
+                if(step["image_path"] === null){
+                    step["image_path"] = "/images/category-image-" + step["category_main"] + ".jpg"
+                }else{
+                    step["image_path"] ="/storage/" + step["image_path"]
+                }
+            })
+
+            //取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+            response.data.data.forEach(step => {
+                step["category_main_id"] = step["category_main"]
+                step["category_sub_id"] = step["category_sub"]
+                step["category_sub"] = state.categoryList[step['category_main'] - 1]['subCategory'][step['category_sub'] - 1]['name']
+                step["category_main"] = state.categoryList[step['category_main'] - 1]['name']
+            })
 
             //取得したSTEPの作成日時をUTC形式からyyyy-mm-dd形式に変更する
             response.data.data.forEach(step => {
@@ -314,6 +401,16 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //検索条件の自分が登録したSTEP一覧取得処理
@@ -328,6 +425,27 @@ const actions = {
             context.commit('setApiStatus', true)
             //リロード・ページ遷移でも検索条件が保持されるように、検索条件をstateに格納しておく
             context.commit('setMyStepSearchConditions', data)
+
+            if(!response.data.data || !Array(response.data.data)){
+                return false
+            }
+
+            //一覧に表示させるための画像パスを取得
+            response.data.data.forEach(step => {
+                if(step["image_path"] === null){
+                    step["image_path"] = "/images/category-image-" + step["category_main"] + ".jpg"
+                }else{
+                    step["image_path"] ="/storage/" + step["image_path"]
+                }
+            })
+
+            //取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+            response.data.data.forEach(step => {
+                step["category_main_id"] = step["category_main"]
+                step["category_sub_id"] = step["category_sub"]
+                step["category_sub"] = state.categoryList[step['category_main'] - 1]['subCategory'][step['category_sub'] - 1]['name']
+                step["category_main"] = state.categoryList[step['category_main'] - 1]['name']
+            })
 
             //取得したSTEPの作成日時をUTC形式からyyyy-mm-dd形式に変更する
             response.data.data.forEach(step => {
@@ -375,6 +493,16 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //自分が挑戦したSTEP一覧取得処理
@@ -388,6 +516,23 @@ const actions = {
         if (response.status === OK) {
             //APIステータスが200OKの場合、APIステータスにtrueを入れる
             context.commit('setApiStatus', true)
+
+            //一覧に表示させるための画像パスを取得
+            response.data.data.forEach(step => {
+                if(step["image_path"] === null){
+                    step["image_path"] = "/images/category-image-" + step["category_main"] + ".jpg"
+                }else{
+                    step["image_path"] ="/storage/" + step["image_path"]
+                }
+            })
+
+            //取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+            response.data.data.forEach(step => {
+                step["category_main_id"] = step["category_main"]
+                step["category_sub_id"] = step["category_sub"]
+                step["category_sub"] = state.categoryList[step['category_main'] - 1]['subCategory'][step['category_sub'] - 1]['name']
+                step["category_main"] = state.categoryList[step['category_main'] - 1]['name']
+            })
 
             //取得したSTEPの作成日時をUTC形式からyyyy-mm-dd形式に変更する
             response.data.data.forEach(step => {
@@ -412,6 +557,16 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //検索条件の自分が挑戦したSTEP一覧取得処理
@@ -426,6 +581,23 @@ const actions = {
             context.commit('setApiStatus', true)
             //リロード・ページ遷移でも検索条件が保持されるように、検索条件をstateに格納しておく
             context.commit('setMyChallengeSearchConditions', data)
+
+            //一覧に表示させるための画像パスを取得
+            response.data.data.forEach(step => {
+                if(step["image_path"] === null){
+                    step["image_path"] = "/images/category-image-" + step["category_main"] + ".jpg"
+                }else{
+                    step["image_path"] ="/storage/" + step["image_path"]
+                }
+            })
+
+            //取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+            response.data.data.forEach(step => {
+                step["category_main_id"] = step["category_main"]
+                step["category_sub_id"] = step["category_sub"]
+                step["category_sub"] = state.categoryList[step['category_main'] - 1]['subCategory'][step['category_sub'] - 1]['name']
+                step["category_main"] = state.categoryList[step['category_main'] - 1]['name']
+            })
 
             //取得したSTEPの作成日時をUTC形式からyyyy-mm-dd形式に変更する
             response.data.data.forEach(step => {
@@ -450,18 +622,50 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //STEP詳細取得処理
     async fetchStep(context, data) {
         //APIステータスを空にする
         context.commit('setApiStatus', null)
+        console.log(data.beforePath)
         //指定idのSTEPのデータを一つ取得し、結果をresponseに格納
-        const response = await axios.get(`/api/steps/${data}`)
+        const response = await axios.get(`/api/steps/${data.id}`)
 
         if (response.status === OK) {
             //APIステータスが200OKの場合、APIステータスにtrueを入れる
             context.commit('setApiStatus', true)
+
+            //STEP詳細画面からメソッドが呼び出された場合
+            if(data.beforePath === 'detail'){
+
+                //アイキャッチ画像のpathを取得
+                if(response.data["image_path"] === null){
+                    response.data["image_path"] = "/images/category-image-" + response.data["category_main"] + ".jpg"
+                }else{
+                    response.data["image_path"] ="/storage/" + response.data["image_path"]
+                }
+
+                //画面に表示するために、取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+                response.data["category_sub"] = state.categoryList[response.data['category_main'] - 1]['subCategory'][response.data['category_sub'] - 1]['name']
+                response.data["category_main"] = state.categoryList[response.data['category_main'] - 1]['name']
+
+
+            }
+            if(!response.data['challenge_step'] || !Array(response.data['challenge_step'])){
+                return false
+            }
+
 
             //取得したSTEPにリレーションしているchallengesテーブルをもとに、
             //そのSTEPに挑戦している人数を計算する
@@ -495,6 +699,16 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //STEP登録処理
@@ -503,15 +717,27 @@ const actions = {
         //APIステータスを空にする
         context.commit('setApiStatus', null)
 
-        //登録するSTEPデータを変数に格納
-        const registerData = {
-            title: data.title,
-            category_main: data.category_main,
-            category_sub: data.category_sub,
-            content:data.content,
+        //ファイル情報をLaravelのcontrollerに送信するため、FormDataインスタンスを生成
+        let formData = new FormData()
+
+        //image以外をformDataインスタンスに格納
+        formData.append('title',data.title)
+        formData.append('category_main', data.category_main)
+        formData.append('category_sub', data.category_sub)
+        formData.append('content', data.content)
+
+        //dataに、アイキャッチ画像の画像ファイルが含まれている場合
+        if(data.image !== null){
+            //画像ファイルを格納
+            formData.append('image', data.image)
         }
+        //HTTP通信のヘッダーにmultipart/form-dataを付与するconfigを定義
+        let config = {headers:{
+            'Content-Type' : 'multipart/form-data'
+        }}
+
         //データをAPIに渡し、登録した結果をresponseに代入
-        const response = await axios.post('/api/new', registerData)
+        const response = await axios.post('/api/new', formData, config)
 
 
         if (response.status === CREATED) {
@@ -538,6 +764,16 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
         }
     },
 
@@ -553,6 +789,10 @@ const actions = {
         if (response.status === CREATED || response.status === OK) {
             //親元のSTEPのstep_number（サブSTEPの数）とtime（目安達成時間の合計）を更新する
             context.commit('setSubStep', response.data)
+
+            if(!response.data || !Array(response.data)){
+                return false
+            }
 
             //登録したサブSTEPの個数を取得
             const subStepLength = response.data.length
@@ -595,6 +835,16 @@ const actions = {
                 //それ以外の場合はエラーコードをerror/setCodeに格納する
                 //エラーコードの種類に応じて、component側でエラー画面を表示させる
                 context.commit('error/setCode', updated.status, { root: true })
+                if(response.data.message){
+                    context.commit('message/setContent', {
+                        content: response.data.message,
+                        timeout: 5000
+                      },{root:true})
+                    context.commit('message/setDangerFlg', {
+                        boolean : true,
+                        timeout: 5000
+                        },{root:true})
+                }
             }
         }
 
@@ -609,6 +859,16 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
         }
     },
 
@@ -616,8 +876,43 @@ const actions = {
     async edit(context, data){
         //APIステータスを空にする
         context.commit('setApiStatus', null)
+
+        //ファイル情報をLaravelのcontrollerに送信するため、FormDataインスタンスを生成
+        let formData = new FormData()
+
+        //emailとintroductionをformDataインスタンスに格納
+        formData.append('id',data.id)
+        formData.append('title',data.title)
+        formData.append('category_main', data.category_main)
+        formData.append('category_sub', data.category_sub)
+        formData.append('content', data.content)
+        formData.append('time_aim', data.time_aim)
+        formData.append('step_number', data.step_number)
+
+
+
+
+        //dataに、登録するアイコンの画像ファイルが含まれている場合
+        if(data.image !== null){
+            //画像ファイルを格納
+            formData.append('image', data.image)
+        }
+        //imageName（DBで既にアイコンが登録されている場合の画像ファイル名）を変数に格納
+        //DBにアイコンが登録されていない場合は、imageNameはnullで格納される
+        formData.append('imageName', data.imageName)
+
+        formData.append('subStepForm', JSON.stringify(data.subStepForm))
+        formData.append('deletedSubStep', JSON.stringify(data.deletedSubStep))
+
+
+        //HTTP通信のヘッダーにmultipart/form-dataを付与するconfigを定義
+        let config = {headers:{
+            'Content-Type' : 'multipart/form-data'
+        }}
+
+
         //dataをAPIに渡し更新処理を行う。その後返却された結果をresponseに代入
-        const response = await axios.post('/api/edit',data)
+        const response = await axios.post('/api/edit', formData, config)
 
         if (response.status === CREATED || response.status === OK) {
             //APIステータスが201CREATEDもしくは200OKの場合、APIステータスにtrueを入れる
@@ -642,6 +937,17 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
+
         }
     },
 
@@ -676,6 +982,17 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
+
         }
     },
 
@@ -703,6 +1020,16 @@ const actions = {
         //エラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
+        if(response.data.message){
+            context.commit('message/setContent', {
+                content: response.data.message,
+                timeout: 5000
+              },{root:true})
+            context.commit('message/setDangerFlg', {
+                boolean : true,
+                timeout: 5000
+                },{root:true})
+        }
     },
 
     //indexの検索条件をリセット
@@ -737,6 +1064,7 @@ const actions = {
         }
         context.commit('setMyChallengeSearchConditions', resetData)
     },
+    //
 }
 
 export default {

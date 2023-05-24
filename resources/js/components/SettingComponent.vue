@@ -1,65 +1,65 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--ユーザー情報更新画面-->
         <section class="p-setting">
-            <h2 class="c-ornament p-setting__title">
-                <span class="c-ornament__border p-setting__border">
+            <h2 class="c-ornament">
+                <span class="c-ornament__border">
                     ユーザー情報更新
                 </span>
             </h2>
             <!--ユーザー情報更新フォーム-->
-            <form class="c-form p-setting__form" @submit.prevent="update">
+            <form class="c-form" @submit.prevent="update">
                 <!--メールアドレス入力部分-->
-                <label for="email" class="c-label p-setting__label">
+                <label for="email" class="c-label c-label--marginl">
                     メールアドレス
                 </label>
-                <input id="email" type="text" name="email" class="c-input p-setting__input"
+                <input id="email" type="text" name="email" class="c-input"
                        v-model="updateForm.email" placeholder="step@example.com"
                        :class="(updateErrors !== null && updateErrors.email) ? 'c-input--error' : ''">
                 <!--バリデーションエラー表示部分-->
-                <div v-if="updateErrors" class="c-error p-setting__error">
-                    <ul v-if="updateErrors.email" class="c-error__ul p-setting__errorUl">
-                        <li class="c-error__list p-setting__errorList"  v-for="msg in updateErrors.email" :key="msg">
+                <div v-if="updateErrors" class="c-error">
+                    <ul v-if="updateErrors.email" class="c-error__ul">
+                        <li class="c-error__list"  v-for="msg in updateErrors.email" :key="msg">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                             {{ msg }}
                         </li>
                     </ul>
                 </div>
                 <!--自己紹介入力部分-->
-                <label for="introduction" class="c-label p-setting__label">
+                <label for="introduction" class="c-label c-label--marginl">
                     自己紹介文 ※500文字以内
                 </label>
-                <textarea name="introduction" id="introduction" cols="30" rows="10" class="c-input p-setting__textarea"
+                <textarea name="introduction" id="introduction" cols="30" rows="10" class="c-textarea"
                           v-model="updateForm.introduction" placeholder="500文字以内の自己紹介文を入力できます。"
-                          :class="(updateErrors !== null && updateErrors.introduction) ? 'c-input--error' : ''">
+                          :class="(updateErrors !== null && updateErrors.introduction) ? 'c-textarea--error' : ''">
                 </textarea>
                 <!--バリデーションエラー表示部分-->
-                <div v-if="updateErrors" class="c-error p-setting__error">
-                        <ul v-if="updateErrors.introduction" class="c-error__ul p-setting__errorUl">
-                            <li class="c-error__list p-setting__errorList" v-for="msg in updateErrors.introduction" :key="msg">
+                <div v-if="updateErrors" class="c-error">
+                        <ul v-if="updateErrors.introduction" class="c-error__ul">
+                            <li class="c-error__list" v-for="msg in updateErrors.introduction" :key="msg">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                                 {{ msg }}
                             </li>
                         </ul>
                 </div>
                 <!--ユーザーアイコン登録・更新部分-->
-                <label for="icon" class="c-label p-setting__label">
+                <label for="icon" class="c-label c-label--marginl">
                     ユーザーアイコン
                 </label>
-                <input id="icon" type="file" name="icon" class="c-input p-setting__input" @change="onFileChange">
+                <input id="icon" type="file" name="icon" class="c-input" @change="onFileChange">
                 <!--バリデーションエラー部分-->
                 <div v-if="updateErrors" class="c-error p-setting__error">
-                        <ul v-if="updateErrors.icon" class="c-error__ul p-setting__errorUl">
-                            <li class="c-error__list p-setting__errorList" v-for="msg in updateErrors.icon" :key="msg">
+                        <ul v-if="updateErrors.icon" class="c-error__ul">
+                            <li class="c-error__list" v-for="msg in updateErrors.icon" :key="msg">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                                 {{ msg }}
                             </li>
                         </ul>
                 </div>
                 <!--ファイル選択時のエラー表示部分（ファイル形式・ファイルサイズ）-->
-                <div v-if="sizeErrorMessage" class="c-error p-setting__error">
-                        <ul  class="c-error__ul p-setting__errorUl" v-if="sizeErrorMessage">
-                            <li class="c-error__list p-setting__errorList">
+                <div v-if="sizeErrorMessage" class="c-error">
+                        <ul  class="c-error__ul" v-if="sizeErrorMessage">
+                            <li class="c-error__list">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                                 {{ sizeErrorMessage }}
                             </li>
@@ -73,7 +73,7 @@
                 </div>
                 <!--アイコンプレビュー部分-->
                 <div class="p-setting_preview" v-if="preview">
-                    <label class="c-label p-setting__label u-pointerNone">
+                    <label class="c-label c-label--marginl u-pointerNone">
                         アイコンプレビュー
                     </label>
                     <output class="p-setting__myIcon">
@@ -81,8 +81,8 @@
                     </output>
                 </div>
                 <!--ユーザー情報更新ボタン部分-->
-                <div class="c-submit p-register__submit">
-                    <button type="submit" class="c-button p-setting__button p-setting__button--orange">更新する</button>
+                <div class="c-submit">
+                    <button type="submit" class="c-button c-button--orange p-setting__button">更新する</button>
                 </div>
             </form>
         </section>
@@ -137,10 +137,10 @@
                     this.sizeErrorMessage = 'ファイル形式が違います。'
                     return false
                 }
-                // ファイルサイズが2MBを超えていたら処理を中断し、ファイル選択時のエラーを表示
-                if ( event.target.files[0].size > 2097152) {
+                // ファイルサイズが10MBを超えていたら処理を中断し、ファイル選択時のエラーを表示
+                if ( event.target.files[0].size > 1024*1024*10) {
                     this.reset()
-                    this.sizeErrorMessage = 'ファイルサイズが2MBを超えています。'
+                    this.sizeErrorMessage = 'ファイルサイズが10MBを超えています。'
                     return false
                 }
 

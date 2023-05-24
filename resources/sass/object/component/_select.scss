@@ -1,0 +1,65 @@
+//selectBox部分
+.c-select{
+    display: block;
+    width: 25%;
+    background: $background-color_lightgray;
+    padding: $space_m;
+    font-size: $font-size_default;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: none;
+    color: $font-color_default;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin: 0 $space_l 0 $space_l;
+    &:first-child{
+        margin: 0 $space_l 0 0;
+    }
+    @include mq(){
+        width: 80%;
+        margin: $space_l 0 $space_l 0;
+        &:first-child{
+            margin:0;
+        }
+    }
+    &:hover{
+        box-shadow: 0 0 3px 0 rgba(255,124,060,1);
+        outline: 0;
+    }
+    &:focus{
+        box-shadow: 0 0 3px 0 rgba(255,124,060,1);
+        outline: 0;
+    }
+    &--boxshadow{
+        box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+    }
+    &--fullWidth{
+        margin: 0;
+        width: 100%;
+    }
+    &--error{
+        border:1px solid $background-color_red;
+        background: $background-color_lightRed;
+    }
+    &--invalid{
+        cursor: not-allowed;
+        background: $background-color_gray;
+    }
+    &--sortType{
+        width: 25%;
+        margin: 0 0 0 $space_l;
+        @include mq(){
+            width: 40%;
+        }
+    }
+    &__option{
+        color: $font-color_default;
+        cursor: pointer;
+        &--disable{
+            color: $font-color_gray;
+        }
+    }
+}

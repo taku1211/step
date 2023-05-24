@@ -1,5 +1,5 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--サブSTEP詳細ページ-->
         <div class="p-subDetail" v-if="subStep">
             <RouterLink :to="`/steps/${stepMainId}`" class="p-subDetail__link">
@@ -13,6 +13,9 @@
                     {{ subStep.title}}
                 </span>
             </h2>
+            <div class="p-subDetail__imageArea">
+                <img :src="subStep.step.image_path" alt="STEPアイキャッチ画像" class="p-subDetail__image">
+            </div>
             <!--サブSTEP詳細の表示-->
             <div class="p-subDetail__flex">
                 <div class="p-subDetail__left">
@@ -21,26 +24,26 @@
                     <p class="p-subDetail__para p-subDetail__para--title">
                         ♢サブSTEPタイトル
                     </p>
-                    <p class="p-subDetail__para u-leftMargin__l">
+                    <p class="p-subDetail__para p-subDetail__para--leftMargin">
                         {{ subStep.title }}
                     </p>
                     <p class="p-subDetail__para p-subDetail__para--title">
                         ♢カテゴリー
                     </p>
-                    <p class="p-subDetail__para u-leftMargin__l">
+                    <p class="p-subDetail__para p-subDetail__para--leftMargin">
                         {{ subStep.step.category_main }} | {{ subStep.step.category_sub }}
                     </p>
                     <p class="p-subDetail__para p-subDetail__para--title">
                         ♢目安達成時間
                     </p>
-                    <p class="p-subDetail__para u-leftMargin__l">
+                    <p class="p-subDetail__para p-subDetail__para--leftMargin">
                         {{ (Math.floor(subStep.time_aim/60) !== 0)?Math.floor(subStep.time_aim/60)+'時間':'' }}
                         {{ (subStep.time_aim%60 !== 0)?(subStep.time_aim%60)+'分':'' }}
                     </p>
                     <p class="p-subDetail__para p-subDetail__para--title">
                         ♢サブステップ概要
                     </p>
-                    <p class="p-subDetail__para u-leftMargin__l">
+                    <p class="p-subDetail__para p-subDetail__para--leftMargin">
                         {{ (subStep.content !== null)? subStep.content : '概要は登録されていません。' }}
                     </p>
                 </div>
@@ -53,26 +56,26 @@
                         ♢{{ subStep.step.title }}
                     </p>
                     <div class="p-subDetail__sub" v-for="(relatedSubStep, idx) in relatedSubSteps" :key="idx">
-                        <p class="p-subDetail__sub-para p-subDetail__sub-para--left">
+                        <p class="p-subDetail__subPara p-subDetail__subPara--left">
                             STEP{{ relatedSubStep.order }}
                         </p>
-                        <RouterLink :to="`/substeps/${relatedSubStep.id}`" class="p-subDetail__sub-para p-subDetail__sub-para--center">
+                        <RouterLink :to="`/substeps/${relatedSubStep.id}`" class="p-subDetail__subPara p-subDetail__subPara--center">
                             <p class="p-subDetail__subTitle">
                                 {{ relatedSubStep.title }}
                             </p>
                         </RouterLink>
                         <!--STEPに挑戦済、かつ、このサブSTEPがクリア済ではない、かつ、このサブSTEPに挑戦済の場合-->
-                        <p class="p-subDetail__sub-para p-subDetail__sub-para--right p-subDetail__sub-para--orange"
-                           v-if="myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 0 && myChallenge[idx+1]['challenge_flg'] === 1">
+                        <p class="p-subDetail__subPara p-subDetail__subPara--right p-subDetail__subPara--orange"
+                           v-if="myChallenge && Array(myChallenge) && myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 0 && myChallenge[idx+1]['challenge_flg'] === 1">
                            チャレンジ中
                         </p>
                         <!--STEPに挑戦済、かつ、このサブSTEPがクリア済、かつ、このサブSTEPに挑戦済の場合-->
-                        <p class="p-subDetail__sub-para p-subDetail__sub-para--right p-subDetail__sub-para--green"
-                           v-else-if="myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 1 && myChallenge[idx+1]['challenge_flg'] === 1">
+                        <p class="p-subDetail__subPara p-subDetail__subPara--right p-subDetail__subPara--green"
+                           v-else-if="myChallenge && Array(myChallenge) && myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 1 && myChallenge[idx+1]['challenge_flg'] === 1">
                            クリア
                         </p>
                         <!--STEPに挑戦済、かつ、このサブSTEPがクリア済みではない、かつ、このサブSTEPにまだ挑戦していない場合-->
-                        <p class="p-subDetail__sub-para p-subDetail__sub-para--right" v-else>
+                        <p class="p-subDetail__subPara p-subDetail__subPara--right" v-else>
                             <i class="fa-solid fa-lock"></i>
                         </p>
                     </div>
@@ -83,16 +86,16 @@
                         ♢{{ subStep.step.title }}
                     </p>
                     <div class="p-subDetail__sub" v-for="(relatedSubStep, idx) in relatedSubSteps" :key="idx">
-                        <p class="p-subDetail__sub-para p-subDetail__sub-para--left">
+                        <p class="p-subDetail__subPara p-subDetail__subPara--left">
                             STEP{{ relatedSubStep.order }}
                         </p>
-                        <RouterLink :to="`/substeps/${relatedSubStep.id}`" class="p-subDetail__sub-para p-subDetail__sub-para--center">
+                        <RouterLink :to="`/substeps/${relatedSubStep.id}`" class="p-subDetail__subPara p-subDetail__subPara--center">
                             <p class="p-subDetail__subTitle">
                                 {{ relatedSubStep.title }}
                             </p>
                         </RouterLink>
                         <!--チャレンジ中・クリアなどを表示するのではなく、各サブSTEPの目安達成時間を表示する-->
-                        <p class="p-subDetail__sub-para p-subDetail__sub-para--right">
+                        <p class="p-subDetail__subPara p-subDetail__subPara--right">
                             {{ (Math.floor(relatedSubStep.time_aim/60) !== 0)?Math.floor(relatedSubStep.time_aim/60)+'時間':'' }}
                             {{ (relatedSubStep.time_aim%60 !== 0)?(relatedSubStep.time_aim%60)+'分':'' }}
                         </p>
@@ -106,7 +109,7 @@
 
                 <!--目標達成にかかった時間を登録・更新する部分-->
                 <!--すでに挑戦済みの場合に表示する-->
-                <div class="p-subDetail__block" v-if="myChallenge.length !== 0 && myChallenge[subStep.order]['challenge_flg'] === 1">
+                <div class="p-subDetail__block" v-if="myChallenge && Array(myChallenge) && myChallenge.length !== 0 && myChallenge[subStep.order]['challenge_flg'] === 1">
                     <label for="subTime" class="c-label p-subDetail__label">
                         目標達成にかかった時間：
                     </label>
@@ -141,14 +144,14 @@
                     </RouterLink>
                 </button>
                 <!--このサブSTEPに挑戦済みで、かつまだクリアしていない場合-->
-                <button class="c-button p-subDetail__button p-subDetail__button--orange" @click="clearSubStep(id)"
-                        v-else-if="Number(this.subStep['user_id']) !==  Number(this.userId) && myChallenge.length !== 0 &&
+                <button class="c-button c-button--orange mp-subDetail__button" @click="clearSubStep(id)"
+                        v-else-if="Number(this.subStep['user_id']) !==  Number(this.userId) && myChallenge && Array(myChallenge) && myChallenge.length !== 0 &&
                         myChallenge[subStep.order]['challenge_flg'] === 1 && myChallenge[subStep.order]['clear_flg'] === 0">
                     クリアする
                 </button>
                 <!--このサブSTEPに挑戦済みで、かつまだクリア済の場合-->
                 <button class="c-button p-subDetail__button p-subDetail__button--green" @click="updateClearTime(id)"
-                        v-else-if="Number(this.subStep['user_id']) !==  Number(this.userId) && myChallenge.length !== 0 &&
+                        v-else-if="Number(this.subStep['user_id']) !==  Number(this.userId) && myChallenge && Array(myChallenge) && myChallenge.length !== 0 &&
                         myChallenge[subStep.order]['challenge_flg'] === 1 && myChallenge[subStep.order]['clear_flg'] === 1">
                     時間を更新
                 </button>
@@ -170,6 +173,7 @@
 
 <script>
 import { OK } from '../util'
+import mainCategoryJson from "./../../json/categoryList.json"
 
     export default {
         props: {
@@ -188,6 +192,7 @@ import { OK } from '../util'
                 myChallenge:[],
                 userId:this.$store.getters['auth/userId'],
                 time:15,
+                categoryList:mainCategoryJson['mainCategory']
             }
         },
         methods: {
@@ -208,6 +213,18 @@ import { OK } from '../util'
                     if(element['id'] === Number(this.id)){
                         //subStepに選択されたサブSTEPを格納
                         this.subStep = element
+
+                        //アイキャッチ画像のpathを取得
+                        if(this.subStep.step["image_path"] === null){
+                            this.subStep.step["image_path"] = "/images/category-image-" + this.subStep.step["category_main"] + ".jpg"
+                        }else{
+                            this.subStep.step["image_path"] ="/storage/" + this.subStep.step["image_path"]
+                        }
+
+                        //取得したSTEPのカテゴリー・サブカテゴリーを数字から日本語に変換する
+                        this.subStep.step["category_sub"] = this.categoryList[this.subStep.step['category_main'] - 1]['subCategory'][this.subStep.step['category_sub'] - 1]['name']
+                        this.subStep.step["category_main"] = this.categoryList[this.subStep.step['category_main'] - 1]['name']
+
                         //選択されたサブSTEPの親STEPのidを取得し格納
                         this.stepMainId = this.subStep.step_id
                     }
@@ -247,7 +264,7 @@ import { OK } from '../util'
                 },this.userId)
 
                 //挑戦しているデータが存在し、かつクリア済の場合（timeが更新されており、0ではない場合）
-                if(this.myChallenge.length !== 0  && this.myChallenge[this.subStep['order']]['time'] !== 0){
+                if(this.myChallenge && Array(this.myChallenge) && this.myChallenge.length !== 0  && this.myChallenge[this.subStep['order']]['time'] !== 0){
                     //timeに取得した、取り組んだ時間を格納
                     this.time = this.myChallenge[this.subStep['order']]['time']
 
@@ -262,7 +279,21 @@ import { OK } from '../util'
                 const response = await axios.post('/api/clear',{id:Number(id),time:Number(this.time),order:Number(this.subStep['order']),mainId:Number(this.stepMainId)})
 
                 if(response.status !== OK){
+                    //エラーコードの種類に応じて、component側でエラー画面を表示させる
                     this.$store.commit('error/setCode', response.status)
+                    if(response.data.message){
+                        this.$store.commit('message/setContent', {
+                            content: response.data.message,
+                            timeout: 5000
+                        },{root:true})
+                        this.$store.commit('message/setDangerFlg', {
+                            boolean : true,
+                            timeout: 5000
+                            },{root:true})
+                    }
+                    return false
+                }
+                if(!this.relatedSubSteps || Array(this.relatedSubSteps)){
                     return false
                 }
 
@@ -291,7 +322,15 @@ import { OK } from '../util'
 
                 if(response.status !== OK){
                     this.$store.commit('error/setCode', response.status)
-                        return false
+                    this.$store.commit('message/setContent', {
+                        content: response.data.message,
+                        timeout: 5000
+                        } ,{root:true})
+                    this.$store.commit('message/setDangerFlg', {
+                        boolean : true,
+                        timeout: 5000
+                        }, {root:true})
+                    return false
                 }
                 this.$store.commit('message/setContent', {
                         content: 'サブSTEPに取り組んだ時間を更新しました！',

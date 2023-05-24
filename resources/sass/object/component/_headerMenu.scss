@@ -1,0 +1,28 @@
+//スマートフォン用ハンバーガーメニューのレイアウト
+
+.c-headerMenu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 100vw;
+    height: 100vh;
+    background:$background-color_default;
+    &__return{
+        height: 10vh;
+        font-size: $font-size_xxl;
+        text-align: right;
+        padding: $space_xxl $space_xxl 0 0;
+        background:$background-color_default;
+    }
+    &__icon{
+        padding: $space_m;
+        &:hover{
+            opacity: .7;
+        }
+    }
+    &__footer{
+        height: 30vh;
+        background: $background-color_black;
+    }
+}

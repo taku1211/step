@@ -1,9 +1,33 @@
 //メイン部分レイアウト
 #l-main{
-    width: 100%;
+    width: calc(100vw - 20px);
     margin: $site-height-header auto $space_3l auto;
+    @include mq(tab){
+        padding: 0 2% 0 2%;
+    }
     @include mq(){
         width: 100%;
         margin: $site-height-headerMd auto $space_3l auto;
+        padding:0;
+    }
+    &--siteWidth{
+        width: $site-width;
+        margin: 0 auto 0 auto;
+        @include mq(){
+            width: 100%;
+        }
+        @include mq(tab){
+            width: 100%;
+        }
+    }
+    &--fullWidth{
+        width: calc(100vw - 20px);
+        margin: 0 auto 0 auto;
+        @include mq(tab){
+            width: 100%;
+        }
+        @include mq(){
+            width: 100%;
+        }
     }
 }

@@ -3,12 +3,6 @@
     width: 100%;
     &__title{
         margin-top: $space_3l;
-        &::before{
-            top: 20px;
-        }
-        &::after{
-            top:-20px;
-        }
     }
     &__border{
         max-width: 80%;
@@ -47,6 +41,16 @@
             transform: translate(0,2px);
             border-bottom:none;
             margin-bottom: 2px;
+        }
+    }
+    &__imageArea{
+        width: 100%;
+    }
+    &__image{
+        height: 200px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+        @include mq(sm){
+            height: 120px;
         }
     }
     &__flex{
@@ -97,6 +101,9 @@
         &--title{
             font-weight: bold;
         }
+        &--leftMargin{
+            margin-left: $space_l;
+        }
     }
     &__userInfo{
         display: flex;
@@ -136,7 +143,8 @@
         &:first-child{
             margin-top: 0;
         }
-        &-para{
+    }
+    &__subPara{
         padding: $space_m $space_s $space_m $space_s;
         white-space:nowrap;
         overflow: hidden;
@@ -144,50 +152,49 @@
         @include mq(){
             font-size: $font-size_s;
         }
-            &--left{
-                background: $background-color_light-black;
-                color: $font-color_white;
-                width: 15%;
-                text-align: center;
+        &--left{
+            background: $background-color_light-black;
+            color: $font-color_white;
+            width: 15%;
+            text-align: center;
+        }
+        &--center{
+            display: inline-block;
+            text-align: left;
+            width: 55%;
+            transition: 0.3s;
+            opacity: 1;
+            &:hover{
+                text-decoration: none;
+                opacity: .7;
+                transform: scale(1.02);
             }
-            &--center{
-                display: inline-block;
-                text-align: left;
+            @include mq(tab){
+                width: 70%;
+            }
+            @include mq(){
                 width: 55%;
-                transition: 0.3s;
-                opacity: 1;
-                &:hover{
-                    text-decoration: none;
-                    opacity: .7;
-                    transform: scale(1.02);
-                }
-                @include mq(tab){
-                    width: 70%;
-                }
-                @include mq(){
-                    width: 55%;
-                }
             }
-            &--right{
-                background: $background-color_light-black;
-                color: $font-color_white;
+        }
+        &--right{
+            background: $background-color_light-black;
+            color: $font-color_white;
+            width: 30%;
+            opacity: 1;
+            transition: 0.3s;
+            text-align: center;
+            @include mq(tab){
+                width: 15%;
+            }
+            @include mq(){
                 width: 30%;
-                opacity: 1;
-                transition: 0.3s;
-                text-align: center;
-                @include mq(tab){
-                    width: 15%;
-                }
-                @include mq(){
-                    width: 30%;
-                }
             }
-            &--orange{
-                background: $background-color_orange;
-            }
-            &--green{
-                background: $background-color_green;
-            }
+        }
+        &--orange{
+            background: $background-color_orange;
+        }
+        &--green{
+            background: $background-color_green;
         }
     }
     &__subTitle{
@@ -207,11 +214,9 @@
 
     }
     &__button{
+        display: inline-block;
         &--noPadding{
             padding: 0;
-        }
-        &--orange{
-            background: $background-color_orange;
         }
         &--green{
             background: $background-color_green;

@@ -9,11 +9,17 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class UserController extends Controller
 {
+    static $notFoundRecordErrorMessage = 'データを取得できませんでした。ご迷惑をおかけしますが、しばらく時間を置いてから再度実施してください。';
+    static $systemErrorMessage = '予期せぬエラーが発生しました。ご迷惑をおかけしますが、しばらく時間を置いてから再度実施してください。';
+    static $failSaveRecordError = 'ユーザー情報の更新に失敗しました。ご迷惑をおかけしますが、しばらく時間を置いてから再度実施してください。';
+
+
     //認証チェック
     public function __construct()
     {
@@ -30,9 +36,27 @@ class UserController extends Controller
             'icon' => ['nullable','file', 'max:10240', 'mimes:jpg,jpeg,png,gif'],
         ]);
 
+
+        //ログインユーザーのIdを取得
         $userId = Auth::user()->id;
 
-        $user = User::find($userId);
+        //認証を挟んでいるのでありえないはずだが
+        //認証済みのユーザーIdがなかった場合419認証エラーを返却
+        if(!$userId){
+            return response()->json(['status' => false], 419);
+        }
+
+        try{
+            $user = User::findorFail($userId);
+        } catch (ModelNotFoundException $e) {
+            Log::error($e);
+            // フロントに異常を通知するため404エラーを返却
+            return response()->json(['message' => UserController::$notFoundRecordErrorMessage, 'status' => false], 404);
+        } catch (\Exception $e) {
+            Log::error($e);
+            // フロントに異常を通知するため500エラーを返却
+            return response()->json(['message' => UserController::$systemErrorMessage, 'status' => false], 500);
+        }
         $userIcon = $user->icon;
 
         //画像ファイルが存在する場合（画像の新規登録・もしくは更新）
@@ -59,11 +83,7 @@ class UserController extends Controller
             //nullという文字列でコントローラーにdataが渡ってきてしまうため、
             //if文で文字列のnullが渡ってきたかどうかを確認し、
             //文字列の場合は、文字列ではないnullを登録するようにする
-            if($request->introduction !== 'null'){
-                $user->introduction = $request->introduction;
-            }else{
-                $user->introduction = null;
-            }
+            $user->introduction = ($request->introduction !== 'null') ? $request->introduction : null;
 
             //画像ファイルが存在する場合
             if($request->icon !== null){
@@ -74,24 +94,41 @@ class UserController extends Controller
             }else if($request->icon === null && $request->iconName === $userIcon){
                 //既にDB上で登録されているアイコンから変更がないため、処理なし
 
-
             //画像データもアイコンのファイル名もnullの場合
             //つまり、アイコンが登録されておらず、今回の更新でも登録しない場合
             }else{
                 //ファイル名をnullで登録
                 $user->icon = null;
             }
-            $user->save();
+            $result = $user->save();
+
+            //\Exceptionエラーが発生せず、かつsave()がfalseで返却された場合、500エラーを返却
+            if($result){
+                //trueの場合は何も処理せずそのまま後続処理へ
+            }else{
+                DB::rollBack();
+                if($request->icon !== null){
+                    Storage::delete($getFileName);
+                }
+                //falseの場合は、500エラーを返却
+                $saveError = new \Exception();
+                Log::error($saveError);
+                // フロントに異常を通知するため500エラーを返却
+                return response()->json(['message' => UserController::$failSaveRecordError, 'status' => false], 500);
+            }
 
             DB::commit();
             return $user;
 
-        } catch (\Exception $exception){
+        } catch (\Exception $e){
             DB::rollback();
             if($request->icon !== null){
                 Storage::delete($getFileName);
             }
-            throw $exception;
+            Log::error($e);
+            // フロントに異常を通知するため500エラーを返却
+            return response()->json(['message' => UserController::$systemErrorMessage,'status' => false], 500);
+
         }
     }
 }

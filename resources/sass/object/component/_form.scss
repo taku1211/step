@@ -2,10 +2,11 @@
 .c-form{
     width: 40%;
     margin:$space_3l auto $space_3l auto;
-    @include mq(){
-        width: 80%;
-    }
     @include mq(tab){
         width: 70%;
     }
+    @include mq(){
+        width: 80%;
+    }
+
 }

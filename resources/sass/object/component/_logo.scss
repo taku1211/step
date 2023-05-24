@@ -5,4 +5,14 @@
         width: 25%;
         padding: 0 $space_m 0 $space_m;
     }
+    &--header{
+        @include mq(){
+            height: $site-height-headerMd;
+            display: flex;
+            align-items: center;
+        }
+    }
+    &--footer{
+        margin: 0 auto 0 auto;
+    }
 }

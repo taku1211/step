@@ -1,0 +1,12 @@
+.c-budge{
+    display: inline-block;
+    text-align: center;
+    font-size: $font-size_xs;
+    background: $background-color_green;
+    color: $font-color_white;
+    padding: 2px $space_l 2px $space_l;
+    border-radius: 5px;
+    &--warning{
+        background: $background-color_red;
+    }
+}

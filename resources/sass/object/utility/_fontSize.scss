@@ -1,0 +1,6 @@
+.u-fontSizeSmall{
+    font-size: $font-size_s;
+    @include mq(sm){
+        font-size: $font-size_xs;
+    }
+}

@@ -1,63 +1,63 @@
 <template>
     <!--フッター部分-->
     <footer id="l-footer">
-        <div class="p-footer">
-            <h2 class="c-logo p-footer__logo">
-                <img src="../../image/header_logo.png" alt="サイトロゴ「STEP」">
+        <div class="c-footer">
+            <h2 class="c-logo c-logo--footer">
+                <img src="../../image/footer_logo.png" alt="サイトロゴ「STEP」">
             </h2>
 
-            <div class="p-footer__guidLink">
-                <nav class="c-nav p-footer__nav">
-                    <ul class="c-nav__menu p-footer__menu">
-                        <li class="p-footer__list">
-                            <a href="#" class="p-header__link" v-if="path === '/'" @click.prevent="returnTop">
+            <div class="c-footer__guidLink">
+                <nav class="c-nav">
+                    <ul class="c-nav__menu c-nav__menu--footer">
+                        <li class="c-nav__list c-nav__list--footer">
+                            <a href="#" class="c-nav__link" v-if="path === '/'" @click.prevent="returnTop">
                                 Top
                             </a>
-                            <RouterLink class="p-header__link" to="/" v-else>
+                            <RouterLink class="c-nav__link" to="/" v-else>
                                 Top
                             </RouterLink>
                         </li>
-                        <li class="p-footer__list">
-                            <a href="#" v-scroll-to="'#about'" class="p-header__link" v-if="path === '/'">
+                        <li class="c-nav__list c-nav__list--footer">
+                            <a href="#" v-scroll-to="'#about'" class="c-nav__link" v-if="path === '/'">
                                 About
                             </a>
-                            <RouterLink class="p-header__link" v-scroll-to="'#about'" to="/#about" v-else>
+                            <RouterLink class="c-nav__link" v-scroll-to="'#about'" to="/#about" v-else>
                                 About
                             </RouterLink>
                         </li>
-                        <li class="p-footer__list">
-                            <RouterLink class="p-footer__link" to="/index">
+                        <li class="c-nav__list c-nav__list--footer">
+                            <RouterLink class="c-nav__link" to="/index">
                                 All STEP
                             </RouterLink>
                         </li>
-                        <li class="p-footer__list" v-if="isLogin">
-                            <RouterLink class="p-footer__link" to="/mypage">
+                        <li class="c-nav__list c-nav__list--footer" v-if="isLogin">
+                            <RouterLink class="c-nav__link" to="/mypage">
                                 Mypage
                             </RouterLink>
                         </li>
-                        <li class="p-footer__list" v-else>
-                            <RouterLink class="p-footer__link" to="/login">
+                        <li class="c-nav__list c-nav__list--footer" v-else>
+                            <RouterLink class="c-nav__link" to="/login">
                                 Login
                             </RouterLink>
                         </li>
-                        <li class="p-footer__list" v-if="isLogin">
-                            <RouterLink class="p-footer__link" to="/setting">
+                        <li class="c-nav__list c-nav__list--footer" v-if="isLogin">
+                            <RouterLink class="c-nav__link" to="/setting">
                                 Setting
                             </RouterLink>
                         </li>
-                        <li class="p-footer__list" v-else>
-                            <RouterLink class="p-footer__link" to="/register">
+                        <li class="c-nav__list c-nav__list--footer" v-else>
+                            <RouterLink class="c-nav__link" to="/register">
                                 Register
                             </RouterLink>
                         </li>
-                        <li class="p-footer__list" v-if="isLogin">
-                            <a class="p-footer__link" @click="logout">Logout</a>
+                        <li class="c-nav__list c-nav__list--footer" v-if="isLogin">
+                            <a class="c-nav__link" @click="logout">Logout</a>
                         </li>
                     </ul>
                 </nav>
             </div>
 
-            <p class="p-footer__copyRight">
+            <p class="c-footer__copyRight">
                 Copyright © STEP.   All Rights   Reserved
             </p>
 
@@ -72,25 +72,6 @@
                 Type:String,
                 default:null,
             }
-        },
-        methods: {
-            //ログアウト処理
-            async logout() {
-                await this.$store.dispatch('auth/logout')
-
-                //apiStatusがtrue（200OK）であれば
-                if (this.apiStatus) {
-                     //ログインページへ遷移する
-                     this.$router.push('/login')
-                }
-            },
-            //ページ上部へ戻る
-            returnTop(){
-                window.scroll({
-                    top:0,
-                    behavior:'smooth',
-                })
-            },
         },
         computed: {
             //ログイン状態の真偽判断

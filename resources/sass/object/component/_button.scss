@@ -23,5 +23,48 @@
         transform: translate(0,2px);
         border-bottom:none;
         margin-bottom: 2px;
-       }
+    }
+    &--orange{
+        background:$background-color_orange;
+    }
+    &--sizeM{
+        width: 10%;
+        margin: 0 0 0 $space_l;
+        @include mq(){
+            width: 80%;
+            margin: $space_l 0 $space_l 0;
+        }
+    }
+    &--sizeAuto{
+        min-width: auto;
+        padding: 0;
+    }
+    &--invalid{
+        cursor: not-allowed;
+        opacity: .5;
+        &:hover{
+            opacity: .5;
+        }
+    }
+    &__routerLink{
+        display: inline-block;
+        width: 100%;
+        color: $font-color_white;
+        padding: $space_m $space_xl $space_m $space_xl;
+        @include mq(){
+            padding: $space_s $space_xl;
+        }
+    }
+    &--twoColumn{
+        display: inline-block;
+        width: 30%;
+        text-align: center;
+        @include mq(){
+            padding: $space_m $space_s;
+        }
+        @include mq(tab){
+            width: 40%;
+        }
+    }
+
 }

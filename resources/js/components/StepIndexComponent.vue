@@ -1,56 +1,56 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--STEP一覧表示画面-->
-        <div class="p-allStep">
-            <h2 class="c-ornament p-allStep__title">
-                <span class="c-ornament__border p-allStep__border">
+        <div class="c-allList">
+            <h2 class="c-ornament">
+                <span class="c-ornament__border">
                     STEP 一覧
                 </span>
             </h2>
 
             <!--検索フォーム-->
-            <form class="c-form p-allStep__form" @submit.prevent="searchSteps">
+            <form class="c-allList__searchArea " @submit.prevent="searchSteps">
                 <!--メインカテゴリー-->
-                <select name="categoryMain" id="categoryMain" class="c-input p-allStep__select" @change="changeSubCategory(searchForm.selectedCategoryMain)"
+                <select name="categoryMain" id="categoryMain" class="c-select" @change="changeSubCategory(searchForm.selectedCategoryMain)"
                      v-model="searchForm.selectedCategoryMain">
-                    <option value="メインカテゴリーを選択してください" class="p-allStep__option" disabled>
+                    <option :value="categoryMainSearch" class="c-select__option" disabled>
                            メインカテゴリー
                     </option>
-                    <option value="メインカテゴリーを選択してください" class="p-allStep__option">
+                    <option :value="categoryNoSelect" class="c-select__option">
                            選択なし
                     </option>
-                    <option :value="category" class="p-allStep__option" v-for="category in categoryListMain"
-                           :key="category">{{ category }}
+                    <option :value="category.id" class="c-select__option" v-for="category in categoryList"
+                           :key="category.id">{{ category.name }}
                     </option>
                 </select>
                 <!--サブカテゴリー-->
-                <select name="categorySub" id="categorySub" class="c-input p-allStep__select"
+                <select name="categorySub" id="categorySub" class="c-select"
                     v-model="searchForm.selectedCategorySub">
-                    <option value="サブカテゴリーを選択してください" class="p-allStep__option" disabled>
+                    <option :value="categorySubSearch" class="c-select__option" disabled>
                            サブカテゴリー
                     </option>
-                    <option value="サブカテゴリーを選択してください" class="p-allStep__option">
+                    <option value="選択なし" class="c-select__option">
                            選択なし
                     </option>
-                    <option :value="category" class="p-allStep__option" v-for="category in categoryListSubSelected"
-                             :key="category">{{ category }}
+                    <option :value="category.id" class="c-select__option" v-for="category in categoryListSubSelected"
+                             :key="category.id">{{ category.name }}
                     </option>
                 </select>
                 <!--キーワード入力-->
-                <input type="text" name="search" id="search" class="c-input p-allStep__input"
+                <input type="text" name="search" id="search" class="c-input c-input--sizeM"
                        placeholder="タイトルをキーワードで検索" v-model="searchForm.keyword">
                 <!--検索ボタン-->
-                <button class="c-button p-allStep__button">
+                <button class="c-button c-button--orange c-button--sizeM">
                     検索
                 </button>
             </form>
 
             <!--並び替え設定部分-->
-            <div class="p-allStep__sort">
-                <label for="sortBy" class="c-label p-allStep__label">
+            <div class="c-allList__sort">
+                <label for="sortBy" class="c-label c-label--rowType">
                     並び替え設定
                 </label>
-                <select name="sortBy" id="sortBy" class="c-input p-allStep__selectSort" v-model="searchForm.sort" @change="searchSteps">
+                <select name="sortBy" id="sortBy" class="c-select c-select--sortType" v-model="searchForm.sort" @change="searchSteps">
                     <option value="normal">標準</option>
                     <option value="new">登録が新しい順</option>
                     <option value="old">登録が古い順</option>
@@ -60,48 +60,40 @@
             </div>
 
             <!--STEPが存在する場合-->
-            <div class="c-grid p-allStep__grid" v-if="indexSteps !== null && indexSteps.length !== 0">
-                <div class="c-panel p-allStep__panel" v-for="step  in indexSteps" :key="step.id">
-                    <RouterLink :to="{path:`/steps/${step.id}`}" class="c-panel__routerLink p-allStep__routerLink">
+            <div class="c-grid" v-if="indexSteps !== null && Array(indexSteps) && indexSteps.length !== 0">
+                <div class="c-panel" v-for="step  in indexSteps" :key="step.id">
+                    <RouterLink :to="{path:`/steps/${step.id}`}" class="c-panel__routerLink">
+                        <!-- アイキャッチ画像 -->
+                            <img :src="step.image_path" :alt="step.title + ':アイキャッチ画像'" class="c-panel__image">
                         <!--カテゴリー表示-->
-                        <p class="c-panel__category p-allStep__category">
+                        <p class="c-panel__category">
                             {{ step.category_main }} | {{ step.category_sub }}
                         </p>
                         <!--タイトル表示-->
-                        <h3 class="c-panel__title p-allStep__stepTitle">
+                        <h3 class="c-panel__title">
                             {{ step.title }}
                         </h3>
-                        <!--STEP概要の表示-->
-                        <p class="c-panel__summary p-allStep__summary">
-                            {{ (step.content !== null)? step.content : '概要は登録されていません。' }}
-                        </p>
-                        <!--目安達成時間表示-->
-                        <p class="c-panel__para p-allStep__stepPara">
-                            目安達成時間:
-                            {{ (Math.floor(step.time_aim/60) !== 0)?Math.floor(step.time_aim/60)+'時間':'' }}
-                            {{ (step.time_aim%60 !== 0)?(step.time_aim%60)+'分':'' }}
-                        </p>
                         <!--サブSTEP数の表示-->
-                        <p class="c-panel__para p-allStep__stepPara">
+                        <p class="c-panel__para">
                             STEP数:{{step.step_number}}STEP
                         </p>
                         <!--挑戦中人数の表示-->
-                        <p class="c-panel__para p-allStep__stepPara">
+                        <p class="c-panel__para">
                             挑戦中:{{ step.count_challenger }}人
                         </p>
                         <!--STEP自体が登録された日付表示-->
-                        <p class="c-panel__footer p-allStep__footer">
+                        <p class="c-panel__footer">
                             {{ step.created_at }}
                         </p>
                     </RouterLink>
                 </div>
             </div>
             <!--STEPがない場合-->
-            <div class="p-allStep__para" v-else-if="indexSteps !== null && indexSteps.length === 0 && !searchFlg">
+            <div class="c-allList__para" v-else-if="indexSteps !== null && Array(indexSteps) && indexSteps.length === 0 && !searchFlg">
                 STEPはまだ登録されていません。
             </div>
             <!--検索条件のSTEPがない場合-->
-            <div class="p-allStep__para" v-else-if="indexSteps !== null && indexSteps.length === 0 && searchFlg">
+            <div class="c-allList__para" v-else-if="indexSteps !== null && Array(indexSteps) && indexSteps.length === 0 && searchFlg">
                 検索条件のSTEPはまだ登録されていません。
             </div>
             <!--ページネーション-->
@@ -113,6 +105,8 @@
 <script>
     import PaginationComponent from './PaginationComponent.vue'
     import store from './../store/index'
+    import CategoryListJson from "./../../json/categoryList.json"
+    import commonFunc from "../commonFunc"
 
     export default {
         components: {
@@ -138,36 +132,14 @@
                 indexSteps: null,
                 currentPage: 1,
                 lastPage: 0,
-                categoryListMain:['自己啓発','ビジネススキル','開発','デザイン','財務会計','ITとソフトウェア','マーケティング',
-                                  '趣味・実用・ホビー','写真と動画','健康・フィットネス','音楽','教育・教養'],
+                categoryList:CategoryListJson["mainCategory"],
                 categoryListSubSelected:[],
-                categoryListSub1:['目標達成','生産性向上','リーダーシップ','キャリア','子育て&家族','ポジティブシンキング','哲学・宗教','パーソナルブランディング',
-                                  'クリエイティブスキル','コミュニケーションスキル','ストレス管理','記憶力向上','モチベーション','その他の自己啓発'],
-                categoryListSub2:['新規事業開発','コミュニケーション','チームマネジメント','営業・販売スキル','ビジネス戦略','業務オペレーション',
-                                  '法務知識','プロジェクト管理','ビジネスアナリティクス','人事','業界別スキル','Eコマース','メディア活用','不動産投資','その他のビジネス'],
-                categoryListSub3:['ウェブ開発','データサイエンス','モバイル開発','プログラミング言語','ゲーム開発','DBデザイン・開発','ソフトウェアテスト',
-                                    'ソフトウェアエンジニアリング','ソフトウェア開発ツール','コードなしの開発','その他の開発'],
-                categoryListSub4:['ウェブデザイン','グラフィックデザインとイラストレーション','デザインツール','UX（ユーザー体験）デザイン','ゲームデザイン',
-                                  '3D・アニメーション','ファッションデザイン','建築デザイン','インテリアデザイン','その他のデザイン'],
-                categoryListSub5:['会計＆簿記','コンプライアンス','暗号通貨＆ブロックチェーン','経済学','ファイナンス','ファイナンス資格','財務モデリング・分析',
-                                  '投資・株式','資金管理','税金','その他の財務会計'],
-                categoryListSub6:['IT資格','ネットワークとセキュリティ','ハードウェア','OSとソフトウェア','その他のIT・ソフトウェア'],
-                categoryListSub7:['デジタルマーケティング','SEO','SNSマーケティング','ブランディング','マーケティングの基礎','市場分析と自動化','PR','動画・モバイルマーケティング',
-                                  'コンテンツマーケティング','アフィリエイトマーケティング','プロダクトマーケティング','その他のマーケティング'],
-                categoryListSub8:['アート・ものづくり','ビューティー','エソテリックプラクティス','料理','ゲーム','DIY・リフォーム','ガーデニング','アウトドア',
-                                  'ペット','旅行','その他の趣味・実用・ホビー'],
-                categoryListSub9:['デジタル写真','写真','人物写真撮影','撮影ツール','映像制作','その他の写真と動画'],
-                categoryListSub10:['エクササイズ','健康','スポーツ','栄養学＆ダイエット','ヨガ','心のケア','武道＆護身術','応急措置','ダンス','瞑想','その他の健康・フィットネス'],
-                categoryListSub11:['楽器演奏','作詞・作曲','音楽の基礎','ボイストレーニング','演奏テクニック','音楽ソフトの使い方','その他の音楽'],
-                categoryListSub12:['エンジニアリング','人文科学','数学','科学','オンライン教育','社会学','言語','講師向けトレーニング','入試・資格','その他の教育・教養'],
+                categoryMainSearch: 'メインカテゴリーを選択してください',
+                categorySubSearch: 'サブカテゴリーを選択してください',
+                categoryNoSelect: '選択なし',
             }
         },
         methods: {
-            //ページネーションのための現在のページ数・最終ページを取得
-            getPageData(){
-                this.currentPage = this.$store.getters['step/currentPage']
-                this.lastPage = this.$store.getters['step/lastPage']
-            },
             //登録されているSTEPを取得する
             async fetchAllSteps() {
                 await this.$store.dispatch('step/index', this.page)
@@ -177,17 +149,7 @@
             },
             //検索ボタンを押したときの検索処理
             async searchSteps(){
-                //検索ボタンを押して検索した場合は、必ず1ページを表示するようにする
-                this.searchForm.page = 1
-                this.searchFlg = true
-
-                if(this.searchForm.selectedCategoryMain === 'メインカテゴリーを選択してください'){
-                    this.searchForm.selectedCategoryMain = ''
-                }
-
-                if(this.searchForm.selectedCategorySub === 'サブカテゴリーを選択してください'){
-                    this.searchForm.selectedCategorySub = ''
-                }
+                this.prepareBeforeSearch()
 
                 await this.$store.dispatch('step/search', this.searchForm)
                 this.indexSteps = this.$store.getters['step/index']
@@ -196,85 +158,12 @@
             },
             //検索された状態でのページネーション処理
             async fetchSearchSteps(){
-                //検索ボタンを押して検索した場合と異なり、
-                //searchForm.pageを1にせず、2ページ目以降に進めるようにする
-
-                if(this.searchForm.selectedCategoryMain === 'メインカテゴリーを選択してください'){
-                    this.searchForm.selectedCategoryMain = ''
-                }
-
-                if(this.searchForm.selectedCategorySub === 'サブカテゴリーを選択してください'){
-                    this.searchForm.selectedCategorySub = ''
-                }
+                this.prepareSearchedPagination()
 
                 await this.$store.dispatch('step/search', this.searchForm)
                 this.indexSteps = this.$store.getters['step/index']
 
                 this.getPageData()
-            },
-            //サブカテゴリーの表示項目を変更する
-            changeSubCategory(category){
-                this.searchForm.selectedCategorySub = 'サブカテゴリーを選択してください'
-
-                switch(category){//引数のカテゴリーに連動して、サブカテゴリーの項目を変更する
-                    case '自己啓発':
-                        this.categoryListSubSelected = this.categoryListSub1
-                        break;
-                    case 'ビジネススキル':
-                        this.categoryListSubSelected = this.categoryListSub2
-                        break;
-                    case '開発':
-                        this.categoryListSubSelected = this.categoryListSub3
-                        break;
-                        case 'デザイン':
-                        this.categoryListSubSelected = this.categoryListSub4
-                        break;
-                    case '財務会計':
-                        this.categoryListSubSelected = this.categoryListSub5
-                        break;
-                    case 'ITとソフトウェア':
-                        this.categoryListSubSelected = this.categoryListSub6
-                        break;
-                    case 'マーケティング':
-                        this.categoryListSubSelected = this.categoryListSub7
-                        break;
-                    case '趣味・実用・ホビー':
-                        this.categoryListSubSelected = this.categoryListSub8
-                        break;
-                    case '写真と動画':
-                        this.categoryListSubSelected = this.categoryListSub9
-                        break;
-                    case '健康・フィットネス':
-                        this.categoryListSubSelected = this.categoryListSub10
-                        break;
-                    case '音楽':
-                        this.categoryListSubSelected = this.categoryListSub11
-                        break;
-                    case '教育・教養':
-                        this.categoryListSubSelected = this.categoryListSub12
-                        break;
-                    default:
-                        this.categoryListSubSelected = []
-                }
-            },
-            //URLの「?page=」以降に直接、不正な値が入力された場合の対策
-            //不正な値が入力された場合は、404NotFoundページへ遷移させる
-            checkInvalidPageNum(){
-                //表示ページのsearch情報を取得
-                const search = location.search
-                    //routingで管理しているページ情報を取得
-                    const page = '?page=' + this.page
-
-                    if(search !== '' && search !== page  ){
-                        //一致しない場合（不正な値など）は、404notFoundエラーページへ遷移
-                        this.$router.push('*')
-                    }
-            },
-            //Vuexに表示ページのURL情報を保存する
-            storeUrlData(){
-                //この処理を行うことで、STEP詳細からこのページへ戻る際に、戻るページのpathを特定している
-                this.$store.dispatch('route/setLocationUrl',(location.pathname+location.search))
-                this.$store.dispatch('route/setLocationPath',(location.pathname))
             },
         },
         watch: {
@@ -283,9 +172,9 @@
                 //$routeの変更感知時、
                 async handler () {
                     //vuexに保持した検索条件がデフォルトであれば
-                    if(this.searchForm.selectedCategoryMain === 'メインカテゴリーを選択してください'
+                    if(this.searchForm.selectedCategoryMain === this.categoryMainSearch
                         && this.searchForm.keyword === ''
-                        && this.searchForm.selectedCategorySub === 'サブカテゴリーを選択してください'
+                        && this.searchForm.selectedCategorySub === this.categorySubSearch
                         && this.searchForm.sort === 'normal'){
                         //何も処理しない
                     }else{
@@ -328,7 +217,7 @@
                 store.dispatch('step/resetIndexSearchWord')
             }
             next()
-        }
+        },
     }
 
 </script>

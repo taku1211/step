@@ -10,4 +10,10 @@
     padding: $space_s $space_m $space_s $space_m;
     text-align: center;
     margin-bottom: $space_m;
+    border-radius: 5px;
+    &--danger{
+        background:$background-color_lightRed;
+        border:1px solid $background-color_red;
+        color: $font-color_red;
+    }
 }

@@ -1,0 +1,24 @@
+//フッター部分
+.c-footer{
+    width: $site-width;
+    max-width: $site-width;
+    margin: $space_3l auto $space_3l auto;
+    @include mq(tab){
+        width: 100%;
+        margin: $space_3l auto $space_3l auto;
+    }
+    @include mq(){
+        width: 100%;
+        margin: $space_l auto $space_l auto;
+    }
+    &__guidLink{
+        margin: $space_3l auto $space_3l auto;
+        @include mq(){
+            margin: $space_l auto $space_l auto;
+        }
+    }
+    &__copyRight{
+        font-size: $font-size_s;
+        text-align: center;
+    }
+}

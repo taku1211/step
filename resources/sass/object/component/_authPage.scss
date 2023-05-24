@@ -1,0 +1,12 @@
+//認証画面（ログイン・新規登録）
+.c-authPage{
+    &__link{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        &:hover{
+            background-size: 100% 1px;
+        }
+    }
+}

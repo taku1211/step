@@ -3,15 +3,20 @@
     background: $background-color_default;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
     cursor: pointer;
-    margin: 0 $space_l 0 $space_l;
+    margin: 0 $space_xl 0 $space_xl;
     aspect-ratio: 1/1;
+    border-radius: 10px;
+    position: relative;
+    &:hover{
+        opacity: .7;
+    }
     @include mq(){
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-    }
-    &:hover{
-        opacity: .7;
+        &:hover{
+            opacity: 1;
+        }
     }
     &__routerLink{
         min-height: 100%;
@@ -24,11 +29,31 @@
             text-decoration: none;
         }
     }
+    &__image{
+        display: inline-block;
+        height: 100px;
+        border-radius: 10px 10px 0 0;
+        @include mq(tab){
+            height: 170px;
+        }
+        @include mq(){
+            height: 150px;
+        }
+        @include mq(sm){
+            height: 70px;
+        }
+    }
+    &__head{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: $space_s auto auto $space_s;
+    }
     &__category{
         width: 100%;
         display: block;
         flex-grow: 1;
-        padding:$space_xl $space_m $space_m $space_m;
+        padding:$space_m $space_m $space_m $space_m;
         font-size: $font-size_s;
         color: $font-color_blue;
         white-space: nowrap;
@@ -38,15 +63,15 @@
             font-size: $font-size_default;
         }
         @include mq(){
-            padding: $space_s;
-            font-size: $font-size_s;
+            padding: $space_s $space_s 0 $space_s;
+            font-size: $font-size_xs;
         }
 
     }
     &__title{
         width: 100%;
         flex-grow: 1;
-        padding:$space_m;
+        padding:0 $space_m;
         font-weight: bold;
         white-space: nowrap;
         overflow: hidden;
@@ -56,9 +81,8 @@
             font-size: $font-size_xl;
         }
         @include mq(){
-            padding: $space_s $space_s 0 $space_s;
-            margin-bottom: $space_m;
-            font-size: $font-size_default;
+            padding: $space_s;
+            font-size: $font-size_m;
         }
     }
     &__summary{
@@ -89,7 +113,8 @@
             font-size: $font-size_default;
         }
         @include mq(){
-            font-size: $font-size_s;
+            font-size: $font-size_xs;
+            padding: 0 $space_s $space_s $space_s;
         }
     }
     &__barArea{
@@ -98,6 +123,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @include mq(){
+            padding: 0 $space_s $space_s $space_s;
+        }
     }
     &__bar{
         display: inline-block;
@@ -105,29 +133,35 @@
     }
     &__progress{
         width: 20%;
-        text-align: right;
+        text-align: left;
+        padding-left: $space_s;
         font-size: $font-size_s;
         @include mq(tab){
             font-size: $font-size_default;
         }
         @include mq(){
-            font-size: $font-size_s;
+            font-size: $font-size_xs;
         }
     }
     &__footer{
         width: 100%;
         text-align: right;
         font-size: $font-size_s;
-        padding: 0 $space_m $space_xl $space_m;
+        padding: 0 $space_m $space_m $space_m;
         color: $font-color_orange;
         margin-top: auto;
+        &--flex{
+            display: flex;
+            align-items:flex-end;
+            justify-content: flex-end;
+        }
         @include mq(tab){
             font-size: $font-size_default;
             justify-self: baseline;
         }
         @include mq(){
-            padding: 0 $space_m $space_s $space_m;
-            font-size: $font-size_s;
+            padding: 0 $space_s $space_s $space_s;
+            font-size: $font-size_xs;
         }
     }
 }

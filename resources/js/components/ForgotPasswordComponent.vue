@@ -1,41 +1,41 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--パスワード再設定メール送信画面-->
-        <div class="p-sendMail">
-            <h2 class="c-ornament p-sendMail__title">
-                <span class="c-ornament__border p-sendMail__order">
+        <div class="c-authPage">
+            <h2 class="c-ornament">
+                <span class="c-ornament__border">
                     パスワード再設定
                 </span>
             </h2>
 
-            <form class="c-form p-sendMail__form" @submit.prevent="sendResetMail">
-                <label for="email" class="c-label p-sendMail__label">登録しているEmailを入力してください。</label>
-                <input id="email" type="text" name="email" class="c-input p-sendMail__input"
+            <form class="c-form" @submit.prevent="sendResetMail">
+                <label for="email" class="c-label c-label--marginl">登録しているEmailを入力してください。</label>
+                <input id="email" type="text" name="email" class="c-input"
                        v-model="resetForm.email" placeholder="step@example.com" :class="(resetErrors !== null) ? 'c-input--error' : ''">
                 <!--バリデーションエラー表示部分-->
-                <div v-if="resetErrors" class="c-error p-sendMail__error">
-                    <ul v-if="resetErrors.email" class="c-error__ul p-sendMail__errorUl">
-                        <li class="c-error__list p-sendMail__errorList" v-for="msg in resetErrors.email" :key="msg">
+                <div v-if="resetErrors" class="c-error">
+                    <ul v-if="resetErrors.email" class="c-error__ul">
+                        <li class="c-error__list" v-for="msg in resetErrors.email" :key="msg">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                                 {{ msg }}
                         </li>
                     </ul>
-                    <ul v-if="resetErrors && !resetErrors.email " class="c-error__ul p-sendMail__errorUl">
-                        <li class="c-error__list p-sendMail__errorList">
+                    <ul v-if="resetErrors && !resetErrors.email " class="c-error__ul">
+                        <li class="c-error__list">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                             {{ resetErrors }}
                         </li>
                     </ul>
                 </div>
 
-                <div class="c-submit p-sendMail__submit">
-                    <button type="submit" class="c-button p-sendMail__button">
+                <div class="c-submit c-submit--margin3l">
+                    <button type="submit" class="c-button c-button--orange">
                         メールを送信
                     </button>
                 </div>
                 <!--ログイン画面へのリンク-->
-                <p class="p-sendMail__para">
-                    <RouterLink class="p-sendMail__link" to="/login">
+                <p class="c-authPage__para">
+                    <RouterLink class="c-authPage__link" to="/login">
                         ログインはこちらから
                     </RouterLink>
                 </p>

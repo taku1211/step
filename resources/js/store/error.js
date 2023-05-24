@@ -10,7 +10,9 @@ const state = {
 //stateを更新するためのmutaionsの定義
 const mutations = {
     setCode (state, code) {
+        console.log('setcode')
         state.code = code
+        console.log(state.code)
     }
 }
 

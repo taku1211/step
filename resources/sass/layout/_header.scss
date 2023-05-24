@@ -1,19 +1,20 @@
 //ヘッダーレイアウト
 #l-header{
-    width: 100%;
+    width: calc(100vw - 20px);
     height: $site-height-header;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
     background: $background-color_default;
+    @include mq(tab){
+        width: 100%;
+        padding:0 2% 0 2%;
+    }
     @include mq(){
         width: 100%;
         height: $site-height-headerMd;
-        padding:0 2% 0 2%
+        padding:0 2% 0 2%;
     }
-    @include mq(tab){
-        width: 100%;
-        padding:0 2% 0 2%
-    }
+
 }

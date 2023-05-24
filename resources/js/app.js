@@ -2,6 +2,10 @@ import './bootstrap'
 import Vue from 'vue'
 import VueScrollTo from 'vue-scrollto'
 
+//共通メソッドの読み込み
+import commonFunc from './commonFunc.vue'
+Vue.mixin(commonFunc)
+
 Vue.use(VueScrollTo,{
     offset: -130 //vue-scrollを使用した際にヘッダーの高さ130px分マイナスしてスクロールさせる
 })
@@ -47,10 +51,10 @@ createApp()
 $(window).on('scroll load', function(){
     let scroll = $(this).scrollTop()
     let windowHeight = $(window).height()
-    $('.u-jsFadeIn').each(function(){
+    $('.c-jsFadeIn').each(function(){
         let domHeight = $(this).offset().top;
         if(scroll > domHeight - windowHeight + windowHeight / 3){
-            $(this).addClass('u-jsFadeIn--active')
+            $(this).addClass('c-jsFadeIn--active')
         }
     })
 })

@@ -1,0 +1,21 @@
+//slideUpアニメーション
+.c-slideUp-enter-from{
+    height: 0;
+}
+.c-slideUp-enter-active, .c-slideUp-move{
+    transition: all 0.5s ease;
+    height: 0;
+}
+.c-slideUp-enter-to{
+    height: 30vh;
+}
+
+//SlideDownアニメーション
+.c-slideDown-enter-active, .c-slideDown-leave-active {
+    transform: translate(0px, 0px);
+    transition: transform 0.5s cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.c-slideDown-enter, .c-slideDown-leave-to {
+transform: translateY(-100vh) translateY(0px);
+}

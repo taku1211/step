@@ -1,13 +1,6 @@
 //ユーザー情報更新画面
 .p-setting{
-    &__title{
-        &::before{
-            top: 20px;
-        }
-        &::after{
-            top:-20px;
-        }
-    }
+    width: 100%;
     &__label{
         margin: $space_l 0 $space_l 0;
     }

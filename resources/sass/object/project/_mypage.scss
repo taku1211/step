@@ -21,14 +21,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    &__title{
-        &::before{
-            top: 20px;
-        }
-        &::after{
-            top:-20px;
-        }
-    }
     &__content{
         width: 100%;
         margin-bottom: $space_4l;
@@ -59,6 +51,20 @@
     }
     &__panel{
         position: relative;
+    }
+    &__editButton{
+        min-width: auto;
+        padding: 0;
+        background: $background-color_orange;
+    }
+    &__editLink{
+        display: inline-block;
+        width: 100%;
+        color: $font-color_white;
+        padding: $space_m $space_xl $space_m $space_xl;
+        @include mq(){
+            padding: $space_s $space_xl;
+        }
     }
     &__crownIcon{
         position: absolute;

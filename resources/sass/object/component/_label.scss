@@ -3,6 +3,13 @@
     display: block;
     text-align: left;
     cursor: pointer;
+    &--marginl{
+        margin: $space_l 0 $space_l 0;
+    }
+    &--rowType{
+        margin: 0 $space_l 0 $space_l;
+        line-height: 3;
+    }
     &__passwordIcon{
         margin-left: $space_l;
         padding: 0 $space_s 0 $space_s;

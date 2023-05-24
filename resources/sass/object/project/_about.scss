@@ -3,6 +3,18 @@
     margin: $space_3l auto 0 auto;
     &__title{
         font-size: $font-size_3l;
+        &::before{
+            top:30px;
+            @include mq(){
+                top:15px;
+            }
+        }
+        &::after{
+            top:-30px;
+            @include mq(){
+                top:-15px;
+            }
+        }
         @include mq(){
             font-size: $font-size_xl;
         }

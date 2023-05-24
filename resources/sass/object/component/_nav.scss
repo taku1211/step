@@ -1,8 +1,54 @@
 //navigation部分
 .c-nav{
+    height:auto;
+    &--responsive{
+        height: 60vh;
+        background:$background-color_default;
+    }
     &__menu{
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
+        &--footer{
+            justify-content: space-around;
+            @include mq(){
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 132.8px;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+        }
+        &--responsive{
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    &__list{
+        margin-left: $space_3l;
+        &--responsive{
+            margin: $space_l;
+            font-size: $font-size_xl;
+        }
+        &--footer{
+            margin-left: $space_xl;
+            @include mq{
+                margin-left: 0;
+                padding: $space_s;
+            }
+        }
+    }
+    &__link{
+        background-image: linear-gradient(90deg, $font-color_default, $font-color_default);
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 0 1px;
+        &:hover{
+            background-size: 100% 1px;
+        }
     }
 }

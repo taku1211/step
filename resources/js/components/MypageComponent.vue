@@ -1,5 +1,5 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--My page表示画面-->
         <div class="p-mypage">
             <!--ユーザー情報表示部分-->
@@ -9,8 +9,8 @@
             </div>
 
             <!--自分が登録したSTEPの表示部分-->
-            <h2 class="c-ornament p-mypage__title">
-                <span class="c-ornament__border p-mypage__border">
+            <h2 class="c-ornament">
+                <span class="c-ornament__border">
                     My STEP
                 </span>
             </h2>
@@ -30,9 +30,17 @@
                     </div>
                     <!--自分が登録したSTEPを一つずつ表示する部分-->
                     <!--自分が登録したSTEPが存在する場合-->
-                    <div class="c-grid p-mypage__grid" v-if="mySteps !== null && mySteps.length !== 0">
+                    <div class="c-grid" v-if="mySteps !== null && Array(mySteps) && mySteps.length !== 0">
                         <div class="c-panel p-mypage__panel" v-for="step  in mySteps" :key="step.id">
                             <RouterLink :to="`/steps/${step.id}`" class="c-panel__routerLink p-mypage__routerLink">
+                                <!-- アイキャッチ画像 -->
+                                <img :src="step.image_path" :alt="step.title + ':アイキャッチ画像'" class="c-panel__image">
+
+                                <div class="c-panel__head p-mypage__head">
+                                    <span class="c-budge p-mypage__budge" :class="(step.step_number === 0)? 'c-budge--warning':''">
+                                        {{ (step.step_number === 0)? '非公開':'公開済' }}
+                                    </span>
+                                </div>
                                 <!--カテゴリー表示-->
                                 <p class="c-panel__category p-mypage__category">
                                     {{ step.category_main }} | {{ step.category_sub }}
@@ -41,27 +49,23 @@
                                 <h3 class="c-panel__title p-mypage__stepTitle">
                                     {{ step.title }}
                                 </h3>
-                                <!--STEP概要の表示-->
-                                <p class="c-panel__summary p-mypage__summary">
-                                    {{ (step.content !== null)? step.content : '概要は登録されていません。' }}
-                                </p>
-                                <!--目安達成時間表示-->
-                                <p class="c-panel__para p-mypage__stepPara">
-                                    目安達成時間:
-                                    {{ (Math.floor(step.time_aim/60) !== 0)?Math.floor(step.time_aim/60)+'時間':'' }}
-                                    {{ (step.time_aim%60 !== 0)?(step.time_aim%60)+'分':'' }}
-                                </p>
                                 <!--サブSTEP数の表示-->
-                                <p class="c-panel__para p-mypage__stepPara">STEP数:{{step.step_number}}STEP</p>
+                                <!-- <p class="c-panel__para p-mypage__stepPara">STEP数:{{step.step_number}}STEP</p> -->
                                 <!--挑戦中人数の表示-->
-                                <p class="c-panel__para p-mypage__stepPara">挑戦中:{{ step.count_challenger }}人</p>
-                                <!--STEP自体が登録された日付表示-->
-                                <p class="c-panel__footer p-mypage__footer">  {{ step.created_at }}</p>
+                                <!-- <p class="c-panel__para p-mypage__stepPara">挑戦中:{{ step.count_challenger }}人</p> -->
+                                <!--STEP編集ボタンの表示-->
+                                <div class="c-panel__footer c-panel__footer--flex p-mypage__footer">
+                                    <button class="c-button p-mypage__editButton">
+                                        <RouterLink class="p-mypage__editLink" :to="`/edit/${step.id}`">
+                                            編集<span class="u-hiddenMd">する</span>
+                                        </RouterLink>
+                                    </button>
+                                </div>
                             </RouterLink>
                         </div>
                     </div>
                     <!--自分が登録したSTEPがない場合-->
-                    <div class="p-mypage__para" v-else-if="mySteps !== null && mySteps.length === 0">
+                    <div class="p-mypage__para" v-else-if="mySteps !== null && Array(mySteps) && mySteps.length === 0">
                         登録したSTEPはありません。
                         「STEPを登録」ボタンからSTEPを登録してみましょう。
                     </div>
@@ -72,8 +76,8 @@
                 </div>
 
                 <!--Myチャレンジ表示部分-->
-                <h2 class="c-ornament p-mypage__title">
-                    <span class="c-ornament__border p-mypage__border">
+                <h2 class="c-ornament">
+                    <span class="c-ornament__border">
                         My Challenge
                     </span>
                 </h2>
@@ -81,9 +85,12 @@
                 <!--チャレンジしたSTEPをひとつずつ表示する部分-->
                 <!--チャレンジしたSTEPが存在する場合-->
                 <div class="p-mypage__content">
-                    <div class="c-grid p-mypage__grid" v-if="myChallenge !== null && myChallenge.length !== 0">
+                    <div class="c-grid p-mypage__grid" v-if="myChallenge !== null && Array(myChallenge) && myChallenge.length !== 0">
                         <div class="c-panel p-mypage__panel" v-for="step, idx  in myChallenge" :key="idx">
                             <RouterLink :to="`/steps/${step.id}`" class="c-panel__routerLink p-mypage__routerLink">
+                                <!-- アイキャッチ画像 -->
+                                <img :src="step.image_path" :alt="step.title + ':アイキャッチ画像'" class="c-panel__image">
+
                                 <!--カテゴリー表示-->
                                 <p class="c-panel__category p-mypage__category">
                                     {{ step.category_main }} | {{ step.category_sub }}
@@ -92,12 +99,6 @@
                                 <h3 class="c-panel__title p-mypage__stepTitle">
                                     {{ step.title }}
                                 </h3>
-                                <!--目安達成時間表示-->
-                                <p class="c-panel__para p-mypage__stepPara">
-                                    目安達成時間:
-                                    {{ (Math.floor(step.time_aim/60) !== 0)?Math.floor(step.time_aim/60)+'時間':'' }}
-                                    {{ (step.time_aim%60 !== 0)?(step.time_aim%60)+'分':'' }}
-                                </p>
                                  <!--取り組んだ時間表示-->
                                 <p class="c-panel__para p-mypage__stepPara">
                                     取り組んだ時間:
@@ -116,13 +117,11 @@
                                         {{Math.floor((step.stepProgress.length)/(step.step_number)*100)}}%
                                     </p>
                                 </div>
-                                <!--STEP自体が登録された日付表示-->
-                                <p class="c-panel__footer p-mypage__footer">  {{ step.created_at }}</p>
                             </RouterLink>
                         </div>
                     </div>
                     <!--チャレンジしたSTEPがない場合-->
-                    <div class="p-mypage__para" v-else-if="myChallenge !== null && myChallenge.length === 0">
+                    <div class="p-mypage__para" v-else-if="myChallenge !== null && Array(myChallenge) && myChallenge.length === 0">
                         挑戦したSTEPはありません。
                         <RouterLink class="p-mypage__route" to="/index">
                             STEP一覧
@@ -159,11 +158,14 @@
 
                 //取得したSTEPの内、step_numberが0（サブSTEPが0）のSTEPがある場合は、
                 //mustRegisterSubStepFlgをtrueに変更し、ページにメッセージを表示させる
-                for(let i=0;i<this.mySteps.length;i++){
-                    if(this.mySteps[i]['step_number'] === 0){
-                        this.mustRegisterSubStepFlg = true
-                    }
+                if(this.mySteps && Array(this.mySteps)){
+                    for(let i=0;i<this.mySteps.length;i++){
+                        if(this.mySteps[i]['step_number'] === 0){
+                            this.mustRegisterSubStepFlg = true
+                        }
+                     }
                 }
+
             },
             //自分が挑戦したSTEPを全て取得する
             async getAllMyChallenge(){
@@ -174,6 +176,10 @@
             },
             //チャレンジ中のSTEPの自分の挑戦データ・進捗数・取り組み時間を取得
             getAllMyChallengeInfo(){
+                if(!this.myChallenge || !Array(this.myChallenge)){
+                    return false
+                }
+
                 //チャレンジ中の自分の挑戦データを取得する
                 for(let i=0;i<this.myChallenge.length;i++){
 
@@ -214,25 +220,6 @@
                         }
                     })
                 }
-            },
-            //URLの「?page=」以降に直接、不正な値が入力された場合の対策
-            //不正な値が入力された場合は、404NotFoundページへ遷移させる
-            checkInvalidPageNum(){
-                //表示ページのsearch情報を取得
-                const search = location.search
-                    //routingで管理しているページ情報を取得
-                    const page = '?page=' + this.page
-
-                    if(search !== '' && search !== page  ){
-                        //一致しない場合（不正な値など）は、404notFoundエラーページへ遷移
-                        this.$router.push('*')
-                    }
-            },
-            //Vuexに表示ページのURL情報を保存する
-            storeUrlData(){
-                //この処理を行うことで、STEP詳細からこのページへ戻る際に、戻るページのpathを特定している
-                this.$store.dispatch('route/setLocationUrl',(location.pathname+location.search))
-                this.$store.dispatch('route/setLocationPath',(location.pathname))
             },
         },
         watch: {

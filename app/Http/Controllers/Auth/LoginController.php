@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -19,6 +20,7 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
+    static $systemError = '予期せぬエラーが発生しました。ご迷惑をおかけしますが、しばらく時間を置いてから再度実施してください。';
 
     use AuthenticatesUsers;
 
@@ -41,7 +43,16 @@ class LoginController extends Controller
     // AuthenticatesUsers/Authenticateメソッドのオーバーライド（リダイレクトせずにjson形式でユーザー情報を返却させる
     protected function authenticated(Request $request, $user)
     {
-        return $user;
+        //$userが空の場合は、500エラーを返却、空ではない場合はそのまま処理を続行
+        if(empty($user)){
+            $loginError = new \Exception();
+            Log::error($loginError);
+            // フロントに異常を通知するため500エラーを返却
+            return response()->json(['message' => LoginController::$systemError, 'status' => false], 500);
+        }else{
+            return $user;
+        }
+
     }
     // AuthenticatesUsers/loggedoutメソッドのオーバーライド（リダイレクトせずにjson形式でレスポンスを返却させる
     protected function loggedOut(Request $request)

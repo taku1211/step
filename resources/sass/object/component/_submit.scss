@@ -2,4 +2,13 @@
 .c-submit{
     margin: $space_xl 0 $space_l 0;
     text-align: right;
+    &--margin3l{
+        margin: $space_3l 0 $space_3l 0;
+    }
+    &--flex{
+        margin-top: $space_3l;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
 }

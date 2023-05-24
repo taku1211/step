@@ -89,6 +89,16 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
           }
     },
 
@@ -130,6 +140,16 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
         }
     },
 
@@ -235,6 +255,17 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
+
         }
     },
 
@@ -271,6 +302,16 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
         }
     },
 
@@ -308,6 +349,16 @@ const actions = {
             //それ以外の場合はエラーコードをerror/setCodeに格納する
             //エラーコードの種類に応じて、component側でエラー画面を表示させる
             context.commit('error/setCode', response.status, { root: true })
+            if(response.data.message){
+                context.commit('message/setContent', {
+                    content: response.data.message,
+                    timeout: 5000
+                  },{root:true})
+                context.commit('message/setDangerFlg', {
+                    boolean : true,
+                    timeout: 5000
+                    },{root:true})
+            }
         }
 
     },
@@ -335,7 +386,7 @@ const actions = {
         //それ以外の場合はエラーコードをerror/setCodeに格納する
         //エラーコードの種類に応じて、component側でエラー画面を表示させる
         context.commit('error/setCode', response.status, { root: true })
-    }
+    },
 }
 
 export default {

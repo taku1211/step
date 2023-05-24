@@ -1,18 +1,5 @@
 <template>
-    <div id="l-body" :class="this.class">
-        <!--ページ遷移時のアニメーション部分-->
-        <div :class="this.animationClass">
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-            <div :class="this.animationClassElement"></div>
-        </div>
+    <div id="l-body">
 
         <!--Header部分の読み込み-->
         <header-component :path="pathName"></header-component>
@@ -23,7 +10,7 @@
         </main>
 
         <!--ページ右下に表示されるページトップへ戻るボタン-->
-        <transition name="fadeSoon">
+        <transition name="c-fade">
             <div class="c-returnButton" v-show="visibleReturnTopButton">
                 <i class="fa-solid fa-circle-arrow-up c-returnButton__icon" @click="returnTop"></i>
             </div>
@@ -51,11 +38,8 @@ export default {
     data: function(){
         return {
             pathName: null,
-            isOpen: true,
-            class: 'u-open',
-            animationClass: 'u-animation',
-            animationClassElement: 'u-animation__element',
             visibleReturnTopButton:false,
+            width: window.innerWidth
         }
     },
     computed: {
@@ -65,25 +49,6 @@ export default {
         }
     },
     methods: {
-        //ページ遷移時のアニメーションの終了メソッド//
-        close(){
-            this.class = 'u-close'
-            this.animationClass = ''
-            this.animationClassElement = ''
-        },
-        //ページ遷移時のアニメーションの開始メソッド
-        open(){
-            this.class = 'u-open'
-            this.animationClass = 'u-animation'
-            this.animationClassElement = 'u-animation__element'
-        },
-        //ページの一番上へスクロールで戻る
-        returnTop(){
-            window.scroll({
-                top:0,
-                behavior:'smooth',
-            })
-        },
         //ページトップへ戻るボタンの表示・非表示をスクロール位置で切り替える
         handleScroll() {
           this.scrollY = window.scrollY
@@ -130,32 +95,11 @@ export default {
                 },
                 immediate: true
         },
-        //isOpenメソッドの監視
-        isOpen:{
-            handler(){
-                this.isOpen ? this.open() : this.close()
-            }
-        }
     },
     created() {
         //ページ表示時にスクロール量を検知
         window.addEventListener("scroll", this.handleScroll)
-    },
-    mounted () {
-        //ナビゲーション確立前の処理
-        this.$router.beforeEach((to, from, next) => {
-            //アニメーションの開始メソッドをfalseにする
-            this.isOpen = false;
-            next();
-        })
-        //ナビゲーション確立後の処理
-        this.$router.afterEach((to, from, next) => {
-            //0/8秒間、watchで監視しているisOpenをtrueにし、open()メソッドを実行
-            setTimeout( () => {
-                this.isOpen = true;
-            }, 800);
-        })
-    },
+    }
 }
 
 </script>

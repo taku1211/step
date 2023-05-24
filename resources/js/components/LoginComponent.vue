@@ -1,55 +1,55 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--ログイン画面-->
-        <section class="p-login">
-            <h2 class="c-ornament p-login__title">
-                <span class="c-ornament__border p-login__border">
+        <section class="c-authPage">
+            <h2 class="c-ornament">
+                <span class="c-ornament__border">
                     Login
                 </span>
             </h2>
             <!--ログイン用フォーム-->
-            <form class="c-form p-login__form" @submit.prevent="login">
+            <form class="c-form" @submit.prevent="login">
                 <!--メールアドレス入力部分-->
-                <label for="email" class="c-label p-login__label">
+                <label for="email" class="c-label c-label--marginl">
                     メールアドレス
                 </label>
-                <input id="email" type="text" name="email" class="c-input p-login__input"
+                <input id="email" type="text" name="email" class="c-input"
                        v-model="loginForm.email" placeholder="step@example.com"
                        :class="(loginErrors !== null && loginErrors.email) ? 'c-input--error' : ''">
                 <!--バリデーションエラー表示部分-->
-                <div v-if="loginErrors" class="c-error p-login__error">
-                        <ul v-if="loginErrors.email" class="c-error__ul p-login__errorUl">
-                            <li class="c-error__list p-login__errorList"  v-for="msg in loginErrors.email" :key="msg">
+                <div v-if="loginErrors" class="c-error">
+                        <ul v-if="loginErrors.email" class="c-error__ul">
+                            <li class="c-error__list"  v-for="msg in loginErrors.email" :key="msg">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                                 {{ msg }}
                             </li>
                         </ul>
                 </div>
                 <!--パスワード入力部分-->
-                <label for="password" class="c-label p-login__label">
+                <label for="password" class="c-label c-label--marginl">
                     パスワード
                         <span class="c-label__passwordIcon" @click.prevent="changeInputType">
                             <i :class="eyeStyle" ></i>
                         </span>
                 </label>
-                <input id="password" :type="inputType" name="password" class="c-input p-login__input" :class="(loginErrors !== null && loginErrors.password) ? 'c-input--error' : ''"
+                <input id="password" :type="inputType" name="password" class="c-input" :class="(loginErrors !== null && loginErrors.password) ? 'c-input--error' : ''"
                        v-model="loginForm.password" placeholder="8文字以上のパスワード">
                 <!--バリデーションエラー表示部分-->
-                <div v-if="loginErrors" class="c-error p-login__error">
-                        <ul v-if="loginErrors.password" class="c-error__ul p-login__errorUl">
-                            <li class="c-error__list p-login__errorList" v-for="msg in loginErrors.password" :key="msg">
+                <div v-if="loginErrors" class="c-error">
+                        <ul v-if="loginErrors.password" class="c-error__ul">
+                            <li class="c-error__list" v-for="msg in loginErrors.password" :key="msg">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                                 {{ msg }}
                             </li>
                         </ul>
                 </div>
                 <!--ログインボタン部分-->
-                <div class="c-submit p-login__submit">
-                    <button type="submit" class="c-button p-login__button">ログイン</button>
+                <div class="c-submit">
+                    <button type="submit" class="c-button c-button--orange">ログイン</button>
                 </div>
                 <!--パスワード再設定用ページへのリンク-->
-                <p class="p-login__para">
-                    <RouterLink class="p-login__link" to="/password/forgot">
+                <p class="c-authPage__para">
+                    <RouterLink class="c-authPage__link" to="/password/forgot">
                         パスワードの再設定はこちらから
                     </RouterLink>
                 </p>
@@ -85,16 +85,6 @@
             //バリデーションエラーを空にする
             clearError () {
                      this.$store.commit('auth/setLoginErrorMessages', null)
-            },
-            //inputのtype（パスワード入力部分）を変更する
-            changeInputType(){
-                if(this.inputType === 'password'){
-                    this.inputType = 'text'
-                    this.eyeStyle = 'fa-sharp fa-solid fa-eye-slash'
-                }else{
-                    this.inputType = 'password'
-                    this.eyeStyle = 'fa-solid fa-eye'
-                }
             },
         },
         computed: {

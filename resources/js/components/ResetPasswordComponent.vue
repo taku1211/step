@@ -1,24 +1,24 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--パスワード再設定画面-->
-        <section class="p-resetPassword">
-            <h2 class="c-ornament p-resetPassword__title">
-                <span class="c-ornament__border c-resetPassword__border">
+        <section class="c-authPage">
+            <h2 class="c-ornament">
+                <span class="c-ornament__border">
                     パスワード再設定
                 </span>
             </h2>
             <!--パスワード再設定用フォーム-->
-            <form class="c-form p-resetPassword__form" @submit.prevent="resetPassword">
+            <form class="c-form" @submit.prevent="resetPassword">
                 <!--メールアドレス入力部分-->
-                <label for="email" class="c-label p-resetPassword__label">
+                <label for="email" class="c-label c-label--marginl">
                     メールアドレス
                 </label>
-                <input id="email" type="text" name="email" class="c-input p-resetPassword__input p-resetPassword__input--invalid" disabled
+                <input id="email" type="text" name="email" class="c-input c-input--invalid" disabled
                        v-model="resetForm.email" placeholder="step@example.com" :class="(updateErrors !== null && updateErrors.email) ? 'c-input--error' : ''">
                 <!--バリデーションエラー表示部分-->
-                <div v-if="updateErrors" class="c-error p-resetPassword__error">
-                    <ul v-if="updateErrors.email" class="c-error__ul p-resetPassword__errorUl">
-                        <li class="c-error__list p-resetPassword__errorList"  v-for="msg in updateErrors.email" :key="msg">
+                <div v-if="updateErrors" class="c-error">
+                    <ul v-if="updateErrors.email" class="c-error__ul">
+                        <li class="c-error__list"  v-for="msg in updateErrors.email" :key="msg">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                             {{ msg }}
                         </li>
@@ -26,32 +26,32 @@
                 </div>
 
                 <!--パスワード入力部分-->
-                <label for="password" class="c-label p-resetPassword__label">
+                <label for="password" class="c-label c-label--marginl">
                     パスワード
                     <span class="c-label__passwordIcon" @click.prevent="changeInputType">
                             <i :class="eyeStyle" ></i>
                     </span>
                 </label>
-                <input id="password" :type="inputType" name="password" class="c-input p-resetPassword__input"
+                <input id="password" :type="inputType" name="password" class="c-input"
                        v-model="resetForm.password" placeholder="8文字以上のパスワード"
                        :class="(updateErrors !== null && updateErrors.password) ? 'c-input--error' : ''">
                 <!--パスワード再入力部分-->
-                <label for="password_confirmation" class="c-label p-resetPassword__label">
+                <label for="password_confirmation" class="c-label c-label--marginl">
                     パスワード（再入力）
                 </label>
-                <input id="password_confirmation" :type="inputType" name="password" class="c-input p-resetPassword__input"
+                <input id="password_confirmation" :type="inputType" name="password" class="c-input"
                        v-model="resetForm.password_confirmation" placeholder="8文字以上のパスワード"
                        :class="(updateErrors !== null && updateErrors.password) ? 'c-input--error' : ''">
                 <!--バリデーションエラー表示部分-->
-                <div v-if="updateErrors" class="c-error p-resetPassword__error">
-                    <ul v-if="updateErrors.password" class="c-error__ul p-resetPassword__errorUl">
-                        <li class="c-error__list p-resetPassword__errorList"  v-for="msg in updateErrors.password" :key="msg">
+                <div v-if="updateErrors" class="c-error">
+                    <ul v-if="updateErrors.password" class="c-error__ul">
+                        <li class="c-error__list"  v-for="msg in updateErrors.password" :key="msg">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                             {{ msg }}
                         </li>
                     </ul>
-                    <ul v-if="updateErrors && !updateErrors.email && !updateErrors.password" class="c-error__ul p-sendMail__errorUl">
-                        <li class="c-error__list p-sendMail__errorList">
+                    <ul v-if="updateErrors && !updateErrors.email && !updateErrors.password" class="c-error__ul">
+                        <li class="c-error__list">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                             {{ updateErrors }}
                         </li>
@@ -59,8 +59,8 @@
                 </div>
 
                 <!--再設定ボタン部分-->
-                <div class="c-submit p-resetPassword__submit">
-                    <button type="submit" class="c-button p-resetPassword__button p-resetPassword__button--orange">
+                <div class="c-submit">
+                    <button type="submit" class="c-button c-button--orange">
                         再設定する
                     </button>
                 </div>
@@ -98,17 +98,6 @@
             clearError () {
                      this.$store.commit('auth/setUpdatePasswordErrorMessages', null)
             },
-            //inputのtypeを変更する
-            changeInputType(){
-                if(this.inputType === 'password'){
-                    this.inputType = 'text'
-                    this.eyeStyle = 'fa-sharp fa-solid fa-eye-slash'
-                }else{
-                    this.inputType = 'password'
-                    this.eyeStyle = 'fa-solid fa-eye'
-                }
-            },
-
         },
         computed: {
             //apiStatusステートを参照する

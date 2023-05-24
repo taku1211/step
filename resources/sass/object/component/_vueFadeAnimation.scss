@@ -1,0 +1,21 @@
+//fadeアニメーション
+.c-fade-enter-active, .c-fadeSoon-move {
+    transition: opacity 1s ease;
+    opacity: 0;
+}
+.c-fade-enter-to {
+    opacity: 1;
+}
+.c-fade-enter-from{
+    opacity: 0;
+}
+.c-fade-leave-active, .c-fadeSoon-move {
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+.c-fade-leave-to {
+    opacity: 0;
+}
+.c-fade-leave-from{
+    opacity: 1;
+}

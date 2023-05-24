@@ -1,5 +1,5 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--STEP詳細ページ-->
         <div class="p-detail" v-if="step">
                 <!--遷移前のページのURLに合わせて、前のページへ戻るリンクを表示-->
@@ -19,6 +19,9 @@
                     {{ step.title }}
                 </span>
             </h2>
+            <div class="p-detail__imageArea">
+                <img :src="step.image_path" alt="STEPアイキャッチ画像" class="p-detail__image">
+            </div>
             <!--STEP詳細の表示-->
             <div class="p-detail__flex">
                 <!--STEPの概要表示（ページ左側）-->
@@ -27,38 +30,38 @@
                     <p class="p-detail__para p-detail__para--title">
                         ♢STEPタイトル
                     </p>
-                    <p class="p-detail__para u-leftMargin__l">
+                    <p class="p-detail__para p-detail__para--leftMargin">
                         {{ step.title }}
                     </p>
                     <p class="p-detail__para p-detail__para--title">
                         ♢カテゴリー
                     </p>
-                    <p class="p-detail__para u-leftMargin__l">
+                    <p class="p-detail__para p-detail__para--leftMargin">
                         {{ step.category_main }} | {{ step.category_sub }}
                     </p>
                     <p class="p-detail__para p-detail__para--title">
                         ♢目安達成時間
                     </p>
-                    <p class="p-detail__para u-leftMargin__l">
+                    <p class="p-detail__para p-detail__para--leftMargin">
                         {{ (Math.floor(step.time_aim/60) !== 0)?Math.floor(step.time_aim/60)+'時間':'' }}
                         {{ (step.time_aim%60 !== 0)?(step.time_aim%60)+'分':'' }}
                     </p>
                     <p class="p-detail__para p-detail__para--title">
                         ♢ステップ数
                     </p>
-                    <p class="p-detail__para u-leftMargin__l">
+                    <p class="p-detail__para p-detail__para--leftMargin">
                         {{ step.step_number }}STEP
                     </p>
                     <p class="p-detail__para p-detail__para--title">
                         ♢挑戦済みのユーザー数
                     </p>
-                    <p class="p-detail__para u-leftMargin__l">
+                    <p class="p-detail__para p-detail__para--leftMargin">
                         {{ step.count_challenger }}人
                     </p>
                     <p class="p-detail__para p-detail__para--title">
                         ♢ステップ概要
                     </p>
-                    <p class="p-detail__para u-leftMargin__l">
+                    <p class="p-detail__para p-detail__para--leftMargin">
                         {{ (step.content !== null)? step.content : '概要は登録されていません。' }}
                     </p>
                     <!--このSTEPを登録したユーザー情報の表示-->
@@ -80,26 +83,26 @@
                 <!--登録したユーザーとログインユーザーが異なる、もしくはログイン状態ではない場合に表示-->
                 <div class="p-detail__right" v-if="Number(this.step['user_id']) !==  Number(this.userId)">
                     <div class="p-detail__sub" v-for="(subStep, idx) in step.substeps" :key="idx">
-                        <p class="p-detail__sub-para p-detail__sub-para--left">
+                        <p class="p-detail__subPara p-detail__subPara--left">
                             STEP{{ idx+1 }}
                         </p>
-                        <RouterLink :to="`/substeps/${subStep.id}`" class="p-detail__sub-para p-detail__sub-para--center">
+                        <RouterLink :to="`/substeps/${subStep.id}`" class="p-detail__subPara p-detail__subPara--center">
                             <p class="p-detail__subTitle">
                                 {{ subStep.title }}
                             </p>
                         </RouterLink>
                         <!--STEPに挑戦済、かつ、このサブSTEPがクリア済ではない、かつ、このサブSTEPに挑戦済の場合-->
-                        <p class="p-detail__sub-para p-detail__sub-para--right p-detail__sub-para--orange"
-                           v-if="myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 0 && myChallenge[idx+1]['challenge_flg'] === 1">
+                        <p class="p-detail__subPara p-detail__subPara--right p-detail__subPara--orange"
+                           v-if="myChallenge && Array(myChallenge) && myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 0 && myChallenge[idx+1]['challenge_flg'] === 1">
                             チャレンジ中
                         </p>
                         <!--STEPに挑戦済、かつ、このサブSTEPがクリア済、かつ、このサブSTEPに挑戦済の場合-->
-                        <p class="p-detail__sub-para p-detail__sub-para--right p-detail__sub-para--green"
-                           v-else-if="myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 1 && myChallenge[idx+1]['challenge_flg'] === 1">
+                        <p class="p-detail__subPara p-detail__subPara--right p-detail__subPara--green"
+                           v-else-if="myChallenge && Array(myChallenge) && myChallenge.length !== 0 && myChallenge[idx+1]['clear_flg'] === 1 && myChallenge[idx+1]['challenge_flg'] === 1">
                             クリア
                         </p>
                         <!--STEPに挑戦済、かつ、このサブSTEPがクリア済みではない、かつ、このサブSTEPにまだ挑戦していない場合-->
-                        <p class="p-detail__sub-para p-detail__sub-para--right" v-else>
+                        <p class="p-detail__subPara p-detail__subPara--right" v-else>
                             <i class="fa-solid fa-lock"></i>
                         </p>
                     </div>
@@ -107,16 +110,16 @@
                 <!--登録したユーザーとログインユーザーが同じ場合-->
                  <div class="p-detail__right" v-else>
                     <div class="p-detail__sub" v-for="(subStep, idx) in step.substeps" :key="idx">
-                        <p class="p-detail__sub-para p-detail__sub-para--left">
+                        <p class="p-detail__subPara p-detail__subPara--left">
                             STEP{{ idx+1 }}
                         </p>
-                        <RouterLink :to="`/substeps/${subStep.id}`" class="p-detail__sub-para p-detail__sub-para--center">
+                        <RouterLink :to="`/substeps/${subStep.id}`" class="p-detail__subPara p-detail__subPara--center">
                             <p class="p-detail__subTitle">
                                 {{ subStep.title }}
                             </p>
                         </RouterLink>
                         <!--チャレンジ中・クリアなどを表示するのではなく、各サブSTEPの目安達成時間を表示する-->
-                        <p class="p-detail__sub-para p-detail__sub-para--right">
+                        <p class="p-detail__subPara p-detail__subPara--right">
                             {{ (Math.floor(subStep.time_aim/60) !== 0)?Math.floor(subStep.time_aim/60)+'時間':'' }}
                             {{ (subStep.time_aim%60 !== 0)?(subStep.time_aim%60)+'分':'' }}
                         </p>
@@ -128,7 +131,7 @@
             <!--登録したユーザーとログインユーザーが異なる場合に表示-->
             <div class="p-detail__submit" v-if="this.userId !== null && Number(this.step['user_id']) !==  Number(this.userId)">
                 <!--まだこのSTEPに挑戦していない場合に表示-->
-                <button class="c-button p-detail__button p-detail__button--orange"
+                <button class="c-button c-button--orange p-detail__button"
                         v-if="!this.challengeFlg && Number(this.step['step_number']) !==  0"
                         @click="challengeStep(id)">
                         チャレンジ
@@ -204,7 +207,7 @@
         methods: {
             //STEP詳細を取得し表示する
             async fetchStep () {
-                await this.$store.dispatch('step/fetchStep',this.id)
+                await this.$store.dispatch('step/fetchStep',{id: this.id, beforePath:'detail'})
 
                 //apiStatusがtrue（200OK 取得に成功）であれば、
                 if(this.apiStatus) {
@@ -217,8 +220,10 @@
                         }
                    },this.userId)
 
+                   if(this.myChallenge)
+
                    //挑戦状況のデータがあれば、
-                   if(this.myChallenge.length !== 0){
+                   if(this.myChallenge && Array(this.myChallenge) && this.myChallenge.length !== 0){
                         //challengeFlgをtrueにする
                         this.challengeFlg = true
 
@@ -242,12 +247,12 @@
             },
             //STEPに挑戦する
             async challengeStep(mainId,subId){
-                const response = await this.$store.dispatch('step/challenge',{step_id: mainId, substep_id:subId})
+                await this.$store.dispatch('step/challenge',{step_id: mainId, substep_id:subId})
 
                 //apiStatusがtrue（挑戦に成功）の場合は、
                 if(this.apiStatus){
-                    //マイページへ遷移し、挑戦一覧に挑戦したSTEPが追加される
-                    this.$router.push('/mypage')
+                    //STEP詳細画面にクエリパラメータを付与し遷移（コンポーネントの再描写）
+                    this.$router.push( {path:'/steps/'+this.id, query: { challenge:'true'}})
                 }
             },
             //STEPをTwitterでシェアする
@@ -262,7 +267,7 @@
         computed: {
             //apiStatusステートを参照する
             apiStatus () {
-                return this.$store.state.auth.apiStatus
+                return this.$store.state.step.apiStatus
             },
         },
         watch:{

@@ -6,8 +6,11 @@
     background:$background-color_lightRed;
     border:1px solid $background-color_red;
     padding: $space_s;
-    border-radius: 2px;
+    border-radius: 10px;
     box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
     margin-top: $space_l;
+    }
+    &__list{
+        width: 100%;
     }
 }

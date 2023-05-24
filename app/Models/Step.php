@@ -19,6 +19,7 @@ class Step extends Model
         'content',
         'time_aim',
         'step_number',
+        'iamge_path'
     ];
 
     //各モデルとのリレーション

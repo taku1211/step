@@ -1,7 +1,7 @@
 <template>
     <!--Sessionメッセージの表示部分-->
-    <transition name="fade">
-        <div class="c-message p-message" v-if="message">
+    <transition name="c-fade">
+        <div :class="(dangerFlg) ? 'c-message c-message--danger p-message': 'c-message p-message'" v-if="message">
             <i class="fa-solid fa-circle-check"></i>{{ message }}
         </div>
     </transition>
@@ -16,6 +16,9 @@
         ...mapState({
           message: state => state.message.content
         }),
+        dangerFlg(){
+            return this.$store.state.message.dangerFlg
+        }
       }
     }
   </script>

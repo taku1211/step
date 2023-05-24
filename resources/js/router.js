@@ -82,7 +82,28 @@ const routes = [
                 //ログイン済みの場合はmypageへ遷移
                  next('/mypage')
             }else{
-                 next()
+                const token = {
+                    token : to.query.token
+                }
+                const response = axios.post('/api/checkToken', token)
+                response.then(function(data){
+                    console.log(data.data.message)
+                    if(data.status === 200){
+                        next()
+                    }else{
+                        store.commit('message/setContent', {
+                            content: data.data.message,
+                            timeout: 5000
+                          },{root:true})
+                        store.commit('message/setDangerFlg', {
+                        boolean : true,
+                        timeout: 5000
+                        },{root:true})
+                        next('/password/forgot')
+                    }
+                }).catch(function(error) {
+                    next('/500')
+                })
             }
         }
     },

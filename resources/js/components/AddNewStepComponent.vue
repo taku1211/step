@@ -1,10 +1,10 @@
 <template>
-    <div id="l-siteWidth">
+    <div id="l-main--siteWidth">
         <!--新規STEP登録画面-->
         <div class="p-newStep">
 
-                <h2 class="c-ornament p-newStep__title">
-                    <span class="c-ornament__border p-newStep__border">
+                <h2 class="c-ornament">
+                    <span class="c-ornament__border">
                         1. STEP概要の登録
                     </span>
                 </h2>
@@ -12,16 +12,16 @@
                 <!--親元のSTEPを登録するフォーム-->
                 <form action="" class="c-form p-newStep__form" @submit.prevent="createStep">
                         <!--STEPタイトル入力部分-->
-                        <label for="title" class="c-label p-newStep__label">
+                        <label for="title" class="c-label c-label--marginl">
                             タイトル
                         </label>
-                        <input id="title" type="text" name="title" class="c-input p-newStep__input" v-bind:disabled="createSubStepFlg"
-                                placeholder="タイトルを入力してください" v-model="stepForm.title"
-                                :class="[createMainStepFlg ? '':'p-newStep__input--invalid',(registerErrors !== null && registerErrors.title) ? 'c-input--error' : '']">
+                        <input id="title" type="text" name="title" class="c-input" v-bind:disabled="createSubStepFlg"
+                                placeholder="タイトルを入力" v-model="stepForm.title"
+                                :class="[createMainStepFlg ? '':'c-input--invalid',(registerErrors !== null && registerErrors.title) ? 'c-input--error' : '']">
                         <!--バリデーションエラー表示部分-->
-                        <div v-if="registerErrors" class="c-error p-newStep__error">
-                            <ul v-if="registerErrors.title" class="c-error__ul p-newStep__errorUl">
-                                <li class="c-error__list p-newStep__errorList" v-for="msg in registerErrors.title" :key="msg">
+                        <div v-if="registerErrors" class="c-error">
+                            <ul v-if="registerErrors.title" class="c-error__ul">
+                                <li class="c-error__list" v-for="msg in registerErrors.title" :key="msg">
                                     <i class="fa-solid fa-triangle-exclamation"></i>
                                     {{ msg }}
                                 </li>
@@ -29,23 +29,23 @@
                         </div>
 
                         <!--メインカテゴリー選択部分-->
-                        <label for="categoryMain" class="c-label p-newStep__label">
+                        <label for="categoryMain" class="c-label c-label--marginl">
                             メインカテゴリー
                         </label>
-                        <select name="categoryMain" id="categoryMain" class="c-input p-newStep__select" v-model="selectedCategoryMain" v-bind:disabled="createSubStepFlg"
-                                :class="[createMainStepFlg ? '':'p-newStep__input--invalid',(registerErrors !== null && registerErrors.category_main) ? 'c-input--error' : '']">
-                            <option value="メインカテゴリーを選択してください" class="p-newStep__option p-newStep__option--disable" disabled>
-                                メインカテゴリーを選択してください
+                        <select name="categoryMain" id="categoryMain" class="c-select c-select--boxshadow c-select--fullWidth" v-model="selectedCategoryMain" v-bind:disabled="createSubStepFlg"
+                                :class="[createMainStepFlg ? '':'c-select--invalid',(registerErrors !== null && registerErrors.category_main) ? 'c-select--error' : '']">
+                            <option value="メインカテゴリーを選択してください" class="c-select__option c-select__option--disable" disabled>
+                                メインカテゴリーを選択
                             </option>
-                            <option :value="category" class="p-newStep__option" v-for="category in categoryListMain"
-                                    :key="category">
-                                    {{ category }}
+                            <option :value="category.id" class="c-select__option" v-for="category in categoryList"
+                                    :key="category.id">
+                                    {{ category.name }}
                             </option>
                         </select>
                         <!--バリデーションエラー表示部分-->
-                        <div v-if="registerErrors" class="c-error p-newStep__error">
-                            <ul v-if="registerErrors.category_main" class="c-error__ul p-newStep__errorUl">
-                                <li class="c-error__list p-newStep__errorList" v-for="msg in registerErrors.category_main" :key="msg">
+                        <div v-if="registerErrors" class="c-error">
+                            <ul v-if="registerErrors.category_main" class="c-error__ul">
+                                <li class="c-error__list" v-for="msg in registerErrors.category_main" :key="msg">
                                     <i class="fa-solid fa-triangle-exclamation"></i>
                                     {{ msg }}
                                 </li>
@@ -53,23 +53,23 @@
                         </div>
 
                         <!--サブカテゴリー選択部分-->
-                        <label for="categorySub" class="c-label p-newStep__label">
+                        <label for="categorySub" class="c-label c-label--marginl">
                             サブカテゴリー
                         </label>
-                        <select name="categorySub" id="categorySub" class="c-input p-newStep__select" v-model="stepForm.category_sub" v-bind:disabled="createSubStepFlg"
-                                :class="[createMainStepFlg ? '':'p-newStep__input--invalid',(registerErrors !== null && registerErrors.category_sub) ? 'c-input--error' : '']">
-                            <option value="サブカテゴリーを選択してください" class="p-newStep__option p-newStep__option--disable" disabled>
-                                サブカテゴリーを選択してください
+                        <select name="categorySub" id="categorySub" class="c-select c-select--boxshadow c-select--fullWidth" v-model="stepForm.category_sub" v-bind:disabled="createSubStepFlg"
+                                :class="[createMainStepFlg ? '':'c-select--invalid',(registerErrors !== null && registerErrors.category_sub) ? 'c-select--error' : '']">
+                            <option value="サブカテゴリーを選択してください" class="c-select__option c-select__option--disable" disabled>
+                                サブカテゴリーを選択
                             </option>
-                            <option :value="category" class="p-newStep__option" v-for="category in categoryListSubSelected"
-                                    :key="category">
-                                    {{ category }}
+                            <option :value="category.id" class="c-select__option" v-for="category in categoryListSubSelected"
+                                    :key="category.id">
+                                    {{ category.name }}
                             </option>
                         </select>
                         <!--バリデーションエラー表示部分-->
-                        <div v-if="registerErrors" class="c-error p-newStep__error">
-                            <ul v-if="registerErrors.category_sub" class="c-error__ul p-newStep__errorUl">
-                                <li class="c-error__list p-newStep__errorList" v-for="msg in registerErrors.category_sub" :key="msg">
+                        <div v-if="registerErrors" class="c-error">
+                            <ul v-if="registerErrors.category_sub" class="c-error__ul">
+                                <li class="c-error__list" v-for="msg in registerErrors.category_sub" :key="msg">
                                     <i class="fa-solid fa-triangle-exclamation"></i>
                                     {{ msg }}
                                 </li>
@@ -77,73 +77,110 @@
                         </div>
 
                         <!--STEP紹介文入力部分-->
-                        <label for="content" class="c-label p-newStep__label">
+                        <label for="content" class="c-label c-label--marginl">
                             STEP紹介文※500字以内
                         </label>
-                        <textarea name="content" id="content" cols="30" rows="10" class="c-input p-newStep__textarea"
-                                  v-model="stepForm.content" v-bind:disabled="createSubStepFlg" placeholder="500文字以内の自己紹介文を入力できます。"
-                                  :class="[createMainStepFlg ? '':'p-newStep__input--invalid',(registerErrors !== null && registerErrors.content) ? 'c-input--error' : '']">
+                        <textarea name="content" id="content" cols="30" rows="10" class="c-textarea"
+                                  v-model="stepForm.content" v-bind:disabled="createSubStepFlg" placeholder="500文字以内の紹介文を入力できます。"
+                                  :class="[createMainStepFlg ? '':'c-textarea--invalid',(registerErrors !== null && registerErrors.content) ? 'c-textarea--error' : '']">
                         </textarea>
                         <!--バリデーションエラー表示部分-->
-                        <div v-if="registerErrors" class="c-error p-newStep__error">
-                            <ul v-if="registerErrors.content" class="c-error__ul p-newStep__errorUl">
-                                <li class="c-error__list p-newStep__errorList" v-for="msg in registerErrors.content" :key="msg">
+                        <div v-if="registerErrors" class="c-error">
+                            <ul v-if="registerErrors.content" class="c-error__ul">
+                                <li class="c-error__list" v-for="msg in registerErrors.content" :key="msg">
                                     <i class="fa-solid fa-triangle-exclamation"></i>
                                     {{ msg }}
                                 </li>
                             </ul>
                         </div>
 
+                        <!-- STEPアイキャッチ画像登録部分 -->
+                        <label for="image" class="c-label c-label--marginl">
+                            STEPアイキャッチ画像※10MB以内<br>
+                            <span class="u-fontSizeSmall">※画像を登録しない場合は、カテゴリー毎にデフォルトのアイキャッチ画像を表示します。</span>
+                        </label>
+                        <input id="image" type="file" name="image" class="c-input" v-bind:disabled="createSubStepFlg"
+                                placeholder="タイトルを入力してください" @change="onFileChange"
+                                :class="[createMainStepFlg ? '':'c-input--invalid',(registerErrors !== null && registerErrors.image) ? 'c-input--error' : '']">
+
+                        <!--バリデーションエラー部分-->
+                        <div v-if="registerErrors" class="c-error">
+                                <ul v-if="registerErrors.image" class="c-error__ul">
+                                    <li class="c-error__list" v-for="msg in registerErrors.image" :key="msg">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                        {{ msg }}
+                                    </li>
+                                </ul>
+                        </div>
+                        <!--ファイル選択時のエラー表示部分（ファイル形式・ファイルサイズ）-->
+                        <div v-if="sizeErrorMessage" class="c-error">
+                                <ul  class="c-error__ul" v-if="sizeErrorMessage">
+                                    <li class="c-error__list">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                        {{ sizeErrorMessage }}
+                                    </li>
+                                </ul>
+                        </div>
+                        <!--アイキャッチプレビュー部分-->
+                        <div class="c-imagePreview" v-if="preview">
+                            <label class="c-label c-label--marginl u-pointerNone">
+                                アイキャッチ画像プレビュー
+                            </label>
+                            <output>
+                                <img :src="preview" alt="アップロード画像" class="c-imagePreview__image">
+                            </output>
+                        </div>
+
                         <!--親元のSTEPを登録するボタン-->
-                        <div class="c-submit p-newStep__submit">
-                            <button class="c-button p-newStep__button"
-                            :class="createMainStepFlg ? '':'p-newStep__button--invalid' " v-bind:disabled="createSubStepFlg">
+                        <div class="c-submit">
+                            <button class="c-button c-button--orange"
+                            :class="createMainStepFlg ? '':'c-button--invalid' " v-bind:disabled="createSubStepFlg">
                                 STEP概要登録
                             </button>
                         </div>
                 </form>
 
                 <!--親元のSTEPに紐づくサブSTEPを登録する部分-->
-                <transitionGroup name="fadeSoon" tag="div">
-                    <h2 class="c-ornament p-newStep__title" v-if="createSubStepFlg" key="p-newStep__title">
-                        <span class="c-ornament__border p-newStep__border">
+                <transitionGroup name="c-fadeSoon" tag="div">
+                    <h2 class="c-ornament" v-if="createSubStepFlg" key="c-ornament">
+                        <span class="c-ornament__border">
                             2. サブSTEPの登録
                         </span>
                     </h2>
 
                     <form key="p-newStep__form" class="c-form p-newStep__form" v-if="createSubStepFlg" @submit.prevent="createSubStep">
                             <!--一つずつのサブSTEP登録パネル部分-->
-                            <transitionGroup name="fadeSoon" tag="div">
-                                <div class="p-subStep" v-for="object in subStepArray" :key="object">
+                            <transitionGroup name="c-fade" tag="div">
+                                <div class="c-subStep" v-for="object in subStepArray" :key="object">
                                     <!--サブSTEP登録パネルヘッダー-->
-                                    <div class="p-subStep__head">
-                                        <p class="p-subStep__icon p-subStep__icon--disable">✕</p>
-                                        <h3 class="p-subStep__title">STEP {{ subStepArray.indexOf(object)+1 }}</h3>
-                                        <p class="p-subStep__icon" @click="removeSubStep(subStepArray.indexOf(object))">✕</p>
+                                    <div class="c-subStep__head">
+                                        <p class="c-subStep__icon c-subStep__icon--disable">✕</p>
+                                        <h3 class="c-subStep__title">STEP {{ subStepArray.indexOf(object)+1 }}</h3>
+                                        <p class="c-subStep__icon" @click="removeSubStep(subStepArray.indexOf(object))">✕</p>
                                     </div>
                                     <!--サブSTEPタイトル入力部分-->
-                                    <label :for="'subTitle'+(subStepArray.indexOf(object)+1)" class="c-label p-subStep__label">
+                                    <label :for="'subTitle'+(subStepArray.indexOf(object)+1)" class="c-label c-label--marginl">
                                         タイトル
                                     </label>
                                     <input :id="'subTitle'+(subStepArray.indexOf(object)+1)" type="text" :name="'subTitle'+(subStepArray.indexOf(object)+1)"
-                                           class="c-input p-subStep__input" v-model="subStepForm[subStepArray.indexOf(object)].subTitle"
-                                           placeholder="タイトルを入力してください" :class="(registerErrors !== null && registerErrors[subStepArray.indexOf(object)+'.subTitle']) ? 'c-input--error' : ''">
+                                           class="c-input c-input--marginBottomL" v-model="subStepForm[subStepArray.indexOf(object)].subTitle"
+                                           placeholder="タイトルを入力" :class="(registerErrors !== null && registerErrors[subStepArray.indexOf(object)+'.subTitle']) ? 'c-input--error' : ''">
                                     <!--サブSTEP内容入力部分-->
-                                    <label :for="'subContent'+(subStepArray.indexOf(object)+1)" class="c-label p-subStep__label">
+                                    <label :for="'subContent'+(subStepArray.indexOf(object)+1)" class="c-label c-label--marginl">
                                         内容※500字以内
                                     </label>
                                     <textarea :name="'subContent'+(subStepArray.indexOf(object)+1)" :id="'subContent'+(subStepArray.indexOf(object)+1)"
-                                              cols="20" rows="10" class="c-input p-subStep__textarea" v-model="subStepForm[subStepArray.indexOf(object)].subContent"
-                                              :class="(registerErrors !== null && registerErrors[subStepArray.indexOf(object)+'.subContent']) ? 'c-input--error' : ''"
+                                              cols="20" rows="10" class="c-textarea c-textarea--heightLow" v-model="subStepForm[subStepArray.indexOf(object)].subContent"
+                                              :class="(registerErrors !== null && registerErrors[subStepArray.indexOf(object)+'.subContent']) ? 'c-textarea--error' : ''"
                                               placeholder="500文字以内で入力できます。">
                                     </textarea>
                                     <!--サブSTEP目安達成時間選択部分-->
-                                    <label :for="'subTime'+(subStepArray.indexOf(object)+1)" class="c-label p-subStep__label">
+                                    <label :for="'subTime'+(subStepArray.indexOf(object)+1)" class="c-label c-label--marginl">
                                         目安達成時間
                                     </label>
                                     <select :name="'subTime'+(subStepArray.indexOf(object)+1)" :id="'subTime'+(subStepArray.indexOf(object)+1)"
-                                            class="c-input p-subStep__select" v-model="subStepForm[subStepArray.indexOf(object)].subTime"
-                                            :class="(registerErrors !== null && registerErrors[subStepArray.indexOf(object)+'.subTime']) ? 'c-input--error' : ''">
+                                            class="c-select c-select--boxshadow c-select--fullWidth" v-model="subStepForm[subStepArray.indexOf(object)].subTime"
+                                            :class="(registerErrors !== null && registerErrors[subStepArray.indexOf(object)+'.subTime']) ? 'c-select--error' : ''">
                                         <option value="15">15分</option>
                                         <option value="30">30分</option>
                                         <option value="60">1時間</option>
@@ -169,23 +206,23 @@
                             </transitionGroup>
 
                             <!--サブSTEP追加・登録ボタン部分-->
-                            <div class="c-submit p-subStep__submit" key="p-subStep__submit">
-                                <p class="c-button p-subStep__button p-subStep__button--black" @click="addSubStep" v-if="subStepArray.length < 20">
+                            <div class="c-submit c-submit--flex" key="c-submit">
+                                <p class="c-button c-button--twoColumn" @click="addSubStep" v-if="subStepArray && Array(subStepArray) && subStepArray.length < 20">
                                     サブSTEP追加
                                 </p>
                                 <p v-else>
                                     <!--既にサブSTEPが20ある場合、サブSTEP追加のボタンは非表示-->
                                 </p>
 
-                                <button class="c-button p-subStep__button p-subStep__button--orange" v-if="subStepArray.length > 0">
+                                <button class="c-button c-button--orange c-button--twoColumn" v-if="subStepArray && Array(subStepArray) && subStepArray.length > 0">
                                     STEP登録
                                 </button>
                             </div>
 
                             <!--サブSTEPのバリデーションエラー表示部分-->
-                            <div v-if="registerErrors" class="c-error p-newStep__error">
-                                <ul v-for="array,idx in registerErrors" class="c-error__ul p-newStep__errorUl" :key="idx">
-                                    <li class="c-error__list p-newStep__errorList" v-for="msg in array" :key="msg">
+                            <div v-if="registerErrors" class="c-error">
+                                <ul v-for="array,idx in registerErrors" class="c-error__ul" :key="idx">
+                                    <li class="c-error__list" v-for="msg in array" :key="msg">
                                         <i class="fa-solid fa-triangle-exclamation"></i>
                                         {{ msg }}
                                     </li>
@@ -199,43 +236,28 @@
 </template>
 
 <script>
+    import CategoryListJson from "./../../json/categoryList.json"
     export default {
         data: function() {
             return {
                 stepForm: {
                     title: '',
-                    category_main: this.selectedCategoryMain,
-                    category_sub:'',
+                    category_main: null,
+                    category_sub:null,
                     content:'',
+                    image: null,
+                    imageName: null,
                 },
+                selectedCategoryMain: 'メインカテゴリーを選択してください',
                 subStepForm: [{subTitle:'',subContent:'', subTime: null, order:null}],
                 createMainStepFlg:true,
                 createSubStepFlg:false,
                 countAddSubStep: 1,
                 subStepArray: [1],
-                selectedCategoryMain:'メインカテゴリーを選択してください',
-                categoryListMain:['自己啓発','ビジネススキル','開発','デザイン','財務会計','ITとソフトウェア','マーケティング',
-                                  '趣味・実用・ホビー','写真と動画','健康・フィットネス','音楽','教育・教養'],
+                sizeErrorMessage:'',
+                preview:'',
+                categoryList: CategoryListJson["mainCategory"],
                 categoryListSubSelected:[],
-                categoryListSub1:['目標達成','生産性向上','リーダーシップ','キャリア','子育て&家族','ポジティブシンキング','哲学・宗教','パーソナルブランディング',
-                                  'クリエイティブスキル','コミュニケーションスキル','ストレス管理','記憶力向上','モチベーション','その他の自己啓発'],
-                categoryListSub2:['新規事業開発','コミュニケーション','チームマネジメント','営業・販売スキル','ビジネス戦略','業務オペレーション',
-                                  '法務知識','プロジェクト管理','ビジネスアナリティクス','人事','業界別スキル','Eコマース','メディア活用','不動産投資','その他のビジネス'],
-                categoryListSub3:['ウェブ開発','データサイエンス','モバイル開発','プログラミング言語','ゲーム開発','DBデザイン・開発','ソフトウェアテスト',
-                                    'ソフトウェアエンジニアリング','ソフトウェア開発ツール','コードなしの開発','その他の開発'],
-                categoryListSub4:['ウェブデザイン','グラフィックデザインとイラストレーション','デザインツール','UX（ユーザー体験）デザイン','ゲームデザイン',
-                                  '3D・アニメーション','ファッションデザイン','建築デザイン','インテリアデザイン','その他のデザイン'],
-                categoryListSub5:['会計＆簿記','コンプライアンス','暗号通貨＆ブロックチェーン','経済学','ファイナンス','ファイナンス資格','財務モデリング・分析',
-                                  '投資・株式','資金管理','税金','その他の財務会計'],
-                categoryListSub6:['IT資格','ネットワークとセキュリティ','ハードウェア','OSとソフトウェア','その他のIT・ソフトウェア'],
-                categoryListSub7:['デジタルマーケティング','SEO','SNSマーケティング','ブランディング','マーケティングの基礎','市場分析と自動化','PR','動画・モバイルマーケティング',
-                                  'コンテンツマーケティング','アフィリエイトマーケティング','プロダクトマーケティング','その他のマーケティング'],
-                categoryListSub8:['アート・ものづくり','ビューティー','エソテリックプラクティス','料理','ゲーム','DIY・リフォーム','ガーデニング','アウトドア',
-                                  'ペット','旅行','その他の趣味・実用・ホビー'],
-                categoryListSub9:['デジタル写真','写真','人物写真撮影','撮影ツール','映像制作','その他の写真と動画'],
-                categoryListSub10:['エクササイズ','健康','スポーツ','栄養学＆ダイエット','ヨガ','心のケア','武道＆護身術','応急措置','ダンス','瞑想','その他の健康・フィットネス'],
-                categoryListSub11:['楽器演奏','作詞・作曲','音楽の基礎','ボイストレーニング','演奏テクニック','音楽ソフトの使い方','その他の音楽'],
-                categoryListSub12:['エンジニアリング','人文科学','数学','科学','オンライン教育','社会学','言語','講師向けトレーニング','入試・資格','その他の教育・教養'],
             }
         },
         methods: {
@@ -245,6 +267,8 @@
                 if(this.selectedCategoryMain !== 'メインカテゴリーを選択してください'){
                     this.stepForm.category_main = this.selectedCategoryMain
                 }
+                this.stepForm.category_main = (this.stepForm.category_main === 'メインカテゴリーを選択してください') ? null : this.stepForm.category_main
+                this.stepForm.category_sub = (this.stepForm.category_sub === 'サブカテゴリーを選択してください') ? null : this.stepForm.category_sub
                 await this.$store.dispatch('step/create', this.stepForm)
 
                 //親元のSTEPの登録が成功したとき、（apiStatusがtrueのとき）
@@ -276,57 +300,20 @@
                 //削除したサブSTEP用のオブジェクトを配列から削除する
                 this.subStepForm.splice(number,1)
             },
+            //commonFuncのchangeSubCategoryを上書き
             //サブカテゴリーの表示項目を変更する
-            changeSubCategory(category){
+            changeSubCategory(categoryId){
                 //既に選択されているサブカテゴリーを空にする
                 this.stepForm.category_sub = null
-
-                switch(category){//引数のカテゴリーに連動して、サブカテゴリーの項目を変更する
-                    case '自己啓発':
-                        this.categoryListSubSelected = this.categoryListSub1
-                        break;
-                    case 'ビジネススキル':
-                        this.categoryListSubSelected = this.categoryListSub2
-                        break;
-                    case '開発':
-                        this.categoryListSubSelected = this.categoryListSub3
-                        break;
-                        case 'デザイン':
-                        this.categoryListSubSelected = this.categoryListSub4
-                        break;
-                    case '財務会計':
-                        this.categoryListSubSelected = this.categoryListSub5
-                        break;
-                    case 'ITとソフトウェア':
-                        this.categoryListSubSelected = this.categoryListSub6
-                        break;
-                    case 'マーケティング':
-                        this.categoryListSubSelected = this.categoryListSub7
-                        break;
-                    case '趣味・実用・ホビー':
-                        this.categoryListSubSelected = this.categoryListSub8
-                        break;
-                    case '写真と動画':
-                        this.categoryListSubSelected = this.categoryListSub9
-                        break;
-                    case '健康・フィットネス':
-                        this.categoryListSubSelected = this.categoryListSub10
-                        break;
-                    case '音楽':
-                        this.categoryListSubSelected = this.categoryListSub11
-                        break;
-                    case '教育・教養':
-                        this.categoryListSubSelected = this.categoryListSub12
-                        break;
-                    default:
-                        this.categoryListSubSelected = []
-                }
+                this.categoryListSubSelected = (categoryId && typeof(categoryId) === 'number') ? this.categoryList[categoryId - 1]["subCategory"] : [];
             },
             //サブSTEPを登録する
             async createSubStep(){
-                //サブSTEPの順番（order）をsubStepForm配列に追加する
-                for(let i = 0; i<this.subStepForm.length; i++){
-                    this.subStepForm[i]["order"] = i+1
+                if(this.subStepForm && Array(this.subStepForm)){
+                    //サブSTEPの順番（order）をsubStepForm配列に追加する
+                    for(let i = 0; i<this.subStepForm.length; i++){
+                        this.subStepForm[i]["order"] = i+1
+                    }
                 }
 
                 await this.$store.dispatch('step/createSubStep', this.subStepForm)
@@ -340,6 +327,57 @@
             //validationエラーを空にする
             clearError () {
                      this.$store.commit('step/setRegisterErrorMessages', null)
+            },
+                        //フォームでファイルが選択されたら実行される処理
+            //ファイルのデータURLを取得する
+            onFileChange (event) {
+                //ファイル選択時エラーのメッセージを初期化
+                this.sizeErrorMessage = ''
+
+                // 何も選択されていなかったら処理中断
+                if (event.target.files.length === 0) {
+                    this.reset()
+                    return false
+                }
+
+                // ファイルが画像ではなかったら処理を中断し、ファイル選択時のエラーを表示
+                if (! event.target.files[0].type.match('image.*')) {
+                    this.reset()
+                    this.sizeErrorMessage = 'ファイル形式が違います。'
+                    return false
+                }
+                // ファイルサイズが10MBを超えていたら処理を中断し、ファイル選択時のエラーを表示
+                if ( event.target.files[0].size > 1024*1024*10) {
+                    this.reset()
+                    this.sizeErrorMessage = 'ファイルサイズが10MBを超えています。'
+                    return false
+                }
+
+                // FileReaderクラスのインスタンスを生成
+                const reader = new FileReader()
+
+                // ファイルを読み込み終わったタイミングで実行する処理
+                reader.onload = e => {
+                    // previewに読み込み結果（データURL）を代入する
+                    // previewに値が入ると<output>につけたv-ifがtrueと判定される
+                    // また<output>内部の<img>のsrc属性はpreviewの値を参照しているので
+                    // 結果として画像が表示される
+                    this.preview = e.target.result
+                }
+
+                // ファイルを読み込む
+                // 読み込まれたファイルはデータURL形式で受け取れる（上記onload参照）
+                reader.readAsDataURL(event.target.files[0])
+                //読み込まれたファイルのデータURLをstepForm.imageに代入する
+                this.stepForm.image = event.target.files[0]
+            },
+            // ファイル選択欄の値とプレビュー表示をリセットする
+            reset () {
+                this.preview = null
+
+                this.$el.querySelector('input[type="file"]').value = null
+                this.stepForm.image = null
+                this.sizeErrorMessage = ''
             },
         },
         computed: {
@@ -364,7 +402,7 @@
                 this.changeSubCategory(newData)
                 },
                 deep:true,
-                immediate:true,
+                //immediate:true,
             }
         },
     }

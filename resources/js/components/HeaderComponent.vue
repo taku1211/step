@@ -1,69 +1,69 @@
 <template>
     <!--ヘッターー部分-->
     <header id="l-header">
-        <div class="p-header">
-            <h1 class="c-logo p-header__logo">
-                    <a href="#" class="p-header__logoLink" v-if="path === '/'" @click.prevent="returnTop">
+        <div class="c-header">
+            <h1 class="c-logo c-logo--header">
+                    <a href="#" class="c-logo__link" v-if="path === '/'" @click.prevent="returnTop">
                         <img src="../../image/header_logo.png" alt="サイトロゴ「STEP」">
                     </a>
-                    <RouterLink class="p-header__logoLink" to="/" v-else>
+                    <RouterLink class="c-logo__link" to="/" v-else>
                         <img src="../../image/header_logo.png" alt="サイトロゴ「STEP」">
                     </RouterLink>
             </h1>
             <!--レスポンシブ対応（width:767px未満）の場合ハンバーガーメニューを表示-->
             <!--ただし、エラー画面の場合は、ハンバーガーメニュー非表示-->
-            <ul class="p-header__humburgerMenu" v-if="path !== '/404' && path !== '/500' && path !== '/419'">
-                <li class="p-header__icon" v-if="!openHeaderMenu" @click="openMenu"><i class="fa-solid fa-bars" ></i></li>
-                <li class="p-header__icon" v-else><i class="fa-solid fa-xmark" ></i></li>
+            <ul class="c-header__humburgerMenu" v-if="path !== '/404' && path !== '/500' && path !== '/419'">
+                <li class="c-header__icon" v-if="!openHeaderMenu" @click="openMenu"><i class="fa-solid fa-bars" ></i></li>
+                <li class="c-header__icon" v-else><i class="fa-solid fa-xmark" ></i></li>
             </ul>
             <!--それ以外の場合はメニューを表示-->
             <!--ただし、エラー画面の場合は、メニュー非表示-->
-            <div class="p-header__flexRight" v-if="path !== '/404' && path !== '/500' && path !== '/419'">
-                <nav class="c-nav p-header__nav">
-                    <ul class="c-nav__menu p-header__menu">
-                        <li class="p-header__list">
-                            <a href="#" class="p-header__link" v-if="path === '/'" @click.prevent="returnTop">
+            <div class="c-header__flexRight" v-if="path !== '/404' && path !== '/500' && path !== '/419'">
+                <nav class="c-nav">
+                    <ul class="c-nav__menu">
+                        <li class="c-nav__list">
+                            <a href="#" class="c-nav__link" v-if="path === '/'" @click.prevent="returnTop">
                                 Top
                             </a>
-                            <RouterLink class="p-header__link" to="/" v-else>
+                            <RouterLink class="c-nav__link" to="/" v-else>
                                 Top
                             </RouterLink>
                         </li>
-                        <li class="p-header__list">
-                            <a href="#" v-scroll-to="'#about'" class="p-header__link" v-if="path === '/'">
+                        <li class="c-nav__list">
+                            <a href="#" v-scroll-to="'#about'" class="c-nav__link" v-if="path === '/'">
                                 About
                             </a>
-                            <RouterLink class="p-header__link" v-scroll-to="'#about'" to="/#about" v-else>
+                            <RouterLink class="c-nav__link" v-scroll-to="'#about'" to="/#about" v-else>
                                 About
                             </RouterLink>
                         </li>
-                        <li class="p-header__list">
-                            <RouterLink class="p-header__link" to="/index">
+                        <li class="c-nav__list">
+                            <RouterLink class="c-nav__link" to="/index">
                                 All STEP
                             </RouterLink>
                         </li>
-                        <li class="p-header__list" v-if="isLogin">
-                            <RouterLink class="p-header__link" to="/mypage">
+                        <li class="c-nav__list" v-if="isLogin">
+                            <RouterLink class="c-nav__link" to="/mypage">
                                 Mypage
                             </RouterLink>
                         </li>
-                        <li class="p-header__list" v-else>
-                            <RouterLink class="p-header__link" to="/login">
+                        <li class="c-nav__list" v-else>
+                            <RouterLink class="c-nav__link" to="/login">
                                 Login
                             </RouterLink>
                         </li>
-                        <li class="p-header__list" v-if="isLogin">
-                            <RouterLink class="p-header__link" to="/setting">
+                        <li class="c-nav__list" v-if="isLogin">
+                            <RouterLink class="c-nav__link" to="/setting">
                                 Setting
                             </RouterLink>
                         </li>
-                        <li class="p-header__list" v-else>
-                            <RouterLink class="p-header__link" to="/register">
+                        <li class="c-nav__list" v-else>
+                            <RouterLink class="c-nav__link" to="/register">
                                 Register
                             </RouterLink>
                         </li>
-                        <li class="p-header__list" v-if="isLogin">
-                            <a class="p-header__link" @click="logout">Logout</a>
+                        <li class="c-nav__list" v-if="isLogin">
+                            <a class="c-nav__link" @click="logout">Logout</a>
                         </li>
 
                     </ul>
@@ -74,10 +74,10 @@
         <!--Sessionメッセージ表示用のコンポーネントの読み込み-->
         <message-component></message-component>
         <!--ハンバーガーメニュー用のコンポーネントの読み込み-->
-        <transition name="fadeSoon">
+        <transition name="c-fade">
             <overview-component v-if="openHeaderMenu" @closeMenu="closeMenu"></overview-component>
         </transition>
-        <transition name="top">
+        <transition name="c-slideDown">
             <headermenu-component v-if="openHeaderMenu" @closeMenu="closeMenu" :path="path"></headermenu-component>
         </transition>
     </header>
@@ -106,23 +106,6 @@
             }
         },
         methods: {
-            //ログアウト処理
-            async logout() {
-                await this.$store.dispatch('auth/logout')
-
-                //apiStatusがtrue（200OK）であれば
-                if (this.apiStatus) {
-                    //ログインページへ遷移する
-                     this.$router.push('/login')
-                }
-            },
-            //ページ上部へ戻る
-            returnTop(){
-                window.scroll({
-                    top:0,
-                    behavior:'smooth',
-                })
-            },
             //ハンバーガーメニューを拓く
             openMenu(){
                 this.openHeaderMenu = true

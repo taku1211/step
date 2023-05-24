@@ -33,6 +33,8 @@ Route::post('/updateUser', [App\Http\Controllers\UserController::class, 'update'
 Route::post('password/request', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('sendResetLinkEmail');
 //パスワード再設定
 Route::post('password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('resetPassword');
+Route::post('/checkToken', [App\Http\Controllers\Auth\ResetPasswordController::class, 'checkToken'])->name('checkToken');
+
 //セッションに保存されているtokenリセット
 Route::get('/token/refresh', function (Illuminate\Http\Request $request) {
     $request->session()->regenerateToken();
@@ -91,9 +93,6 @@ Route::post('/myChallengeSearch', [App\Http\Controllers\StepController::class, '
 
 //挑戦するSTEPを登録する
 Route::post('/challenge',[App\Http\Controllers\ChallengeController::class, 'challenge'])->name('challenge');
-//挑戦しているSTEPの一覧を取得する
-Route::get('/challenge/{id}',[App\Http\Controllers\ChallengeController::class, 'index'])->name('indexChallenge');
-
 //サブSTEPをクリアする
 Route::post('/clear',[App\Http\Controllers\ChallengeController::class, 'clear'])->name('clear');
 //クリア済のサブSTEPの時間を更新する

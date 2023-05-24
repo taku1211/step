@@ -1,0 +1,19 @@
+//トップページ　aboutの文章のfadeInアニメーション
+.c-jsFadeIn{
+    opacity: 0;
+    position: relative;
+    top:10px;
+    transition:1.5s;
+    @include mq(tab){
+        opacity: 1;
+        top: 0;
+    }
+    @include mq(){
+        opacity: 1;
+        top: 0;
+    }
+    &--active{
+        opacity: 1;
+        top:0;
+    }
+}

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -22,6 +23,8 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
+    static $createRecordError = '新規登録に失敗しました。ご迷惑をおかけしますが、しばらく時間を置いてから再度実施してください。';
+    static $systemError = '予期せぬエラーが発生しました。ご迷惑をおかけしますが、しばらく時間を置いてから再度実施してください。';
 
     use RegistersUsers;
 
@@ -64,13 +67,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            //'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'icon' => null,
-            'introduction' => null,
-        ]);
+        try{
+            $user = User::create([
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'icon' => null,
+                'introduction' => null,
+            ]);
+            if(empty($user)){
+                $createError = new \Exception();
+                Log::error($createError);
+                // フロントに異常を通知するため500エラーを返却
+                return response()->json(['message' => RegisterController::$createRecordError, 'status' => false], 500);
+            }else{
+                return $user;
+            }
+        } catch (\Exception $e) {
+            //ログにエラー内容を入力
+            Log::error($e);
+            // フロントに異常を通知するため500エラーを返却
+            return response()->json(['message' => RegisterController::$systemError,'status' => false], 500);
+        }
     }
     // RegistersUsers/registerdメソッドのオーバーライド（リダイレクトせずにjson形式で登録したユーザー情報を返却させる
     protected function registered(Request $request, $user)
