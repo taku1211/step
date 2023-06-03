@@ -1,0 +1,9 @@
+//STEP登録画面フォームレイアウト
+.p-newStepForm{
+    width: 50%;
+    @include mq(){
+        width: 80%;
+    }
+}
+
+

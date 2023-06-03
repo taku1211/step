@@ -638,7 +638,6 @@ const actions = {
     async fetchStep(context, data) {
         //APIステータスを空にする
         context.commit('setApiStatus', null)
-        console.log(data.beforePath)
         //指定idのSTEPのデータを一つ取得し、結果をresponseに格納
         const response = await axios.get(`/api/steps/${data.id}`)
 

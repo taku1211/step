@@ -1,7 +1,7 @@
 <template>
     <div id="l-main--siteWidth">
         <!--パスワード再設定画面-->
-        <section class="c-authPage">
+        <section>
             <h2 class="c-ornament">
                 <span class="c-ornament__border">
                     パスワード再設定

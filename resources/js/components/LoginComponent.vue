@@ -1,7 +1,7 @@
 <template>
     <div id="l-main--siteWidth">
         <!--ログイン画面-->
-        <section class="c-authPage">
+        <section>
             <h2 class="c-ornament">
                 <span class="c-ornament__border">
                     Login
@@ -48,8 +48,8 @@
                     <button type="submit" class="c-button c-button--orange">ログイン</button>
                 </div>
                 <!--パスワード再設定用ページへのリンク-->
-                <p class="c-authPage__para">
-                    <RouterLink class="c-authPage__link" to="/password/forgot">
+                <p>
+                    <RouterLink class="c-authPageLink" to="/password/forgot">
                         パスワードの再設定はこちらから
                     </RouterLink>
                 </p>

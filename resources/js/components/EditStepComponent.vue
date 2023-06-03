@@ -99,12 +99,12 @@
                                 </ul>
                         </div>
                         <!--アイキャッチ画像プレビュー部分-->
-                        <div class="c-imagePreview" v-if="preview">
+                        <div v-if="preview">
                             <label class="c-label c-label--marginl u-pointerNone">
                                 アイキャッチ画像プレビュー
                             </label>
                             <output>
-                                <img :src="preview" alt="アップロード画像" class="c-imagePreview__image">
+                                <img :src="preview" alt="アップロード画像" class="c-imagePreview">
                             </output>
                         </div>
 

@@ -1,15 +1,3 @@
-//slideUpアニメーション
-.c-slideUp-enter-from{
-    height: 0;
-}
-.c-slideUp-enter-active, .c-slideUp-move{
-    transition: all 0.5s ease;
-    height: 0;
-}
-.c-slideUp-enter-to{
-    height: 30vh;
-}
-
 //SlideDownアニメーション
 .c-slideDown-enter-active, .c-slideDown-leave-active {
     transform: translate(0px, 0px);

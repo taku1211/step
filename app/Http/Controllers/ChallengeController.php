@@ -29,7 +29,6 @@ class ChallengeController extends Controller
     {
         $request->validate([
             'step_id' => ['required', 'int','max:18446744073709551615','min:0'],
-            'substep_id' => [ 'int','max:18446744073709551615','min:0'],
         ]);
 
 
@@ -47,6 +46,10 @@ class ChallengeController extends Controller
             $subStep = SubStep::where([
                 ['step_id','=',$request->step_id],
             ])->orderBy('order','asc')->get();
+        }catch (ModelNotFoundException $e) {
+            Log::error($e);
+            // フロントに異常を通知するため404エラーを返却
+            return response()->json(['message' => ChallengeController::$notFoundRecordError, 'status' => false], 404);
         } catch (\Exception $e) {
             Log::error($e);
             // フロントに異常を通知するため500エラーを返却
@@ -60,7 +63,7 @@ class ChallengeController extends Controller
         if(!$subStepCount){
             $recordError = new ModelNotFoundException();
             Log::error($recordError);
-            // フロントに異常を通知するため500エラーを返却
+            // フロントに異常を通知するため404エラーを返却
             return response()->json(['message' => ChallengeController::$notFoundRecordError,'status' => false], 404);
         }
 
@@ -76,7 +79,7 @@ class ChallengeController extends Controller
             $challengeMainStep->user_id = $userId;
             $challengeMainStep->step_id = $request->step_id;
             //STEP自体での挑戦ではsubstep_idはnull
-            $challengeMainStep->substep_id = $request->substep_id;
+            $challengeMainStep->substep_id = null;
             //まだ挑戦をクリアしていないので、実施時間は0で登録
             $challengeMainStep->time = 0;
             //orderはサブSTEPが何番目かを示すためSTEP自体の挑戦は0で登録
@@ -141,7 +144,7 @@ class ChallengeController extends Controller
             return response()->json(['message' => ChallengeController::$systemError, 'status' => false], 500);
         }
     }
-    //抽選中のSTEPをクリアする処理
+    //挑戦中のSTEPをクリアする処理
     public function clear(Request $request)
     {
         $request->validate([
@@ -156,6 +159,10 @@ class ChallengeController extends Controller
                 ['step_id','=',$request->mainId],
                 ['order','<>',0]
             ])->get();
+        }catch (ModelNotFoundException $e) {
+            Log::error($e);
+            // フロントに異常を通知するため404エラーを返却
+            return response()->json(['message' => ChallengeController::$notFoundRecordError, 'status' => false], 404);
         } catch (\Exception $e) {
             Log::error($e);
             // フロントに異常を通知するため500エラーを返却
@@ -373,8 +380,8 @@ class ChallengeController extends Controller
             return response()->json(['message' => ChallengeController::$systemError, 'status' => false], 500);
         }
 
-        //取得した挑戦データが未クリアの場合は、更新処理ではないため500エラーを返却
-        if($challenge->clear_flg === 0){
+        //取得した挑戦データが未クリアもしくは未挑戦の場合は、更新処理ではないため500エラーを返却
+        if($challenge->clear_flg === 0 || $challenge->challenge_flg === 0 ){
             $recordError = new \Exception();
             Log::error($recordError);
             return response()->json(['message' => ChallengeController::$updateError, 'status' => false], 500);
@@ -447,4 +454,5 @@ class ChallengeController extends Controller
             return response()->json(['message' => ChallengeController::$systemError, 'status' => false], 500);
         }
     }
+
 }

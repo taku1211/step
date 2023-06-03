@@ -13,12 +13,13 @@
     &--siteWidth{
         width: $site-width;
         margin: 0 auto 0 auto;
-        @include mq(){
-            width: 100%;
-        }
         @include mq(tab){
             width: 100%;
         }
+        @include mq(){
+            width: 100%;
+        }
+
     }
     &--fullWidth{
         width: calc(100vw - 20px);

@@ -87,7 +87,6 @@ const routes = [
                 }
                 const response = axios.post('/api/checkToken', token)
                 response.then(function(data){
-                    console.log(data.data.message)
                     if(data.status === 200){
                         next()
                     }else{

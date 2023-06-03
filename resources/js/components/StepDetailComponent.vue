@@ -246,8 +246,8 @@
                 this.userIntroduction = (this.step['user']['introduction'] === null)?'自己紹介はまだ登録されていません。':this.step['user']['introduction']
             },
             //STEPに挑戦する
-            async challengeStep(mainId,subId){
-                await this.$store.dispatch('step/challenge',{step_id: mainId, substep_id:subId})
+            async challengeStep(mainId){
+                await this.$store.dispatch('step/challenge',{step_id: mainId})
 
                 //apiStatusがtrue（挑戦に成功）の場合は、
                 if(this.apiStatus){

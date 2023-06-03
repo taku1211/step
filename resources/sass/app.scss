@@ -31,7 +31,7 @@
 @import './object/component/headerMenu';
 @import './object/component/footer';
 @import './object/component/message';
-@import './object/component/authPage';
+@import './object/component/authPageLink';
 @import './object/component/allList';
 @import './object/component/form';
 @import './object/component/select';
@@ -53,7 +53,8 @@
 @import './object/component/returnButton';
 @import './object/component/overlay';
 @import './object/component/subStep';
-@import './object/component/vueSlideAnimation';
+@import './object/component/vueSlideUpAnimation';
+@import './object/component/vueSlideDownAnimation';
 @import './object/component/vueFadeAnimation';
 @import './object/component/jsFadeAnimation';
 
@@ -67,7 +68,7 @@
 @import './object/project/mypage';
 @import './object/project/stepDetail';
 @import './object/project/subStepDetail';
-@import './object/project/addNewStep';
+@import './object/project/addNewStepForm';
 @import './object/project/editStep';
 @import './object/project/feature';
 

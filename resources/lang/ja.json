@@ -1,0 +1,10 @@
+{
+    "Unauthorized": "認証エラーです。再度ログインしてください。",
+    "Forbidden": "この操作は許可されていません。",
+    "Not Found": "ページが見つかりません。",
+    "Page Expired": "有効期限が切れています。",
+    "Too Many Requests": "リクエストが頻繁に発生しています。",
+    "Server Error": "システムエラーが発生しました。",
+    "Service Unavailable": "現在サービスはご利用頂けません。",
+    "CSRF token mismatch.": "認証エラーです。再度ログインしてください。"
+}

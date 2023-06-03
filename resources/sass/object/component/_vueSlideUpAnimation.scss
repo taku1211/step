@@ -1,0 +1,11 @@
+//slideUpアニメーション
+.c-slideUp-enter-from{
+    height: 0;
+}
+.c-slideUp-enter-active, .c-slideUp-move{
+    transition: all 0.5s ease;
+    height: 0;
+}
+.c-slideUp-enter-to{
+    height: 30vh;
+}

@@ -1,7 +1,7 @@
 <template>
     <div id="l-main--siteWidth">
         <!--パスワード再設定メール送信画面-->
-        <div class="c-authPage">
+        <div>
             <h2 class="c-ornament">
                 <span class="c-ornament__border">
                     パスワード再設定
@@ -34,8 +34,8 @@
                     </button>
                 </div>
                 <!--ログイン画面へのリンク-->
-                <p class="c-authPage__para">
-                    <RouterLink class="c-authPage__link" to="/login">
+                <p>
+                    <RouterLink class="c-authPageLink" to="/login">
                         ログインはこちらから
                     </RouterLink>
                 </p>

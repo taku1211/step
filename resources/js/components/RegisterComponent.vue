@@ -1,7 +1,7 @@
 <template>
     <div id="l-main--siteWidth">
         <!--新規ユーザー登録画面-->
-        <section class="p-register">
+        <section>
             <h2 class="c-ornament">
                 <span class="c-ornament__border">
                     Register
@@ -54,8 +54,8 @@
                     <button type="submit" class="c-button c-button--orange">登録する</button>
                 </div>
                 <!--ログインページへのリンク-->
-                <p class="c-authPage__para">
-                    <RouterLink class="c-authPage__link" to="/login">
+                <p>
+                    <RouterLink class="c-authPageLink" to="/login">
                         ログインはこちらから
                     </RouterLink>
                 </p>

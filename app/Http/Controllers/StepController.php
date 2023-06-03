@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
 
 class StepController extends Controller
 {
@@ -174,7 +173,6 @@ class StepController extends Controller
         if($request->category_sub === "null"){
             $request->merge(['category_sub' => null]);
         }
-        Log::debug($request);
 
         //バリデーション
          $request->validate([
@@ -191,14 +189,7 @@ class StepController extends Controller
              'subStepForm.*.order' => ['required', 'int','max:18446744073709551615','min:0'],
         ]);
 
-        // Validator::make($subStepForm, [
-        //     '*.title' => [ 'required', 'string', 'max:255'],
-        //     '*.content' => ['string', 'max:500','nullable'],
-        //     '*.time_aim' => ['required', 'int','max:18446744073709551615','min:0'],
-        //     '*.order' => ['required', 'int','max:18446744073709551615','min:0'],
-        // ])->validate();
-
-        //更新するSTEPをuserIdとcategoryIdで絞って取得
+        //更新するSTEPをuserIdとstepIdで絞って取得
         $userId = Auth::user()->id;
 
         //認証を挟んでいるのでありえないはずだが
@@ -207,10 +198,10 @@ class StepController extends Controller
             return response()->json(['status' => false], 419);
         }
 
-        $categoryId = $request->id;
+        $stepId = $request->id;
         try{
             $step = Step::where([
-                ['id', '=' , $categoryId],
+                ['id', '=' , $stepId],
                 ['user_id', '=', $userId],
             ])->with(['subSteps'])->firstOrFail();
         } catch (ModelNotFoundException $e) {
@@ -248,7 +239,6 @@ class StepController extends Controller
             //1. 削除処理
             //削除するサブSTEPのデータ数を取得
             $deleteData = json_decode($request->deletedSubStep, true);
-            Log::debug($deleteData);
             $deleteCount = count($deleteData);
 
             //deleteCountが0もしくはnullでなければ、if内を実行
@@ -341,13 +331,13 @@ class StepController extends Controller
                 for($i=0;$i<$subStepCount;$i++){
                     //SubStepモデルのidをキーとして、idが存在すれば更新、なければ新規追加する
                     $subStep = SubStep::upsert([
-                        ['id' => $subStepForm[$i]['id'],
+                        'id' => $subStepForm[$i]['id'],
                         'title' => $subStepForm[$i]['title'],
                         'time_aim' => $subStepForm[$i]['time_aim'],
                         'content' => $subStepForm[$i]['content'],
                         'step_id' => $request->id,
                         'order' => $subStepForm[$i]['order'],
-                        'user_id' => $userId]
+                        'user_id' => $userId
                     ],['id']);
 
                     //更新に成功した場合は、そのまま後続処理を継続
@@ -393,6 +383,7 @@ class StepController extends Controller
         if(!$userId){
             return response()->json(['status' => false], 419);
         }
+        DB::beginTransaction();
         try{
             $step = Step::where([
                 ['id', '=', $request->id],
@@ -401,6 +392,7 @@ class StepController extends Controller
             //削除に成功した場合は、そのまま$stepを返却
             //削除対象のレコードが存在せず、削除ができなかった場合は、500エラーを返却
             if($step){
+                DB::commit();
                 return $step;
             }else{
                 DB::rollback();
@@ -442,6 +434,7 @@ class StepController extends Controller
     //検索条件に合致するSTEPをページごとに取得する（サブSTEPが0のSTEPは除く）
     public function search(Request $request)
     {
+
         //キーワード検索を行う文字について、メタ文字をエスケープする
         $keyword = '%'.addcslashes($request->keyword, '%_\\').'%' ?? "";
         $categoryMain = $request->selectedCategoryMain ?? "";
@@ -706,7 +699,7 @@ class StepController extends Controller
 
 
     }
-    //検索条件に合致するSTEPをページごとに取得する（既に削除済のSTEPも含む）
+    //検索条件に合致する自分が挑戦しているSTEPをページごとに取得する（既に削除済のSTEPも含む）
     public function searchMyChallenge(Request $request)
     {
         //キーワード検索を行う文字について、メタ文字をエスケープする

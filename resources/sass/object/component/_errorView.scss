@@ -1,5 +1,6 @@
 //input部分：validationエラー時のcss
 .c-errorView{
+    width: 100%;
     &__para{
         line-height: 3;
     }

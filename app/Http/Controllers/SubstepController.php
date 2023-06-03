@@ -27,7 +27,6 @@ class SubstepController extends Controller
     //サブSTEPの新規登録
     public function create(Request $request)
     {
-
         $request->validate([
             '*.subTitle' => [ 'required', 'string', 'max:255'],
             '*.subContent' => ['string', 'max:500','nullable'],

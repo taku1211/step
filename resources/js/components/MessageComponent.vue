@@ -1,7 +1,8 @@
 <template>
     <!--Sessionメッセージの表示部分-->
     <transition name="c-fade">
-        <div :class="(dangerFlg) ? 'c-message c-message--danger p-message': 'c-message p-message'" v-if="message">
+        <div :class="(dangerFlg) ? 'c-message c-message--danger p-message': 'c-message p-message'"
+        v-if=" message ">
             <i class="fa-solid fa-circle-check"></i>{{ message }}
         </div>
     </transition>

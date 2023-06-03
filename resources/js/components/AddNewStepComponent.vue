@@ -1,7 +1,7 @@
 <template>
     <div id="l-main--siteWidth">
         <!--新規STEP登録画面-->
-        <div class="p-newStep">
+        <div>
 
                 <h2 class="c-ornament">
                     <span class="c-ornament__border">
@@ -10,7 +10,7 @@
                 </h2>
 
                 <!--親元のSTEPを登録するフォーム-->
-                <form action="" class="c-form p-newStep__form" @submit.prevent="createStep">
+                <form action="" class="c-form p-newStepForm" @submit.prevent="createStep">
                         <!--STEPタイトル入力部分-->
                         <label for="title" class="c-label c-label--marginl">
                             タイトル
@@ -122,12 +122,12 @@
                                 </ul>
                         </div>
                         <!--アイキャッチプレビュー部分-->
-                        <div class="c-imagePreview" v-if="preview">
+                        <div v-if="preview">
                             <label class="c-label c-label--marginl u-pointerNone">
                                 アイキャッチ画像プレビュー
                             </label>
                             <output>
-                                <img :src="preview" alt="アップロード画像" class="c-imagePreview__image">
+                                <img :src="preview" alt="アップロード画像" class="c-imagePreview">
                             </output>
                         </div>
 

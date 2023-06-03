@@ -144,7 +144,7 @@
                     </RouterLink>
                 </button>
                 <!--このサブSTEPに挑戦済みで、かつまだクリアしていない場合-->
-                <button class="c-button c-button--orange mp-subDetail__button" @click="clearSubStep(id)"
+                <button class="c-button c-button--orange p-subDetail__button" @click="clearSubStep(id)"
                         v-else-if="Number(this.subStep['user_id']) !==  Number(this.userId) && myChallenge && Array(myChallenge) && myChallenge.length !== 0 &&
                         myChallenge[subStep.order]['challenge_flg'] === 1 && myChallenge[subStep.order]['clear_flg'] === 0">
                     クリアする
@@ -291,9 +291,6 @@ import mainCategoryJson from "./../../json/categoryList.json"
                             timeout: 5000
                             },{root:true})
                     }
-                    return false
-                }
-                if(!this.relatedSubSteps || Array(this.relatedSubSteps)){
                     return false
                 }
 

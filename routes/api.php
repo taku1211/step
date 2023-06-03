@@ -30,9 +30,9 @@ Route::post('/user', function(){return Auth::user();})->name('user');
 //ユーザー情報更新
 Route::post('/updateUser', [App\Http\Controllers\UserController::class, 'update'])->name('updateUser');
 //パスワードリセットメール送信
-Route::post('password/request', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('sendResetLinkEmail');
+Route::post('/password/request', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('sendResetLinkEmail');
 //パスワード再設定
-Route::post('password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('resetPassword');
+Route::post('/password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('resetPassword');
 Route::post('/checkToken', [App\Http\Controllers\Auth\ResetPasswordController::class, 'checkToken'])->name('checkToken');
 
 //セッションに保存されているtokenリセット
@@ -67,7 +67,7 @@ Route::post('/destroy',[App\Http\Controllers\StepController::class, 'destroy'])-
 //STEPの詳細を取得し表示
 Route::get('/steps/{id}',[App\Http\Controllers\StepController::class, 'show'])->name('show');
 //STEPに登録されているサブSTEPを取得
-Route::get('/substeps',[App\Http\Controllers\SubstepController::class, 'index'])->name('index');
+Route::get('/substeps',[App\Http\Controllers\SubstepController::class, 'index'])->name('indexsubSteps');
 
 //一覧取得
 
