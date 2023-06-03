@@ -90,6 +90,8 @@
 </template>
 
 <script>
+    import imageCompression from "browser-image-compression";
+
     export default {
         data: function(){
             return {
@@ -101,6 +103,10 @@
                 },
                 sizeErrorMessage:'',
                 preview: (this.$store.getters['auth/icon']) ? '/storage/'+this.$store.getters['auth/icon']:null,
+                imageOption: {
+                    maxSizeMB: 0.5,
+                    maxWidthOrHeight: 800
+                }
             }
         },
         methods: {
@@ -121,7 +127,7 @@
             },
             //フォームでファイルが選択されたら実行される処理
             //ファイルのデータURLを取得する
-            onFileChange (event) {
+            async onFileChange (event) {
                 //ファイル選択時エラーのメッセージを初期化
                 this.sizeErrorMessage = ''
 
@@ -159,9 +165,16 @@
                 // ファイルを読み込む
                 // 読み込まれたファイルはデータURL形式で受け取れる（上記onload参照）
                 reader.readAsDataURL(event.target.files[0])
-                //読み込まれたファイルのデータURLをupdateForm.myIconに代入する
-                this.updateForm.myIcon = event.target.files[0]
+
+                try {
+                // 表示を軽くするため圧縮画像を生成する
+                this.updateForm.myIcon =  await imageCompression(event.target.files[0], this.imageOption);
+                } catch (error) {
+                    //圧縮ができなかった場合は、元の画像をそのまま代入する
+                    this.updateForm.myIcon = event.target.files[0]
+                }
                 this.updateForm.iconName = null
+
             },
             // ファイル選択欄の値とプレビュー表示をリセットする
             reset () {

@@ -237,6 +237,8 @@
 
 <script>
     import CategoryListJson from "./../../json/categoryList.json"
+    import imageCompression from "browser-image-compression";
+
     export default {
         data: function() {
             return {
@@ -258,6 +260,10 @@
                 preview:'',
                 categoryList: CategoryListJson["mainCategory"],
                 categoryListSubSelected:[],
+                imageOption: {
+                    maxSizeMB: 0.5,
+                    maxWidthOrHeight: 800
+                }
             }
         },
         methods: {
@@ -330,7 +336,7 @@
             },
                         //フォームでファイルが選択されたら実行される処理
             //ファイルのデータURLを取得する
-            onFileChange (event) {
+            async onFileChange (event) {
                 //ファイル選択時エラーのメッセージを初期化
                 this.sizeErrorMessage = ''
 
@@ -366,10 +372,15 @@
                 }
 
                 // ファイルを読み込む
-                // 読み込まれたファイルはデータURL形式で受け取れる（上記onload参照）
                 reader.readAsDataURL(event.target.files[0])
-                //読み込まれたファイルのデータURLをstepForm.imageに代入する
-                this.stepForm.image = event.target.files[0]
+
+                try {
+                // 表示を軽くするため圧縮画像を生成する
+                this.stepForm.image =  await imageCompression(event.target.files[0], this.imageOption);
+                } catch (error) {
+                    //圧縮ができなかった場合は、元の画像をそのまま代入する
+                    this.stepForm.image = event.target.files[0]
+                }
             },
             // ファイル選択欄の値とプレビュー表示をリセットする
             reset () {

@@ -1,6 +1,7 @@
 import './bootstrap'
 import Vue from 'vue'
 import VueScrollTo from 'vue-scrollto'
+import imageCompression from "browser-image-compression";
 
 //共通メソッドの読み込み
 import commonFunc from './commonFunc.vue'

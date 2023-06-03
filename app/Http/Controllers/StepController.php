@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Image;
 
 class StepController extends Controller
 {
@@ -59,12 +60,16 @@ class StepController extends Controller
             $randomName = Str::random(12);
             $extension = $request->image->extension();
             $getFileName = $randomName.'.'.$extension;
+
+            Log::debug($getFileName);
             $img = $request->file('image');
             Storage::putFileAs('public',$img,$getFileName);
         }
 
         //新規登録するためのSTEPインスタンスの生成
         $step = new Step;
+
+        Log::debug($step);
 
         DB::beginTransaction();
 

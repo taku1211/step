@@ -7,16 +7,13 @@
     aspect-ratio: 1/1;
     border-radius: 10px;
     position: relative;
-    &:hover{
+    &:active{
         opacity: .7;
     }
     @include mq(){
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-        &:hover{
-            opacity: 1;
-        }
     }
     &__routerLink{
         min-height: 100%;
@@ -53,7 +50,7 @@
         width: 100%;
         display: block;
         flex-grow: 1;
-        padding:$space_m $space_m $space_m $space_m;
+        padding:$space_s $space_m $space_s $space_m;
         font-size: $font-size_s;
         color: $font-color_blue;
         white-space: nowrap;
@@ -71,7 +68,7 @@
     &__title{
         width: 100%;
         flex-grow: 1;
-        padding: $space_m 0 $space_m $space_s;
+        padding: 0 0 $space_m $space_s;
         font-weight: bold;
         white-space: nowrap;
         overflow: hidden;
