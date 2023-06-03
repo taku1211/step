@@ -37,7 +37,7 @@
             height: 170px;
         }
         @include mq(){
-            height: 150px;
+            height: 100px;
         }
         @include mq(sm){
             height: 70px;
@@ -71,7 +71,7 @@
     &__title{
         width: 100%;
         flex-grow: 1;
-        padding:0 $space_m;
+        padding: $space_m 0 $space_m $space_s;
         font-weight: bold;
         white-space: nowrap;
         overflow: hidden;
@@ -81,6 +81,10 @@
             font-size: $font-size_xl;
         }
         @include mq(){
+            padding: $space_s;
+            font-size: $font-size_l;
+        }
+        @include mq(sm){
             padding: $space_s;
             font-size: $font-size_m;
         }

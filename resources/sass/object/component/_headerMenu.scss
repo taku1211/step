@@ -12,11 +12,14 @@
         height: 10vh;
         font-size: $font-size_xxl;
         text-align: right;
-        padding: $space_xxl $space_xxl 0 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        padding:0  $space_xxl 0 0;
         background:$background-color_default;
     }
     &__icon{
-        padding: $space_m;
+        display: inline-block;
         &:hover{
             opacity: .7;
         }

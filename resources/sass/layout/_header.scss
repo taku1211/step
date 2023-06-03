@@ -1,6 +1,7 @@
 //ヘッダーレイアウト
 #l-header{
-    width: calc(100vw - 20px);
+    //width: calc(100vw - 20px);
+    width: 100vw;
     height: $site-height-header;
     position: fixed;
     top: 0;

@@ -1,6 +1,6 @@
 //フッター部分
 .c-footer{
-    width: $site-width;
+    width: 100%;
     max-width: $site-width;
     margin: $space_3l auto $space_3l auto;
     @include mq(tab){

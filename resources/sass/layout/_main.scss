@@ -11,7 +11,7 @@
         padding:0;
     }
     &--siteWidth{
-        width: $site-width;
+        width: calc($site-width - 20px);
         margin: 0 auto 0 auto;
         @include mq(tab){
             width: 100%;

@@ -1,9 +1,9 @@
 //ヘッダー部分
 .c-header{
-    width: $site-width;
+    width: 100%;
     max-width: $site-width;
     margin: 0 auto 0 auto;
-    padding: $space_3l 0 $space_s 0;
+    padding: $space_3l $space_m $space_s $space_m;
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
