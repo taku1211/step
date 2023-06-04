@@ -2,23 +2,27 @@
 .p-hero{
     text-align: center;
     background-image: url('../../../../resources/image/hero-image4.jpg');
-    background-attachment: fixed;
+    //background-attachment: fixed;
+    background-attachment: scroll;
     background-position: center;
     background-size: cover;
     -moz-background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;
     background-repeat: no-repeat;
-    height: 90vh;
-    min-height: 90vh;
+    height: 80vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @include mq(tab){
+        height: 60vh;
+        min-height: 60vh;
+    }
     @include mq(){
         height: 40vh;
         min-height: 40vh;
-        background-attachment: scroll;
     }
     &__title{
         font-size: $font-size_4l;
