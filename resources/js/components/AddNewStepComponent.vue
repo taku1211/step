@@ -148,7 +148,7 @@
                         </span>
                     </h2>
 
-                    <form key="p-newStep__form" class="c-form p-newStep__form" v-if="createSubStepFlg" @submit.prevent="createSubStep">
+                    <form key="p-newStep__form" class="c-form p-newStepForm" v-if="createSubStepFlg" @submit.prevent="createSubStep">
                             <!--一つずつのサブSTEP登録パネル部分-->
                             <transitionGroup name="c-fade" tag="div">
                                 <div class="c-subStep" v-for="object in subStepArray" :key="object">
