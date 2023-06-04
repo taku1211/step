@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ResetPasswordController extends Controller
 {
@@ -34,14 +36,30 @@ class ResetPasswordController extends Controller
     }
 
     //パスワードリセット処理
-    public function resetPassword()
+    public function resetPassword(Request $request)
     {
 
         $credentials = request()->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|max:255',
             'token' => 'required|string',
             'password' => 'required|string|min:8|confirmed'
         ]);
+
+        //該当ユーザーがDBに存在しない場合は404エラーを返却
+        try{
+            User::where([
+                'email' => $request->email,
+            ])->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            Log::error($e);
+            // フロントに異常を通知するため404エラーを返却
+            return response()->json(['message' => ResetPasswordController::$systemError, 'status' => false], 404);
+        } catch (\Exception $e){
+            Log::error($e);
+            // フロントに異常を通知するため500エラーを返却
+            return response()->json(['message' => ResetPasswordController::$systemError, 'status' => false], 500);
+        }
+
 
         //パスワードの再設定
         try{
@@ -65,9 +83,10 @@ class ResetPasswordController extends Controller
             return response()->json(['message' => ResetPasswordController::$systemError, 'status' => false], 500);
         }
 
+
         //token有効期限切れの場合
         if ($reset_password_status == Password::INVALID_TOKEN) {
-            return response()->json(['message' => 'URLの有効期限が切れています。再度、パスワード再発行メールを送信してください。', 'status' => false], 401);
+            return response()->json(['message' => 'パスワードの再設定に失敗しました。再度、パスワード再発行メールを送信してください。', 'status' => false], 401);
         }
         //正常に再設定が完了したら200レスポンスを返却
         return response()->json(['message' => 'パスワードの再設定が完了しました。', 'status' => true], 200);
