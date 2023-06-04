@@ -16,6 +16,9 @@
         white-space:nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        @include mq(sm){
+            font-size: $font-size_l;
+        }
     }
     &__budge{
         display: inline-block;

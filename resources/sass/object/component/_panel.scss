@@ -83,7 +83,7 @@
         }
         @include mq(sm){
             padding: $space_s;
-            font-size: $font-size_m;
+            font-size: $font-size_s;
         }
     }
     &__summary{
